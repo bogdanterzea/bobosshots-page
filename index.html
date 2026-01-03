@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Terzea Bogdan - Fotograf profesionist în Sibiu. Portrete, Evenimente, Produse și Travel Photography.">
+    <meta name="keywords" content="fotograf sibiu, fotografii portret, fotografii evenimente, fotograf profesionist">
+    <meta name="author" content="Terzea Bogdan">
+
+    <title>Bobosshots | Terzea Bogdan Fotograf - Sibiu</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            900: '#0a0a0a',
+                            800: '#121212',
+                            700: '#1a1a1a',
+                            600: '#2a2a2a',
+                            500: '#3a3a3a',
+                        },
+                        accent: {
+                            primary: '#6366f1',
+                            hover: '#818cf8',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #3a3a3a;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4a4a4a;
+        }
+
+        /* Hero parallax effect */
+        .hero-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* Image hover effects */
+        .portfolio-item {
+            overflow: hidden;
+        }
+
+        .portfolio-item img {
+            transition: transform 0.5s ease, filter 0.3s ease;
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.1);
+            filter: brightness(0.8);
+        }
+
+        .portfolio-item .overlay {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .portfolio-item:hover .overlay {
+            opacity: 1;
+        }
+
+        /* Service card hover */
+        .service-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Lightbox styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        /* Loading animation */
+        .fade-in {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Nav link underline effect */
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #6366f1;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-dark-900 text-white">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#acasa" class="text-2xl font-bold tracking-tight">
+                    <span class="text-white">Bobos</span><span class="text-accent-primary">shots</span>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#acasa" class="nav-link text-gray-300 hover:text-white transition-colors">Acasă</a>
+                    <a href="#portofoliu" class="nav-link text-gray-300 hover:text-white transition-colors">Portofoliu</a>
+                    <a href="galerie.html" class="nav-link text-gray-300 hover:text-white transition-colors">Galerie</a>
+                    <a href="#servicii" class="nav-link text-gray-300 hover:text-white transition-colors">Servicii</a>
+                    <a href="#despre" class="nav-link text-gray-300 hover:text-white transition-colors">Despre</a>
+                    <a href="#contact" class="bg-accent-primary hover:bg-accent-hover text-white px-6 py-2.5 rounded-full font-medium transition-colors">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-dark-800 border-t border-dark-600">
+            <div class="px-4 py-4 space-y-3">
+                <a href="#acasa" class="block text-gray-300 hover:text-white py-2 transition-colors">Acasă</a>
+                <a href="#portofoliu" class="block text-gray-300 hover:text-white py-2 transition-colors">Portofoliu</a>
+                <a href="galerie.html" class="block text-gray-300 hover:text-white py-2 transition-colors">Galerie</a>
+                <a href="#servicii" class="block text-gray-300 hover:text-white py-2 transition-colors">Servicii</a>
+                <a href="#despre" class="block text-gray-300 hover:text-white py-2 transition-colors">Despre</a>
+                <a href="#contact" class="block bg-accent-primary hover:bg-accent-hover text-white px-6 py-2.5 rounded-full font-medium text-center transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="acasa" class="relative min-h-screen flex items-center justify-center hero-bg" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('hero-background.jpg');">
+        <div class="text-center px-4 fade-in">
+            <!-- Location Badge -->
+            <div class="inline-flex items-center bg-dark-700/80 backdrop-blur-sm px-4 py-2 rounded-full mb-8">
+                <span class="text-xl mr-2">📍</span>
+                <span class="text-gray-300 text-sm font-medium">Sibiu, Romania</span>
+            </div>
+
+            <!-- Main Heading -->
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight">
+                Terzea Bogdan
+                <span class="block text-accent-primary">Fotograf</span>
+            </h1>
+
+            <!-- Tagline -->
+            <p class="text-xl md:text-2xl text-gray-400 mb-10 max-w-2xl mx-auto font-light">
+                ✨ Transform momentele tale în amintiri
+            </p>
+
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#portofoliu" class="bg-accent-primary hover:bg-accent-hover text-white px-8 py-4 rounded-full font-semibold text-lg transition-all hover:scale-105 shadow-lg shadow-accent-primary/25">
+                    <i class="fas fa-images mr-2"></i>Vezi Portofoliul
+                </a>
+                <a href="#contact" class="border-2 border-white/20 hover:border-white/40 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all hover:bg-white/5">
+                    <i class="fas fa-envelope mr-2"></i>Contactează-mă
+                </a>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+                <a href="#portofoliu" class="text-white/50 hover:text-white transition-colors">
+                    <i class="fas fa-chevron-down text-2xl"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portofoliu" class="py-24 bg-dark-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <span class="text-accent-primary font-medium tracking-wider uppercase text-sm">Portofoliu</span>
+                <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-6">Lucrările Mele</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">O selecție din cele mai bune fotografii realizate de-a lungul timpului.</p>
+            </div>
+
+            <!-- Portfolio Filter -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <button class="filter-btn active px-6 py-2 rounded-full bg-accent-primary text-white font-medium transition-all" data-filter="all">Toate</button>
+                <button class="filter-btn px-6 py-2 rounded-full bg-dark-700 text-gray-300 hover:bg-dark-600 font-medium transition-all" data-filter="portrete">Portrete</button>
+                <button class="filter-btn px-6 py-2 rounded-full bg-dark-700 text-gray-300 hover:bg-dark-600 font-medium transition-all" data-filter="evenimente">Evenimente</button>
+                <button class="filter-btn px-6 py-2 rounded-full bg-dark-700 text-gray-300 hover:bg-dark-600 font-medium transition-all" data-filter="auto">Auto</button>
+                <button class="filter-btn px-6 py-2 rounded-full bg-dark-700 text-gray-300 hover:bg-dark-600 font-medium transition-all" data-filter="travel">Travel</button>
+            </div>
+
+            <!-- Portfolio Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Portfolio Item 1 - Portret Forest -->
+                <div class="portfolio-item relative rounded-2xl cursor-pointer group" data-category="portrete" onclick="openLightbox(this)">
+                    <img src="portfolio/portrete/portret-forest.jpg" alt="Portret în natură" class="w-full h-80 object-cover rounded-2xl">
+                    <div class="overlay absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-2xl flex items-end p-6">
+                        <div>
+                            <h3 class="text-lg font-semibold">Portret în Natură</h3>
+                            <p class="text-gray-400 text-sm">Portrete</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Portfolio Item 2 - Concert -->
+                <div class="portfolio-item relative rounded-2xl cursor-pointer group" data-category="evenimente" onclick="openLightbox(this)">
+                    <img src="portfolio/evenimente/event-concert.jpg" alt="Concert Live" class="w-full h-80 object-cover rounded-2xl">
+                    <div class="overlay absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-2xl flex items-end p-6">
+                        <div>
+                            <h3 class="text-lg font-semibold">Concert Live</h3>
+                            <p class="text-gray-400 text-sm">Evenimente</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Portfolio Item 3 - Mountain Lake -->
+                <div class="portfolio-item relative rounded-2xl cursor-pointer group" data-category="travel" onclick="openLightbox(this)">
+                    <img src="portfolio/travel/travel-mountain-lake.jpg" alt="Lac Montan" class="w-full h-80 object-cover rounded-2xl">
+                    <div class="overlay absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-2xl flex items-end p-6">
+                        <div>
+                            <h3 class="text-lg font-semibold">Lac Montan</h3>
+                            <p class="text-gray-400 text-sm">Travel</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Portfolio Item 4 - Silhouette B&W -->
+                <div class="portfolio-item relative rounded-2xl cursor-pointer group" data-category="portrete" onclick="openLightbox(this)">
+                    <img src="portfolio/portrete/portret-silhouette.jpg" alt="Portret Siluetă" class="w-full h-80 object-cover rounded-2xl">
+                    <div class="overlay absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-2xl flex items-end p-6">
+                        <div>
+                            <h3 class="text-lg font-semibold">Siluetă Artistică</h3>
+                            <p class="text-gray-400 text-sm">Portrete</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Portfolio Item 5 - Singer -->
+                <div class="portfolio-item relative rounded-2xl cursor-pointer group" data-category="evenimente" onclick="openLightbox(this)">
+                    <img src="portfolio/evenimente/event-singer.jpg" alt="Artist pe Scenă" class="w-full h-80 object-cover rounded-2xl">
+                    <div class="overlay absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-2xl flex items-end p-6">
+                        <div>
+                            <h3 class="text-lg font-semibold">Artist pe Scenă</h3>
+                            <p class="text-gray-400 text-sm">Evenimente</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Portfolio Item 6 - Village Church -->
+                <div class="portfolio-item relative rounded-2xl cursor-pointer group" data-category="travel" onclick="openLightbox(this)">
+                    <img src="portfolio/travel/travel-village-church.jpg" alt="Sat Transilvănean" class="w-full h-80 object-cover rounded-2xl">
+                    <div class="overlay absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-2xl flex items-end p-6">
+                        <div>
+                            <h3 class="text-lg font-semibold">Sat Transilvănean</h3>
+                            <p class="text-gray-400 text-sm">Travel</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Portfolio Item 7 - Christmas Portrait -->
+                <div class="portfolio-item relative rounded-2xl cursor-pointer group" data-category="portrete" onclick="openLightbox(this)">
+                    <img src="portfolio/portrete/portret-christmas.jpg" alt="Portret de Iarnă" class="w-full h-80 object-cover rounded-2xl">
+                    <div class="overlay absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-2xl flex items-end p-6">
+                        <div>
+                            <h3 class="text-lg font-semibold">Portret de Iarnă</h3>
+                            <p class="text-gray-400 text-sm">Portrete</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Portfolio Item 8 - Dogs Event -->
+                <div class="portfolio-item relative rounded-2xl cursor-pointer group" data-category="evenimente" onclick="openLightbox(this)">
+                    <img src="portfolio/evenimente/event-dogs.jpg" alt="Eveniment Canin" class="w-full h-80 object-cover rounded-2xl">
+                    <div class="overlay absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-2xl flex items-end p-6">
+                        <div>
+                            <h3 class="text-lg font-semibold">Eveniment Canin</h3>
+                            <p class="text-gray-400 text-sm">Evenimente</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Portfolio Item 9 - Motorcycle -->
+                <div class="portfolio-item relative rounded-2xl cursor-pointer group" data-category="auto" onclick="openLightbox(this)">
+                    <img src="portfolio/auto/product-motorcycle.jpg" alt="Motocicletă Kawasaki" class="w-full h-80 object-cover rounded-2xl">
+                    <div class="overlay absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-2xl flex items-end p-6">
+                        <div>
+                            <h3 class="text-lg font-semibold">Kawasaki ZX-6R</h3>
+                            <p class="text-gray-400 text-sm">Auto</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Portfolio Item 10 - Urban Portrait -->
+                <div class="portfolio-item relative rounded-2xl cursor-pointer group" data-category="portrete" onclick="openLightbox(this)">
+                    <img src="portfolio/portrete/portret-urban.jpg" alt="Portret Urban" class="w-full h-80 object-cover rounded-2xl">
+                    <div class="overlay absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-2xl flex items-end p-6">
+                        <div>
+                            <h3 class="text-lg font-semibold">Portret Urban</h3>
+                            <p class="text-gray-400 text-sm">Portrete</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Portfolio Item 11 - Vintage Car -->
+                <div class="portfolio-item relative rounded-2xl cursor-pointer group" data-category="auto" onclick="openLightbox(this)">
+                    <img src="portfolio/auto/product-vintage-car.jpg" alt="Cadillac Vintage" class="w-full h-80 object-cover rounded-2xl">
+                    <div class="overlay absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-2xl flex items-end p-6">
+                        <div>
+                            <h3 class="text-lg font-semibold">Cadillac Vintage</h3>
+                            <p class="text-gray-400 text-sm">Auto</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Portfolio Item 12 - Sports Cars -->
+                <div class="portfolio-item relative rounded-2xl cursor-pointer group" data-category="auto" onclick="openLightbox(this)">
+                    <img src="portfolio/auto/product-sports-cars.jpg" alt="Mașini Sport" class="w-full h-80 object-cover rounded-2xl">
+                    <div class="overlay absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-2xl flex items-end p-6">
+                        <div>
+                            <h3 class="text-lg font-semibold">Mașini Sport</h3>
+                            <p class="text-gray-400 text-sm">Auto</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="servicii" class="py-24 bg-dark-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <span class="text-accent-primary font-medium tracking-wider uppercase text-sm">Servicii</span>
+                <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-6">Ce Ofer</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Servicii profesionale de fotografie adaptate nevoilor tale.</p>
+            </div>
+
+            <!-- Services Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Service 1 - Portrete -->
+                <div class="service-card bg-dark-700 rounded-3xl p-8 text-center">
+                    <div class="w-20 h-20 bg-accent-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-user text-accent-primary text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Portrete</h3>
+                    <p class="text-gray-400 leading-relaxed">Fotografii de portret care surprind esența și personalitatea fiecărei persoane.</p>
+                </div>
+
+                <!-- Service 2 - Evenimente -->
+                <div class="service-card bg-dark-700 rounded-3xl p-8 text-center">
+                    <div class="w-20 h-20 bg-accent-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-calendar-check text-accent-primary text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Evenimente</h3>
+                    <p class="text-gray-400 leading-relaxed">Nunți, botezuri, aniversări și evenimente corporate imortalizate profesional.</p>
+                </div>
+
+                <!-- Service 3 - Produse -->
+                <div class="service-card bg-dark-700 rounded-3xl p-8 text-center">
+                    <div class="w-20 h-20 bg-accent-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-box-open text-accent-primary text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Produse</h3>
+                    <p class="text-gray-400 leading-relaxed">Fotografii comerciale de produse pentru magazine online și cataloage.</p>
+                </div>
+
+                <!-- Service 4 - Travel -->
+                <div class="service-card bg-dark-700 rounded-3xl p-8 text-center">
+                    <div class="w-20 h-20 bg-accent-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-plane text-accent-primary text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Travel</h3>
+                    <p class="text-gray-400 leading-relaxed">Fotografie de călătorie și peisaje care inspiră și captivează.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="despre" class="py-24 bg-dark-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <!-- Profile Image -->
+                <div class="relative">
+                    <div class="aspect-square max-w-md mx-auto">
+                        <img src="profile/bogdan-profile-1.jpg" alt="Terzea Bogdan" class="w-full h-full object-cover rounded-3xl">
+                        <!-- Decorative elements -->
+                        <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-accent-primary/20 rounded-3xl -z-10"></div>
+                        <div class="absolute -top-6 -left-6 w-24 h-24 border-2 border-accent-primary/30 rounded-3xl -z-10"></div>
+                    </div>
+                </div>
+
+                <!-- About Content -->
+                <div>
+                    <span class="text-accent-primary font-medium tracking-wider uppercase text-sm">Despre Mine</span>
+                    <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-6">Terzea Bogdan</h2>
+                    <p class="text-gray-400 text-lg leading-relaxed mb-6">
+                        Fotograf profesionist cu baza în Sibiu. Pasiunea mea este să capturez emoția autentică din fiecare moment, transformând clipele trecătoare în amintiri de neuitat.
+                    </p>
+                    <p class="text-gray-400 text-lg leading-relaxed mb-8">
+                        Cu experiență în domeniul fotografiei de portret, evenimente și travel, ofer servicii personalizate care se adaptează perfect viziunii tale.
+                    </p>
+
+                    <!-- Stats -->
+                    <div class="grid grid-cols-3 gap-8 mb-8">
+                        <div>
+                            <div class="text-4xl font-bold text-accent-primary">317+</div>
+                            <div class="text-gray-400 text-sm">Proiecte</div>
+                        </div>
+                        <div>
+                            <div class="text-4xl font-bold text-accent-primary">278+</div>
+                            <div class="text-gray-400 text-sm">Clienți Mulțumiți</div>
+                        </div>
+                        <div>
+                            <div class="text-4xl font-bold text-accent-primary">5+</div>
+                            <div class="text-gray-400 text-sm">Ani Experiență</div>
+                        </div>
+                    </div>
+
+                    <!-- CTA -->
+                    <a href="#contact" class="inline-flex items-center bg-accent-primary hover:bg-accent-hover text-white px-8 py-4 rounded-full font-semibold transition-all hover:scale-105">
+                        <i class="fas fa-paper-plane mr-2"></i>Hai să Colaborăm
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-dark-800">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <!-- Section Header -->
+            <span class="text-accent-primary font-medium tracking-wider uppercase text-sm">Contact</span>
+            <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-6">Să Păstrăm Legătura</h2>
+            <p class="text-gray-400 text-lg mb-12">
+                📩 DM pentru colaborări sau întrebări despre serviciile mele.
+            </p>
+
+            <!-- Social Links -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-6 mb-12">
+                <a href="https://instagram.com/bobosshots" target="_blank" rel="noopener noreferrer" class="flex items-center bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white px-8 py-4 rounded-full font-semibold transition-all hover:scale-105 hover:shadow-lg hover:shadow-pink-500/25">
+                    <i class="fab fa-instagram text-2xl mr-3"></i>
+                    @bobosshots
+                </a>
+                <a href="https://www.behance.net/bogdanterzea" target="_blank" rel="noopener noreferrer" class="flex items-center bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-semibold transition-all hover:scale-105 hover:shadow-lg hover:shadow-blue-600/25">
+                    <i class="fab fa-behance text-2xl mr-3"></i>
+                    bogdanterzea
+                </a>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="bg-dark-700 rounded-3xl p-8 max-w-md mx-auto">
+                <div class="flex items-center justify-center mb-4">
+                    <i class="fas fa-map-marker-alt text-accent-primary text-xl mr-3"></i>
+                    <span class="text-gray-300">Sibiu, Romania</span>
+                </div>
+                <p class="text-gray-400 text-sm">
+                    Disponibil pentru proiecte în Sibiu și împrejurimi.<br>
+                    Deplasări în toată România pentru evenimente speciale.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-900 border-t border-dark-700 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <!-- Logo -->
+                <a href="#acasa" class="text-xl font-bold mb-4 md:mb-0">
+                    <span class="text-white">Bobos</span><span class="text-accent-primary">shots</span>
+                </a>
+
+                <!-- Copyright -->
+                <p class="text-gray-500 text-sm text-center md:text-left mb-4 md:mb-0">
+                    &copy; 2024 Terzea Bogdan. Toate drepturile rezervate.
+                </p>
+
+                <!-- Social Icons -->
+                <div class="flex items-center space-x-4">
+                    <a href="https://instagram.com/bobosshots" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-dark-700 hover:bg-accent-primary rounded-full flex items-center justify-center transition-colors">
+                        <i class="fab fa-instagram text-white"></i>
+                    </a>
+                    <a href="https://www.behance.net/bogdanterzea" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-dark-700 hover:bg-accent-primary rounded-full flex items-center justify-center transition-colors">
+                        <i class="fab fa-behance text-white"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <button class="absolute top-6 right-6 text-white text-3xl hover:text-gray-300 transition-colors z-10" onclick="closeLightbox()">
+            <i class="fas fa-times"></i>
+        </button>
+        <button id="lightbox-prev" class="absolute left-6 text-white text-3xl hover:text-gray-300 transition-colors z-10" onclick="event.stopPropagation(); navigateLightbox(-1)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <img id="lightbox-img" src="" alt="Lightbox image" class="rounded-lg">
+        <button id="lightbox-next" class="absolute right-6 text-white text-3xl hover:text-gray-300 transition-colors z-10" onclick="event.stopPropagation(); navigateLightbox(1)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            const icon = mobileMenuBtn.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+            });
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-dark-900/95', 'backdrop-blur-lg', 'shadow-lg');
+            } else {
+                navbar.classList.remove('bg-dark-900/95', 'backdrop-blur-lg', 'shadow-lg');
+            }
+        });
+
+        // Portfolio Filter
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active button
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-accent-primary', 'text-white', 'active');
+                    b.classList.add('bg-dark-700', 'text-gray-300');
+                });
+                btn.classList.add('bg-accent-primary', 'text-white', 'active');
+                btn.classList.remove('bg-dark-700', 'text-gray-300');
+
+                // Filter items
+                const filter = btn.dataset.filter;
+                portfolioItems.forEach(item => {
+                    if (filter === 'all' || item.dataset.category === filter) {
+                        item.style.display = 'block';
+                        item.style.animation = 'fadeIn 0.5s ease forwards';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Lightbox functionality
+        let currentImageIndex = 0;
+        let visibleImages = [];
+
+        function updateVisibleImages() {
+            visibleImages = Array.from(document.querySelectorAll('.portfolio-item')).filter(
+                item => item.style.display !== 'none'
+            );
+        }
+
+        function openLightbox(element) {
+            updateVisibleImages();
+            currentImageIndex = visibleImages.indexOf(element);
+            const img = element.querySelector('img');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+
+            // Use the same image source (local files)
+            lightboxImg.src = img.src;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function navigateLightbox(direction) {
+            currentImageIndex += direction;
+            if (currentImageIndex < 0) currentImageIndex = visibleImages.length - 1;
+            if (currentImageIndex >= visibleImages.length) currentImageIndex = 0;
+
+            const img = visibleImages[currentImageIndex].querySelector('img');
+            document.getElementById('lightbox-img').src = img.src;
+        }
+
+        // Keyboard navigation for lightbox
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('lightbox').classList.contains('active')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') navigateLightbox(-1);
+                if (e.key === 'ArrowRight') navigateLightbox(1);
+            }
+        });
+
+        // Smooth reveal animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section > div').forEach(el => {
+            el.style.opacity = '0';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

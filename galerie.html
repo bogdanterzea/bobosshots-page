@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Galerie completă - Terzea Bogdan Fotograf profesionist în Sibiu">
+    <meta name="author" content="Terzea Bogdan">
+
+    <title>Galerie Completă | Bobosshots - Terzea Bogdan Fotograf</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            900: '#0a0a0a',
+                            800: '#121212',
+                            700: '#1a1a1a',
+                            600: '#2a2a2a',
+                            500: '#3a3a3a',
+                        },
+                        accent: {
+                            primary: '#6366f1',
+                            hover: '#818cf8',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #3a3a3a;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4a4a4a;
+        }
+
+        /* Masonry Grid */
+        .masonry-grid {
+            column-count: 1;
+            column-gap: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .masonry-grid {
+                column-count: 2;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .masonry-grid {
+                column-count: 3;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .masonry-grid {
+                column-count: 4;
+            }
+        }
+
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1rem;
+        }
+
+        /* Image hover effects */
+        .gallery-item {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .gallery-item img {
+            transition: transform 0.5s ease, filter 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+            filter: brightness(0.85);
+        }
+
+        .gallery-item .overlay {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .overlay {
+            opacity: 1;
+        }
+
+        /* Lightbox styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        /* Loading animation */
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Nav link underline effect */
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #6366f1;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Lazy loading placeholder */
+        .lazy-placeholder {
+            background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    </style>
+</head>
+<body class="bg-dark-900 text-white">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-dark-900/95 backdrop-blur-lg shadow-lg transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="index.html" class="text-2xl font-bold tracking-tight">
+                    <span class="text-white">Bobos</span><span class="text-accent-primary">shots</span>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link text-gray-300 hover:text-white transition-colors">Acasă</a>
+                    <a href="index.html#portofoliu" class="nav-link text-gray-300 hover:text-white transition-colors">Portofoliu</a>
+                    <a href="galerie.html" class="nav-link text-accent-primary transition-colors">Galerie</a>
+                    <a href="index.html#servicii" class="nav-link text-gray-300 hover:text-white transition-colors">Servicii</a>
+                    <a href="index.html#despre" class="nav-link text-gray-300 hover:text-white transition-colors">Despre</a>
+                    <a href="index.html#contact" class="bg-accent-primary hover:bg-accent-hover text-white px-6 py-2.5 rounded-full font-medium transition-colors">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-dark-800 border-t border-dark-600">
+            <div class="px-4 py-4 space-y-3">
+                <a href="index.html" class="block text-gray-300 hover:text-white py-2 transition-colors">Acasă</a>
+                <a href="index.html#portofoliu" class="block text-gray-300 hover:text-white py-2 transition-colors">Portofoliu</a>
+                <a href="galerie.html" class="block text-accent-primary py-2 transition-colors">Galerie</a>
+                <a href="index.html#servicii" class="block text-gray-300 hover:text-white py-2 transition-colors">Servicii</a>
+                <a href="index.html#despre" class="block text-gray-300 hover:text-white py-2 transition-colors">Despre</a>
+                <a href="index.html#contact" class="block bg-accent-primary hover:bg-accent-hover text-white px-6 py-2.5 rounded-full font-medium text-center transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Gallery Header -->
+    <section class="pt-32 pb-12 bg-dark-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="text-accent-primary font-medium tracking-wider uppercase text-sm">Colecția Completă</span>
+            <h1 class="text-4xl md:text-6xl font-bold mt-4 mb-6">Galerie Foto</h1>
+            <p class="text-gray-400 max-w-2xl mx-auto text-lg">Toate fotografiile mele într-un singur loc. Explorează colecția completă de imagini.</p>
+
+            <!-- Stats -->
+            <div class="flex justify-center gap-8 mt-8">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-accent-primary" id="photo-count">84</div>
+                    <div class="text-gray-400 text-sm">Fotografii</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Grid -->
+    <section class="py-12 bg-dark-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="masonry-grid" id="gallery-grid">
+                <!-- 2023 Photos -->
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20230730-DSC_3646.jpg" alt="Foto 2023" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20230730-DSC_3773.jpg" alt="Foto 2023" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20231001-DSC_8840.jpg" alt="Foto 2023" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20231001-DSC_8877.jpg" alt="Foto 2023" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20231108-DSC_0704.jpg" alt="Foto 2023" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20231108-DSC_0772.jpg" alt="Foto 2023" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+
+                <!-- 2024 Photos -->
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240302-DSC_2494.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240302-DSC_2517.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240322-DSC_2550.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240322-DSC_2581.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240322-DSC_2621.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240322-DSC_2665.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240322-DSC_2733.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240322-DSC_2818.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240322-DSC_2833.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240405-DSC_3477.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240405-DSC_3568.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240405-DSC_3575.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240407-DSC_3845.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240408-DSC_3867.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240410-DSC_3957.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240410-DSC_3958.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240410-DSC_3995.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240410-DSC_4006.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240410-DSC_4012.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240410-DSC_4014.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240410-DSC_4025.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240410-DSC_4042.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240410-DSC_4046.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240410-DSC_4052.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240517-DSC_4063.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240609-DSC_4651.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240702-DSC_4810.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240702-DSC_4818.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240730-DSC_4923.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240730-DSC_5002.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240730-DSC_5006.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240730-DSC_5064.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240921-DSC_5436.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20240923-DSC_5754.jpg" alt="Foto 2024" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+
+                <!-- 2025 Photos -->
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20250322-DSC_6237-2.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20250322-DSC_6238.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20250330-DSC_6253.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20250330-DSC_6276.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20250330-DSC_6328.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20250330-DSC_6342.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20250401-DSC_6371.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20250402-DSC_6589.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20250402-DSC_6638.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20250403-DSC_6747-2.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20250502-DSC_7061.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20250502-DSC_7136.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20250523-DSC_7158.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20250523-DSC_7179.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20250523-DSC_7202.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20250523-DSC_7220.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20250728-DSC_0670.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20250728-DSC_0679.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20250729-DSC_0966.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20250729-DSC_1131.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20250826-DSC_1467.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20250829-DSC_1623.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20250829-DSC_1657.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20250829-DSC_1659.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20250829-DSC_1661.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20250829-DSC_1666.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20250921-DSC_2217-2.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20251014-DSC_2366.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20251022-20251014-DSC_2365tst.jpg.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20251122-DSC_3216.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20251122-DSC_3238.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20251122-DSC_3267.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20251220-DSC_4431.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20251223-DSC_4900.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/20251223-DSC_4910.jpg" alt="Foto 2025" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+
+                <!-- Named Photos -->
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/Terzea Bogdan-0092.jpg" alt="Foto" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/Terzea Bogdan-0585.jpg" alt="Foto" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/Terzea Bogdan-0591.jpg" alt="Foto" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/Terzea Bogdan-0615.jpg" alt="Foto" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/Terzea Bogdan-9229.jpg" alt="Foto" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/Terzea Bogdan-9954.jpg" alt="Foto" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/Terzea Bogdan-DSC_7905.jpg" alt="Foto" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/Terzea Bogdan-DSC_8076.jpg" alt="Foto" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+                <div class="masonry-item gallery-item rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="images-assets/Terzea Bogdan-DSC_8414.jpg" alt="Foto" class="w-full rounded-xl" loading="lazy">
+                    <div class="overlay absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-expand text-white text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to Top & CTA -->
+    <section class="py-16 bg-dark-800">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-4">Îți place ce vezi?</h2>
+            <p class="text-gray-400 mb-8">Contactează-mă pentru a discuta despre proiectul tău.</p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="index.html#contact" class="bg-accent-primary hover:bg-accent-hover text-white px-8 py-4 rounded-full font-semibold transition-all hover:scale-105">
+                    <i class="fas fa-envelope mr-2"></i>Contactează-mă
+                </a>
+                <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="border-2 border-white/20 hover:border-white/40 text-white px-8 py-4 rounded-full font-semibold transition-all hover:bg-white/5">
+                    <i class="fas fa-arrow-up mr-2"></i>Înapoi Sus
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-900 border-t border-dark-700 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <a href="index.html" class="text-xl font-bold mb-4 md:mb-0">
+                    <span class="text-white">Bobos</span><span class="text-accent-primary">shots</span>
+                </a>
+                <p class="text-gray-500 text-sm text-center md:text-left mb-4 md:mb-0">
+                    &copy; 2024 Terzea Bogdan. Toate drepturile rezervate.
+                </p>
+                <div class="flex items-center space-x-4">
+                    <a href="https://instagram.com/bobosshots" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-dark-700 hover:bg-accent-primary rounded-full flex items-center justify-center transition-colors">
+                        <i class="fab fa-instagram text-white"></i>
+                    </a>
+                    <a href="https://www.behance.net/bogdanterzea" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-dark-700 hover:bg-accent-primary rounded-full flex items-center justify-center transition-colors">
+                        <i class="fab fa-behance text-white"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <button class="absolute top-6 right-6 text-white text-3xl hover:text-gray-300 transition-colors z-10" onclick="closeLightbox()">
+            <i class="fas fa-times"></i>
+        </button>
+        <button id="lightbox-prev" class="absolute left-6 text-white text-3xl hover:text-gray-300 transition-colors z-10" onclick="event.stopPropagation(); navigateLightbox(-1)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <img id="lightbox-img" src="" alt="Lightbox image" class="rounded-lg">
+        <button id="lightbox-next" class="absolute right-6 text-white text-3xl hover:text-gray-300 transition-colors z-10" onclick="event.stopPropagation(); navigateLightbox(1)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            const icon = mobileMenuBtn.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+            });
+        });
+
+        // Lightbox functionality
+        let currentImageIndex = 0;
+        let galleryImages = [];
+
+        function updateGalleryImages() {
+            galleryImages = Array.from(document.querySelectorAll('.gallery-item'));
+        }
+
+        function openLightbox(element) {
+            updateGalleryImages();
+            currentImageIndex = galleryImages.indexOf(element);
+            const img = element.querySelector('img');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+
+            lightboxImg.src = img.src;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function navigateLightbox(direction) {
+            currentImageIndex += direction;
+            if (currentImageIndex < 0) currentImageIndex = galleryImages.length - 1;
+            if (currentImageIndex >= galleryImages.length) currentImageIndex = 0;
+
+            const img = galleryImages[currentImageIndex].querySelector('img');
+            document.getElementById('lightbox-img').src = img.src;
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('lightbox').classList.contains('active')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') navigateLightbox(-1);
+                if (e.key === 'ArrowRight') navigateLightbox(1);
+            }
+        });
+
+        // Initialize gallery images on load
+        updateGalleryImages();
+    </script>
+</body>
+</html>
