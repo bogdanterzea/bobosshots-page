@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produse & Imobiliare | Bobosshots</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: { 900: '#0a0a0a', 800: '#121212', 700: '#1a1a1a' },
+                        accent: { primary: '#6366f1', hover: '#818cf8' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gallery-item { overflow: hidden; }
+        .gallery-item img { transition: transform 0.5s ease; }
+        .gallery-item:hover img { transform: scale(1.05); }
+        .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center; }
+        .lightbox.active { display: flex; }
+        .lightbox img { max-width: 90%; max-height: 90%; object-fit: contain; }
+    </style>
+</head>
+<body class="bg-dark-900 text-white min-h-screen">
+    <!-- Header -->
+    <header class="py-6 px-4 sm:px-6 lg:px-8 border-b border-dark-700">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="index.html" class="flex items-center text-gray-400 hover:text-white transition-colors">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Înapoi
+            </a>
+            <a href="index.html" class="text-2xl font-bold">
+                <span class="text-white">Bobos</span><span class="text-accent-primary">shots</span>
+            </a>
+            <div class="w-20"></div>
+        </div>
+    </header>
+
+    <!-- Page Title -->
+    <section class="py-16 text-center">
+        <div class="w-20 h-20 bg-accent-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+            <i class="fas fa-box-open text-accent-primary text-3xl"></i>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">Produse & Imobiliare</h1>
+        <p class="text-gray-400 max-w-xl mx-auto px-4">Fotografii comerciale de produse și imobiliare pentru apartamente, clădiri și proprietăți.</p>
+    </section>
+
+    <!-- Gallery Grid -->
+    <section class="pb-24 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="gallery-item rounded-2xl cursor-pointer" onclick="openLightbox('portfolio-backup/auto/product-motorcycle.jpg')">
+                    <img src="portfolio/auto/thumbs/product-motorcycle.jpg" alt="Kawasaki ZX-6R" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                </div>
+                <div class="gallery-item rounded-2xl cursor-pointer" onclick="openLightbox('portfolio-backup/auto/product-moto-action.jpg')">
+                    <img src="portfolio/auto/thumbs/product-moto-action.jpg" alt="Motocicletă în Acțiune" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                </div>
+                <div class="gallery-item rounded-2xl cursor-pointer" onclick="openLightbox('portfolio-backup/auto/product-vintage-car.jpg')">
+                    <img src="portfolio/auto/thumbs/product-vintage-car.jpg" alt="Cadillac Vintage" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                </div>
+                <div class="gallery-item rounded-2xl cursor-pointer" onclick="openLightbox('portfolio-backup/auto/product-sports-cars.jpg')">
+                    <img src="portfolio/auto/thumbs/product-sports-cars.jpg" alt="Mașini Sport" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="pb-24 text-center">
+        <a href="https://instagram.com/bobosshots" target="_blank" rel="noopener noreferrer" class="inline-flex items-center bg-accent-primary hover:bg-accent-hover text-white px-8 py-4 rounded-full font-semibold transition-all hover:scale-105">
+            <i class="fab fa-instagram mr-2"></i>Solicită Ofertă
+        </a>
+    </section>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <button class="absolute top-6 right-6 text-white text-3xl hover:text-gray-300 transition-colors" onclick="closeLightbox()">
+            <i class="fas fa-times"></i>
+        </button>
+        <img id="lightbox-img" src="" alt="Lightbox image" class="rounded-lg">
+    </div>
+
+    <script>
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+    </script>
+</body>
+</html>
