@@ -6,6 +6,8 @@
     <title>Portrete | Bobosshots</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <script>
@@ -21,16 +23,61 @@
         }
     </script>
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .gallery-item { overflow: hidden; }
-        .gallery-item img { transition: transform 0.5s ease; }
-        .gallery-item:hover img { transform: scale(1.05); }
-        .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center; }
-        .lightbox.active { display: flex; }
-        .lightbox img { max-width: 90%; max-height: 90%; object-fit: contain; }
+        body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
+
+        /* Preloader */
+        .preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a0a0a; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease, visibility 0.5s ease; }
+        .preloader.hidden { opacity: 0; visibility: hidden; }
+        .preloader-logo { font-size: 2rem; font-weight: bold; margin-bottom: 1.5rem; }
+        .preloader-bar { width: 150px; height: 3px; background: #1a1a1a; border-radius: 3px; overflow: hidden; }
+        .preloader-progress { height: 100%; background: linear-gradient(90deg, #6366f1, #818cf8); width: 0%; animation: loading 1.2s ease-in-out forwards; }
+        @keyframes loading { 0% { width: 0%; } 100% { width: 100%; } }
+
+        /* Subtle Cursor Glow */
+        .cursor-glow { width: 300px; height: 300px; background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); opacity: 0.6; }
+        @media (max-width: 768px) { .cursor-glow { display: none; } }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1a1a1a; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #6366f1, #818cf8); border-radius: 4px; }
+
+        /* Gallery items */
+        .gallery-item { overflow: hidden; transform-style: preserve-3d; perspective: 1000px; }
+        .gallery-item img { transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.3s ease; }
+        .gallery-item:hover img { transform: scale(1.1) rotateX(2deg) rotateY(2deg); filter: brightness(0.8); }
+
+        /* Lightbox */
+        .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 1000; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; }
+        .lightbox.active { display: flex; opacity: 1; }
+        .lightbox img { max-width: 90%; max-height: 85%; object-fit: contain; border-radius: 8px; box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5); }
+        .lightbox-btn { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; cursor: pointer; }
+        .lightbox-btn:hover { background: rgba(99, 102, 241, 0.3); border-color: #6366f1; transform: scale(1.1); }
+
+        /* Nav link effects */
+        .nav-link { position: relative; }
+        .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: linear-gradient(90deg, #6366f1, #818cf8); transition: width 0.3s ease; }
+        .nav-link:hover::after { width: 100%; }
+
+        /* Page entrance */
+        .page-enter { animation: pageEnter 0.6s ease-out forwards; }
+        @keyframes pageEnter { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="bg-dark-900 text-white min-h-screen">
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-logo">
+            <span class="text-white">Bobos</span><span class="text-accent-primary">shots</span>
+        </div>
+        <div class="preloader-bar">
+            <div class="preloader-progress"></div>
+        </div>
+    </div>
+
+    <!-- Subtle Cursor Glow -->
+    <div class="cursor-glow" id="cursor-glow"></div>
+
     <!-- Header -->
     <header class="py-6 px-4 sm:px-6 lg:px-8 border-b border-dark-700">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
@@ -86,24 +133,168 @@
 
     <!-- Lightbox -->
     <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-        <button class="absolute top-6 right-6 text-white text-3xl hover:text-gray-300 transition-colors" onclick="closeLightbox()">
+        <button class="lightbox-btn absolute top-6 right-6 text-white text-xl z-10" onclick="closeLightbox()">
             <i class="fas fa-times"></i>
         </button>
-        <img id="lightbox-img" src="" alt="Lightbox image" class="rounded-lg">
+        <button id="lightbox-prev" class="lightbox-btn absolute left-6 top-1/2 -translate-y-1/2 text-white text-xl z-10" onclick="event.stopPropagation(); navigateLightbox(-1)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <img id="lightbox-img" src="" alt="Lightbox image">
+        <button id="lightbox-next" class="lightbox-btn absolute right-6 top-1/2 -translate-y-1/2 text-white text-xl z-10" onclick="event.stopPropagation(); navigateLightbox(1)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-dark-800/80 backdrop-blur-sm px-4 py-2 rounded-full text-sm text-gray-300">
+            <span id="lightbox-counter">1 / 5</span>
+        </div>
     </div>
 
     <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Preloader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').classList.add('hidden');
+                initAnimations();
+            }, 1500);
+        });
+
+        // Subtle Cursor Glow
+        const cursorGlow = document.getElementById('cursor-glow');
+        if (window.innerWidth > 768 && cursorGlow) {
+            document.addEventListener('mousemove', (e) => {
+                gsap.to(cursorGlow, { x: e.clientX, y: e.clientY, duration: 0.5, ease: 'power2.out' });
+            });
+        }
+
+        // Initialize animations
+        function initAnimations() {
+            // Page header animation
+            gsap.from('header', { y: -50, opacity: 0, duration: 0.8, ease: 'power2.out' });
+
+            // Title section animation
+            gsap.from('section.py-16 > *', { y: 40, opacity: 0, duration: 0.8, stagger: 0.15, ease: 'power2.out' });
+
+            // Gallery items stagger
+            gsap.from('.gallery-item', {
+                y: 60,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: '.grid',
+                    start: 'top 85%'
+                }
+            });
+
+            // CTA button
+            gsap.from('section.pb-24.text-center a', {
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: 'section.pb-24.text-center',
+                    start: 'top 90%'
+                }
+            });
+        }
+
+        // Image tilt effect
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('mousemove', (e) => {
+                const rect = item.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
+                gsap.to(item.querySelector('img'), {
+                    rotateY: x * 10,
+                    rotateX: -y * 10,
+                    duration: 0.5,
+                    ease: 'power2.out'
+                });
+            });
+            item.addEventListener('mouseleave', () => {
+                gsap.to(item.querySelector('img'), {
+                    rotateY: 0,
+                    rotateX: 0,
+                    duration: 0.5,
+                    ease: 'power2.out'
+                });
+            });
+        });
+
+        // Lightbox
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        let currentIndex = 0;
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        function updateCounter() {
+            document.getElementById('lightbox-counter').textContent = `${currentIndex + 1} / ${galleryItems.length}`;
+        }
+
         function openLightbox(src) {
+            const items = Array.from(galleryItems);
+            currentIndex = items.findIndex(item => item.getAttribute('onclick').includes(src));
             document.getElementById('lightbox-img').src = src;
             document.getElementById('lightbox').classList.add('active');
             document.body.style.overflow = 'hidden';
+            updateCounter();
+
+            gsap.fromTo('#lightbox-img', { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'power2.out' });
         }
+
         function closeLightbox() {
-            document.getElementById('lightbox').classList.remove('active');
-            document.body.style.overflow = '';
+            gsap.to('#lightbox-img', {
+                scale: 0.8,
+                opacity: 0,
+                duration: 0.3,
+                ease: 'power2.in',
+                onComplete: () => {
+                    document.getElementById('lightbox').classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
         }
+
+        function navigateLightbox(direction) {
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = galleryItems.length - 1;
+            if (currentIndex >= galleryItems.length) currentIndex = 0;
+
+            const item = galleryItems[currentIndex];
+            const onclick = item.getAttribute('onclick');
+            const src = onclick.match(/'([^']+)'/)[1];
+
+            gsap.to('#lightbox-img', {
+                opacity: 0,
+                x: direction * -50,
+                duration: 0.2,
+                ease: 'power2.in',
+                onComplete: () => {
+                    document.getElementById('lightbox-img').src = src;
+                    gsap.fromTo('#lightbox-img', { opacity: 0, x: direction * 50 }, { opacity: 1, x: 0, duration: 0.3, ease: 'power2.out' });
+                    updateCounter();
+                }
+            });
+        }
+
+        // Touch swipe
+        document.getElementById('lightbox').addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; });
+        document.getElementById('lightbox').addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) navigateLightbox(diff > 0 ? 1 : -1);
+        });
+
+        // Keyboard navigation
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeLightbox();
+            if (document.getElementById('lightbox').classList.contains('active')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') navigateLightbox(-1);
+                if (e.key === 'ArrowRight') navigateLightbox(1);
+            }
         });
     </script>
 </body>
