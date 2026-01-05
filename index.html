@@ -195,6 +195,27 @@
             50% { background-position: 100% 50%; }
         }
 
+        /* Secondary magnetic button - white glow instead of blue */
+        .magnetic-btn-secondary {
+            position: relative;
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .magnetic-btn-secondary::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+
+        .magnetic-btn-secondary:hover::before {
+            opacity: 1;
+        }
+
         /* ===== PORTFOLIO ITEMS ===== */
         .portfolio-item {
             overflow: hidden;
@@ -503,7 +524,7 @@
                 <a href="#portofoliu" class="magnetic-btn bg-accent-primary hover:bg-accent-hover text-white px-8 py-4 rounded-full font-semibold text-lg transition-all shadow-lg shadow-accent-primary/25 glow">
                     <i class="fas fa-images mr-2"></i>Vezi Portofoliul
                 </a>
-                <a href="#contact" class="magnetic-btn border-2 border-white/20 hover:border-white/40 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all hover:bg-white/5">
+                <a href="#contact" class="magnetic-btn-secondary border-2 border-white/30 hover:border-white text-white px-8 py-4 rounded-full font-semibold text-lg transition-all hover:bg-white/10">
                     <i class="fas fa-envelope mr-2"></i>Contactează-mă
                 </a>
             </div>
@@ -1024,7 +1045,7 @@
         }
 
         // ===== MAGNETIC BUTTONS =====
-        document.querySelectorAll('.magnetic-btn').forEach(btn => {
+        document.querySelectorAll('.magnetic-btn, .magnetic-btn-secondary').forEach(btn => {
             btn.addEventListener('mousemove', (e) => {
                 const rect = btn.getBoundingClientRect();
                 const x = e.clientX - rect.left - rect.width / 2;
