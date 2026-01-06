@@ -16,6 +16,13 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <!-- GSAP + ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <!-- Lenis Smooth Scroll -->
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -50,15 +57,177 @@
     </script>
 
     <style>
+        /* ===== CSS VARIABLES FOR THEMING ===== */
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #121212;
+            --bg-tertiary: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --accent: #6366f1;
+            --accent-hover: #818cf8;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f3f4f6;
+            --bg-tertiary: #e5e7eb;
+            --text-primary: #111827;
+            --text-secondary: #6b7280;
+        }
+
         html {
-            scroll-behavior: smooth;
+            scroll-behavior: auto; /* Lenis handles smooth scroll */
+        }
+
+        html.lenis, html.lenis body {
+            height: auto;
         }
 
         body {
             font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Custom scrollbar */
+        /* ===== SCROLL PROGRESS INDICATOR ===== */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+            z-index: 9999;
+            transition: width 0.1s ease-out;
+        }
+
+        /* ===== THEME TOGGLE ===== */
+        .theme-toggle {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            background: var(--accent);
+        }
+
+        .theme-toggle i {
+            font-size: 20px;
+            color: var(--text-primary);
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle:hover i {
+            transform: rotate(180deg);
+        }
+
+        /* ===== BLUR TO SHARP LAZY LOADING ===== */
+        .img-blur-load {
+            filter: blur(20px);
+            transform: scale(1.1);
+            transition: filter 0.5s ease, transform 0.5s ease;
+        }
+
+        .img-blur-load.loaded {
+            filter: blur(0);
+            transform: scale(1);
+        }
+
+        /* ===== SKELETON LOADING ===== */
+        .skeleton {
+            background: linear-gradient(90deg, var(--bg-tertiary) 25%, var(--bg-secondary) 50%, var(--bg-tertiary) 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+        }
+
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* ===== PRELOADER ===== */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .preloader-logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
+
+        .preloader-bar {
+            width: 200px;
+            height: 3px;
+            background: #1a1a1a;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .preloader-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #6366f1, #818cf8);
+            width: 0%;
+            border-radius: 3px;
+            animation: loading 1.5s ease-in-out forwards;
+        }
+
+        @keyframes loading {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        /* ===== SUBTLE CURSOR GLOW ===== */
+        .cursor-glow {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            opacity: 0.6;
+        }
+
+        @media (max-width: 768px) {
+            .cursor-glow { display: none; }
+        }
+
+        /* ===== CUSTOM SCROLLBAR ===== */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -68,56 +237,148 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #3a3a3a;
+            background: linear-gradient(180deg, #6366f1, #818cf8);
             border-radius: 4px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: #4a4a4a;
+            background: linear-gradient(180deg, #818cf8, #a5b4fc);
         }
 
-        /* Hero parallax effect */
+        /* ===== HERO SECTION ===== */
         .hero-bg {
             background-attachment: fixed;
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
+            position: relative;
         }
 
-        /* Image hover effects */
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.4) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== MAGNETIC BUTTONS ===== */
+        .magnetic-btn {
+            position: relative;
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .magnetic-btn::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            background: linear-gradient(135deg, #6366f1, #818cf8, #6366f1);
+            background-size: 200% 200%;
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+            animation: gradient-shift 3s ease infinite;
+        }
+
+        .magnetic-btn:hover::before {
+            opacity: 1;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Secondary magnetic button - white glow instead of blue */
+        .magnetic-btn-secondary {
+            position: relative;
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .magnetic-btn-secondary::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+
+        .magnetic-btn-secondary:hover::before {
+            opacity: 1;
+        }
+
+        /* ===== PORTFOLIO ITEMS ===== */
         .portfolio-item {
             overflow: hidden;
+            transform-style: preserve-3d;
+            perspective: 1000px;
         }
 
         .portfolio-item img {
-            transition: transform 0.5s ease, filter 0.3s ease;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.3s ease;
         }
 
         .portfolio-item:hover img {
-            transform: scale(1.1);
-            filter: brightness(0.8);
+            transform: scale(1.1) rotateX(2deg) rotateY(2deg);
+            filter: brightness(0.7);
         }
 
         .portfolio-item .overlay {
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform: translateY(20px);
         }
 
         .portfolio-item:hover .overlay {
             opacity: 1;
+            transform: translateY(0);
         }
 
-        /* Service card hover */
+        /* ===== SERVICE CARDS ===== */
         .service-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+            transition: none;
+        }
+
+        .service-card:hover::before {
+            left: 100%;
+            transition: left 0.5s ease;
         }
 
         .service-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(99, 102, 241, 0.15), 0 10px 20px rgba(0, 0, 0, 0.3);
         }
 
-        /* Lightbox styles */
+        .service-card .icon-wrapper {
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .service-card:hover .icon-wrapper {
+            transform: scale(1.1) rotateY(10deg);
+        }
+
+        /* ===== LIGHTBOX ===== */
         .lightbox {
             display: none;
             position: fixed;
@@ -125,41 +386,78 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.98);
             z-index: 1000;
             justify-content: center;
             align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .lightbox.active {
             display: flex;
+            opacity: 1;
         }
 
         .lightbox img {
             max-width: 90%;
-            max-height: 90%;
+            max-height: 85%;
             object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+            animation: lightbox-zoom 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        /* Loading animation */
-        .fade-in {
-            animation: fadeIn 0.8s ease forwards;
+        @keyframes lightbox-zoom {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .lightbox-btn {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
         }
 
-        /* Nav link underline effect */
+        .lightbox-btn:hover {
+            background: rgba(99, 102, 241, 0.3);
+            border-color: #6366f1;
+            transform: scale(1.1);
+        }
+
+        /* ===== TEXT ANIMATIONS ===== */
+        .reveal-text {
+            overflow: hidden;
+        }
+
+        .reveal-text span {
+            display: inline-block;
+            transform: translateY(100%);
+            opacity: 0;
+        }
+
+        /* ===== FLOATING ANIMATION ===== */
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+
+        /* ===== NAV LINK EFFECTS ===== */
         .nav-link {
             position: relative;
+            overflow: hidden;
         }
 
         .nav-link::after {
@@ -169,16 +467,106 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: #6366f1;
-            transition: width 0.3s ease;
+            background: linear-gradient(90deg, #6366f1, #818cf8);
+            transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         .nav-link:hover::after {
             width: 100%;
         }
+
+        /* ===== COUNTER ANIMATION ===== */
+        .counter {
+            display: inline-block;
+        }
+
+        /* ===== SECTION TRANSITIONS ===== */
+        .section-reveal {
+            opacity: 0;
+            transform: translateY(60px);
+        }
+
+        /* ===== GLOWING EFFECTS ===== */
+        .glow {
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.3), 0 0 40px rgba(99, 102, 241, 0.1);
+        }
+
+        /* ===== SMOOTH IMAGE LOADING ===== */
+        .img-loading {
+            background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* ===== SCROLL INDICATOR ===== */
+        .scroll-indicator {
+            animation: bounce-glow 2s infinite;
+        }
+
+        @keyframes bounce-glow {
+            0%, 100% {
+                transform: translateY(0);
+                filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.5));
+            }
+            50% {
+                transform: translateY(10px);
+                filter: drop-shadow(0 0 15px rgba(99, 102, 241, 0.8));
+            }
+        }
+
+        /* ===== PAGE TRANSITION ===== */
+        .page-transition {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            z-index: 9997;
+            transform: translateY(100%);
+            pointer-events: none;
+        }
+
+        /* ===== REDUCED MOTION ===== */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
 </head>
 <body class="bg-dark-900 text-white">
+
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">
+        <i class="fas fa-sun" id="theme-icon"></i>
+    </button>
+
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-logo">
+            <span class="text-white">Bobos</span><span class="text-accent-primary">shots</span>
+        </div>
+        <div class="preloader-bar">
+            <div class="preloader-progress"></div>
+        </div>
+    </div>
+
+    <!-- Subtle Cursor Glow -->
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <!-- Page Transition Overlay -->
+    <div class="page-transition" id="page-transition"></div>
 
     <!-- Navigation -->
     <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
@@ -221,7 +609,7 @@
 
     <!-- Hero Section -->
     <section id="acasa" class="relative min-h-screen flex items-center justify-center hero-bg" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('hero-background.jpg');">
-        <div class="text-center px-4 fade-in">
+        <div class="hero-content text-center px-4">
             <!-- Location Badge -->
             <div class="inline-flex items-center bg-dark-700/80 backdrop-blur-sm px-4 py-2 rounded-full mb-8">
                 <span class="text-xl mr-2">📍</span>
@@ -241,16 +629,16 @@
 
             <!-- CTA Buttons -->
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-                <a href="#portofoliu" class="bg-accent-primary hover:bg-accent-hover text-white px-8 py-4 rounded-full font-semibold text-lg transition-all hover:scale-105 shadow-lg shadow-accent-primary/25">
+                <a href="#portofoliu" class="magnetic-btn bg-accent-primary hover:bg-accent-hover text-white px-8 py-4 rounded-full font-semibold text-lg transition-all shadow-lg shadow-accent-primary/25 glow">
                     <i class="fas fa-images mr-2"></i>Vezi Portofoliul
                 </a>
-                <a href="#contact" class="border-2 border-white/20 hover:border-white/40 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all hover:bg-white/5">
+                <a href="#contact" class="magnetic-btn-secondary border-2 border-white/30 hover:border-white text-white px-8 py-4 rounded-full font-semibold text-lg transition-all hover:bg-white/10">
                     <i class="fas fa-envelope mr-2"></i>Contactează-mă
                 </a>
             </div>
 
             <!-- Scroll Indicator -->
-            <div class="animate-bounce">
+            <div class="scroll-indicator">
                 <a href="#portofoliu" class="text-white/50 hover:text-white transition-colors">
                     <i class="fas fa-chevron-down text-2xl"></i>
                 </a>
@@ -428,42 +816,42 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- Service 1 - Portrete -->
                 <a href="galerie-portrete.html" class="service-card bg-dark-700 rounded-3xl p-8 text-center block cursor-pointer">
-                    <div class="w-20 h-20 bg-accent-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                    <div class="icon-wrapper w-20 h-20 bg-accent-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
                         <i class="fas fa-user text-accent-primary text-3xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-4">Portrete</h3>
-                    <p class="text-gray-400 leading-relaxed">Fotografii de portret care surprind esența și personalitatea fiecărei persoane.</p>
-                    <span class="inline-block mt-4 text-accent-primary text-sm font-medium">Vezi Galeria <i class="fas fa-arrow-right ml-1"></i></span>
+                    <p class="text-gray-400 leading-relaxed">Surprind esența ta autentică în fiecare cadru. Portrete care spun povești.</p>
+                    <span class="inline-block mt-4 text-accent-primary text-sm font-medium">Explorează <i class="fas fa-arrow-right ml-1 transition-transform group-hover:translate-x-1"></i></span>
                 </a>
 
                 <!-- Service 2 - Evenimente -->
                 <a href="galerie-evenimente.html" class="service-card bg-dark-700 rounded-3xl p-8 text-center block cursor-pointer">
-                    <div class="w-20 h-20 bg-accent-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                    <div class="icon-wrapper w-20 h-20 bg-accent-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
                         <i class="fas fa-calendar-check text-accent-primary text-3xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-4">Evenimente</h3>
-                    <p class="text-gray-400 leading-relaxed">Concerte, evenimente private și corporate imortalizate profesional.</p>
-                    <span class="inline-block mt-4 text-accent-primary text-sm font-medium">Vezi Galeria <i class="fas fa-arrow-right ml-1"></i></span>
+                    <p class="text-gray-400 leading-relaxed">Fiecare moment contează. Imortalizez energia și emoția evenimentelor tale.</p>
+                    <span class="inline-block mt-4 text-accent-primary text-sm font-medium">Descoperă <i class="fas fa-arrow-right ml-1 transition-transform group-hover:translate-x-1"></i></span>
                 </a>
 
                 <!-- Service 3 - Produse -->
                 <a href="galerie-produse.html" class="service-card bg-dark-700 rounded-3xl p-8 text-center block cursor-pointer">
-                    <div class="w-20 h-20 bg-accent-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                    <div class="icon-wrapper w-20 h-20 bg-accent-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
                         <i class="fas fa-box-open text-accent-primary text-3xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-4">Produse & Imobiliare</h3>
-                    <p class="text-gray-400 leading-relaxed">Fotografii comerciale de produse și imobiliare pentru apartamente, clădiri și proprietăți.</p>
-                    <span class="inline-block mt-4 text-accent-primary text-sm font-medium">Vezi Galeria <i class="fas fa-arrow-right ml-1"></i></span>
+                    <p class="text-gray-400 leading-relaxed">Imagini care vând. Prezint produsele și spațiile tale în cea mai bună lumină.</p>
+                    <span class="inline-block mt-4 text-accent-primary text-sm font-medium">Vezi proiecte <i class="fas fa-arrow-right ml-1 transition-transform group-hover:translate-x-1"></i></span>
                 </a>
 
                 <!-- Service 4 - Travel -->
                 <a href="galerie-travel.html" class="service-card bg-dark-700 rounded-3xl p-8 text-center block cursor-pointer">
-                    <div class="w-20 h-20 bg-accent-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                    <div class="icon-wrapper w-20 h-20 bg-accent-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
                         <i class="fas fa-plane text-accent-primary text-3xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-4">Travel</h3>
-                    <p class="text-gray-400 leading-relaxed">Fotografie de călătorie și peisaje care inspiră și captivează.</p>
-                    <span class="inline-block mt-4 text-accent-primary text-sm font-medium">Vezi Galeria <i class="fas fa-arrow-right ml-1"></i></span>
+                    <p class="text-gray-400 leading-relaxed">Peisaje care te transportă. Aventuri vizuale din locuri extraordinare.</p>
+                    <span class="inline-block mt-4 text-accent-primary text-sm font-medium">Călătorește <i class="fas fa-arrow-right ml-1 transition-transform group-hover:translate-x-1"></i></span>
                 </a>
             </div>
         </div>
@@ -497,7 +885,7 @@
                     <!-- Stats -->
                     <div class="grid grid-cols-3 gap-8 mb-8">
                         <div>
-                            <div class="text-4xl font-bold text-accent-primary">100+</div>
+                            <div class="text-4xl font-bold text-accent-primary">70+</div>
                             <div class="text-gray-400 text-sm">Proiecte</div>
                         </div>
                         <div>
@@ -524,7 +912,7 @@
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <!-- Section Header -->
             <span class="text-accent-primary font-medium tracking-wider uppercase text-sm">Contact</span>
-            <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-6">Să Păstrăm Legătura</h2>
+            <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-6">Hai să Vorbim</h2>
             <p class="text-gray-400 text-lg mb-12">
                 📩 DM pentru colaborări sau întrebări despre serviciile mele.
             </p>
@@ -580,21 +968,289 @@
 
     <!-- Lightbox Modal -->
     <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-        <button class="absolute top-6 right-6 text-white text-3xl hover:text-gray-300 transition-colors z-10" onclick="closeLightbox()">
+        <button class="lightbox-btn absolute top-6 right-6 text-white text-xl z-10" onclick="closeLightbox()">
             <i class="fas fa-times"></i>
         </button>
-        <button id="lightbox-prev" class="absolute left-6 text-white text-3xl hover:text-gray-300 transition-colors z-10" onclick="event.stopPropagation(); navigateLightbox(-1)">
+        <button id="lightbox-prev" class="lightbox-btn absolute left-6 top-1/2 -translate-y-1/2 text-white text-xl z-10" onclick="event.stopPropagation(); navigateLightbox(-1)">
             <i class="fas fa-chevron-left"></i>
         </button>
-        <img id="lightbox-img" src="" alt="Lightbox image" class="rounded-lg">
-        <button id="lightbox-next" class="absolute right-6 text-white text-3xl hover:text-gray-300 transition-colors z-10" onclick="event.stopPropagation(); navigateLightbox(1)">
+        <img id="lightbox-img" src="" alt="Lightbox image">
+        <button id="lightbox-next" class="lightbox-btn absolute right-6 top-1/2 -translate-y-1/2 text-white text-xl z-10" onclick="event.stopPropagation(); navigateLightbox(1)">
             <i class="fas fa-chevron-right"></i>
         </button>
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-dark-800/80 backdrop-blur-sm px-4 py-2 rounded-full text-sm text-gray-300">
+            <span id="lightbox-counter">1 / 12</span>
+        </div>
     </div>
 
     <!-- JavaScript -->
     <script>
-        // Mobile Menu Toggle
+        // ===== REGISTER GSAP PLUGINS =====
+        gsap.registerPlugin(ScrollTrigger);
+
+        // ===== LENIS SMOOTH SCROLL =====
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            orientation: 'vertical',
+            smoothWheel: true
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // Connect Lenis to GSAP ScrollTrigger
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+        });
+        gsap.ticker.lagSmoothing(0);
+
+        // ===== SCROLL PROGRESS INDICATOR =====
+        const scrollProgress = document.getElementById('scroll-progress');
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            scrollProgress.style.width = scrollPercent + '%';
+        });
+
+        // ===== THEME TOGGLE =====
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+
+        // Apply saved theme on load
+        if (savedTheme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'light') {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // ===== BLUR TO SHARP LAZY LOADING =====
+        function initBlurLoad() {
+            const images = document.querySelectorAll('.portfolio-item img');
+            images.forEach(img => {
+                img.classList.add('img-blur-load');
+                if (img.complete) {
+                    img.classList.add('loaded');
+                } else {
+                    img.addEventListener('load', () => {
+                        img.classList.add('loaded');
+                    });
+                }
+            });
+        }
+
+        // ===== PRELOADER =====
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').classList.add('hidden');
+                initAnimations();
+                initBlurLoad();
+            }, 1800);
+        });
+
+        // ===== SUBTLE CURSOR GLOW =====
+        const cursorGlow = document.getElementById('cursor-glow');
+
+        if (window.innerWidth > 768 && cursorGlow) {
+            document.addEventListener('mousemove', (e) => {
+                gsap.to(cursorGlow, { x: e.clientX, y: e.clientY, duration: 0.5, ease: 'power2.out' });
+            });
+        }
+
+        // ===== INITIALIZE ALL ANIMATIONS =====
+        function initAnimations() {
+            // Hero animations
+            const heroTl = gsap.timeline();
+            heroTl
+                .from('.hero-content > *', {
+                    y: 60,
+                    opacity: 0,
+                    duration: 1,
+                    stagger: 0.15,
+                    ease: 'power3.out'
+                });
+
+            // Parallax effect on hero
+            gsap.to('.hero-bg', {
+                backgroundPositionY: '30%',
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '.hero-bg',
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: true
+                }
+            });
+
+            // Section reveals
+            gsap.utils.toArray('section').forEach(section => {
+                const header = section.querySelector('.text-center.mb-16, .text-center.mb-12');
+                if (header) {
+                    gsap.from(header.children, {
+                        y: 40,
+                        opacity: 0,
+                        duration: 0.8,
+                        stagger: 0.1,
+                        ease: 'power2.out',
+                        scrollTrigger: {
+                            trigger: section,
+                            start: 'top 80%',
+                            toggleActions: 'play none none none'
+                        }
+                    });
+                }
+            });
+
+            // Portfolio items stagger animation
+            gsap.from('.portfolio-item', {
+                y: 60,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: '#portofoliu .grid',
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                }
+            });
+
+            // Service cards stagger - simple slide up animation
+            gsap.from('.service-card', {
+                y: 40,
+                duration: 0.6,
+                stagger: 0.1,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: '#servicii .grid',
+                    start: 'top 85%'
+                }
+            });
+
+            // About section animations
+            gsap.from('#despre .relative', {
+                x: -60,
+                opacity: 0,
+                duration: 1,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: '#despre',
+                    start: 'top 70%',
+                    toggleActions: 'play none none none'
+                }
+            });
+
+            gsap.from('#despre > div > div:last-child > *', {
+                x: 60,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: '#despre',
+                    start: 'top 70%',
+                    toggleActions: 'play none none none'
+                }
+            });
+
+            // Counter animation
+            const counters = document.querySelectorAll('.text-4xl.font-bold.text-accent-primary');
+            counters.forEach(counter => {
+                const target = parseInt(counter.textContent);
+                const hasPlus = counter.textContent.includes('+');
+
+                ScrollTrigger.create({
+                    trigger: counter,
+                    start: 'top 85%',
+                    onEnter: () => {
+                        gsap.fromTo(counter,
+                            { innerHTML: 0 },
+                            {
+                                innerHTML: target,
+                                duration: 2,
+                                ease: 'power2.out',
+                                snap: { innerHTML: 1 },
+                                onUpdate: function() {
+                                    counter.innerHTML = Math.floor(counter.innerHTML) + (hasPlus ? '+' : '');
+                                }
+                            }
+                        );
+                    },
+                    once: true
+                });
+            });
+
+            // Contact section
+            gsap.from('#contact > div > *', {
+                y: 40,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: '#contact',
+                    start: 'top 75%',
+                    toggleActions: 'play none none none'
+                }
+            });
+
+            // Floating decorative elements
+            gsap.to('.float', {
+                y: -15,
+                duration: 2,
+                repeat: -1,
+                yoyo: true,
+                ease: 'sine.inOut'
+            });
+        }
+
+        // ===== MAGNETIC BUTTONS =====
+        document.querySelectorAll('.magnetic-btn, .magnetic-btn-secondary').forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+
+                gsap.to(btn, {
+                    x: x * 0.3,
+                    y: y * 0.3,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                gsap.to(btn, {
+                    x: 0,
+                    y: 0,
+                    duration: 0.5,
+                    ease: 'elastic.out(1, 0.5)'
+                });
+            });
+        });
+
+        // ===== MOBILE MENU =====
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
 
@@ -605,7 +1261,6 @@
             icon.classList.toggle('fa-times');
         });
 
-        // Close mobile menu when clicking a link
         document.querySelectorAll('#mobile-menu a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.add('hidden');
@@ -615,24 +1270,26 @@
             });
         });
 
-        // Navbar scroll effect
+        // ===== NAVBAR SCROLL EFFECT =====
         const navbar = document.getElementById('navbar');
 
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('bg-dark-900/95', 'backdrop-blur-lg', 'shadow-lg');
-            } else {
-                navbar.classList.remove('bg-dark-900/95', 'backdrop-blur-lg', 'shadow-lg');
+        ScrollTrigger.create({
+            start: 'top -50',
+            onUpdate: (self) => {
+                if (self.scroll() > 50) {
+                    navbar.classList.add('bg-dark-900/95', 'backdrop-blur-lg', 'shadow-lg');
+                } else {
+                    navbar.classList.remove('bg-dark-900/95', 'backdrop-blur-lg', 'shadow-lg');
+                }
             }
         });
 
-        // Portfolio Filter
+        // ===== PORTFOLIO FILTER =====
         const filterBtns = document.querySelectorAll('.filter-btn');
         const portfolioItems = document.querySelectorAll('.portfolio-item');
 
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                // Update active button
                 filterBtns.forEach(b => {
                     b.classList.remove('bg-accent-primary', 'text-white', 'active');
                     b.classList.add('bg-dark-700', 'text-gray-300');
@@ -640,27 +1297,46 @@
                 btn.classList.add('bg-accent-primary', 'text-white', 'active');
                 btn.classList.remove('bg-dark-700', 'text-gray-300');
 
-                // Filter items
                 const filter = btn.dataset.filter;
-                portfolioItems.forEach(item => {
+
+                portfolioItems.forEach((item, index) => {
                     if (filter === 'all' || item.dataset.category === filter) {
-                        item.style.display = 'block';
-                        item.style.animation = 'fadeIn 0.5s ease forwards';
+                        gsap.to(item, {
+                            opacity: 1,
+                            scale: 1,
+                            duration: 0.4,
+                            delay: index * 0.05,
+                            display: 'block',
+                            ease: 'power2.out'
+                        });
                     } else {
-                        item.style.display = 'none';
+                        gsap.to(item, {
+                            opacity: 0,
+                            scale: 0.9,
+                            duration: 0.3,
+                            display: 'none',
+                            ease: 'power2.in'
+                        });
                     }
                 });
             });
         });
 
-        // Lightbox functionality
+        // ===== LIGHTBOX =====
         let currentImageIndex = 0;
         let visibleImages = [];
+        let touchStartX = 0;
+        let touchEndX = 0;
 
         function updateVisibleImages() {
             visibleImages = Array.from(document.querySelectorAll('.portfolio-item')).filter(
-                item => item.style.display !== 'none'
+                item => getComputedStyle(item).display !== 'none'
             );
+        }
+
+        function updateCounter() {
+            document.getElementById('lightbox-counter').textContent =
+                `${currentImageIndex + 1} / ${visibleImages.length}`;
         }
 
         function openLightbox(element) {
@@ -669,16 +1345,32 @@
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
 
-            // Use full-size image from data attribute for high quality in lightbox
             const fullsizeSrc = element.dataset.fullsize;
             lightboxImg.src = fullsizeSrc;
             lightbox.classList.add('active');
             document.body.style.overflow = 'hidden';
+            updateCounter();
+
+            gsap.fromTo(lightboxImg,
+                { scale: 0.8, opacity: 0 },
+                { scale: 1, opacity: 1, duration: 0.4, ease: 'power2.out' }
+            );
         }
 
         function closeLightbox() {
-            document.getElementById('lightbox').classList.remove('active');
-            document.body.style.overflow = '';
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+
+            gsap.to(lightboxImg, {
+                scale: 0.8,
+                opacity: 0,
+                duration: 0.3,
+                ease: 'power2.in',
+                onComplete: () => {
+                    lightbox.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
         }
 
         function navigateLightbox(direction) {
@@ -686,12 +1378,49 @@
             if (currentImageIndex < 0) currentImageIndex = visibleImages.length - 1;
             if (currentImageIndex >= visibleImages.length) currentImageIndex = 0;
 
-            // Use full-size image from data attribute
+            const lightboxImg = document.getElementById('lightbox-img');
             const fullsizeSrc = visibleImages[currentImageIndex].dataset.fullsize;
-            document.getElementById('lightbox-img').src = fullsizeSrc;
+
+            gsap.to(lightboxImg, {
+                opacity: 0,
+                x: direction * -50,
+                duration: 0.2,
+                ease: 'power2.in',
+                onComplete: () => {
+                    lightboxImg.src = fullsizeSrc;
+                    gsap.fromTo(lightboxImg,
+                        { opacity: 0, x: direction * 50 },
+                        { opacity: 1, x: 0, duration: 0.3, ease: 'power2.out' }
+                    );
+                    updateCounter();
+                }
+            });
         }
 
-        // Keyboard navigation for lightbox
+        // Touch swipe for lightbox
+        document.getElementById('lightbox').addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.getElementById('lightbox').addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    navigateLightbox(1); // Swipe left - next
+                } else {
+                    navigateLightbox(-1); // Swipe right - prev
+                }
+            }
+        }
+
+        // Keyboard navigation
         document.addEventListener('keydown', (e) => {
             if (document.getElementById('lightbox').classList.contains('active')) {
                 if (e.key === 'Escape') closeLightbox();
@@ -700,25 +1429,71 @@
             }
         });
 
-        // Smooth reveal animation on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+        // ===== PAGE TRANSITIONS =====
+        document.querySelectorAll('a[href^="galerie-"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const href = link.getAttribute('href');
+                const transition = document.getElementById('page-transition');
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
-                    observer.unobserve(entry.target);
+                gsap.to(transition, {
+                    y: 0,
+                    duration: 0.5,
+                    ease: 'power2.inOut',
+                    onComplete: () => {
+                        window.location.href = href;
+                    }
+                });
+            });
+        });
+
+        // ===== SMOOTH SCROLL =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    gsap.to(window, {
+                        duration: 1,
+                        scrollTo: { y: target, offsetY: 80 },
+                        ease: 'power2.inOut'
+                    });
                 }
             });
-        }, observerOptions);
+        });
 
-        document.querySelectorAll('section > div').forEach(el => {
-            el.style.opacity = '0';
-            observer.observe(el);
+        // ===== IMAGE TILT EFFECT =====
+        document.querySelectorAll('.portfolio-item').forEach(item => {
+            item.addEventListener('mousemove', (e) => {
+                const rect = item.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+                gsap.to(item.querySelector('img'), {
+                    rotateY: x * 10,
+                    rotateX: -y * 10,
+                    duration: 0.5,
+                    ease: 'power2.out'
+                });
+            });
+
+            item.addEventListener('mouseleave', () => {
+                gsap.to(item.querySelector('img'), {
+                    rotateY: 0,
+                    rotateX: 0,
+                    duration: 0.5,
+                    ease: 'power2.out'
+                });
+            });
+        });
+
+        // ===== REFRESH SCROLL TRIGGER ON RESIZE =====
+        window.addEventListener('resize', () => {
+            ScrollTrigger.refresh();
         });
     </script>
+
+    <!-- GSAP ScrollTo Plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
 </body>
 </html>
