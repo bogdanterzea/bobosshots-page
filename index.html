@@ -20,6 +20,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
+    <!-- Lenis Smooth Scroll -->
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -54,13 +57,109 @@
     </script>
 
     <style>
+        /* ===== CSS VARIABLES FOR THEMING ===== */
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #121212;
+            --bg-tertiary: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --accent: #6366f1;
+            --accent-hover: #818cf8;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f3f4f6;
+            --bg-tertiary: #e5e7eb;
+            --text-primary: #111827;
+            --text-secondary: #6b7280;
+        }
+
         html {
-            scroll-behavior: smooth;
+            scroll-behavior: auto; /* Lenis handles smooth scroll */
+        }
+
+        html.lenis, html.lenis body {
+            height: auto;
         }
 
         body {
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* ===== SCROLL PROGRESS INDICATOR ===== */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+            z-index: 9999;
+            transition: width 0.1s ease-out;
+        }
+
+        /* ===== THEME TOGGLE ===== */
+        .theme-toggle {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            background: var(--accent);
+        }
+
+        .theme-toggle i {
+            font-size: 20px;
+            color: var(--text-primary);
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle:hover i {
+            transform: rotate(180deg);
+        }
+
+        /* ===== BLUR TO SHARP LAZY LOADING ===== */
+        .img-blur-load {
+            filter: blur(20px);
+            transform: scale(1.1);
+            transition: filter 0.5s ease, transform 0.5s ease;
+        }
+
+        .img-blur-load.loaded {
+            filter: blur(0);
+            transform: scale(1);
+        }
+
+        /* ===== SKELETON LOADING ===== */
+        .skeleton {
+            background: linear-gradient(90deg, var(--bg-tertiary) 25%, var(--bg-secondary) 50%, var(--bg-tertiary) 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+        }
+
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
 
         /* ===== PRELOADER ===== */
@@ -445,6 +544,14 @@
 </head>
 <body class="bg-dark-900 text-white">
 
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">
+        <i class="fas fa-sun" id="theme-icon"></i>
+    </button>
+
     <!-- Preloader -->
     <div class="preloader" id="preloader">
         <div class="preloader-logo">
@@ -713,8 +820,8 @@
                         <i class="fas fa-user text-accent-primary text-3xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-4">Portrete</h3>
-                    <p class="text-gray-400 leading-relaxed">Fotografii de portret care surprind esența și personalitatea fiecărei persoane.</p>
-                    <span class="inline-block mt-4 text-accent-primary text-sm font-medium">Vezi Galeria <i class="fas fa-arrow-right ml-1 transition-transform group-hover:translate-x-1"></i></span>
+                    <p class="text-gray-400 leading-relaxed">Surprind esența ta autentică în fiecare cadru. Portrete care spun povești.</p>
+                    <span class="inline-block mt-4 text-accent-primary text-sm font-medium">Explorează <i class="fas fa-arrow-right ml-1 transition-transform group-hover:translate-x-1"></i></span>
                 </a>
 
                 <!-- Service 2 - Evenimente -->
@@ -723,8 +830,8 @@
                         <i class="fas fa-calendar-check text-accent-primary text-3xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-4">Evenimente</h3>
-                    <p class="text-gray-400 leading-relaxed">Concerte, evenimente private și corporate imortalizate profesional.</p>
-                    <span class="inline-block mt-4 text-accent-primary text-sm font-medium">Vezi Galeria <i class="fas fa-arrow-right ml-1 transition-transform group-hover:translate-x-1"></i></span>
+                    <p class="text-gray-400 leading-relaxed">Fiecare moment contează. Imortalizez energia și emoția evenimentelor tale.</p>
+                    <span class="inline-block mt-4 text-accent-primary text-sm font-medium">Descoperă <i class="fas fa-arrow-right ml-1 transition-transform group-hover:translate-x-1"></i></span>
                 </a>
 
                 <!-- Service 3 - Produse -->
@@ -733,8 +840,8 @@
                         <i class="fas fa-box-open text-accent-primary text-3xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-4">Produse & Imobiliare</h3>
-                    <p class="text-gray-400 leading-relaxed">Fotografii comerciale de produse și imobiliare pentru apartamente, clădiri și proprietăți.</p>
-                    <span class="inline-block mt-4 text-accent-primary text-sm font-medium">Vezi Galeria <i class="fas fa-arrow-right ml-1 transition-transform group-hover:translate-x-1"></i></span>
+                    <p class="text-gray-400 leading-relaxed">Imagini care vând. Prezint produsele și spațiile tale în cea mai bună lumină.</p>
+                    <span class="inline-block mt-4 text-accent-primary text-sm font-medium">Vezi proiecte <i class="fas fa-arrow-right ml-1 transition-transform group-hover:translate-x-1"></i></span>
                 </a>
 
                 <!-- Service 4 - Travel -->
@@ -743,8 +850,8 @@
                         <i class="fas fa-plane text-accent-primary text-3xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-4">Travel</h3>
-                    <p class="text-gray-400 leading-relaxed">Fotografie de călătorie și peisaje care inspiră și captivează.</p>
-                    <span class="inline-block mt-4 text-accent-primary text-sm font-medium">Vezi Galeria <i class="fas fa-arrow-right ml-1 transition-transform group-hover:translate-x-1"></i></span>
+                    <p class="text-gray-400 leading-relaxed">Peisaje care te transportă. Aventuri vizuale din locuri extraordinare.</p>
+                    <span class="inline-block mt-4 text-accent-primary text-sm font-medium">Călătorește <i class="fas fa-arrow-right ml-1 transition-transform group-hover:translate-x-1"></i></span>
                 </a>
             </div>
         </div>
@@ -778,7 +885,7 @@
                     <!-- Stats -->
                     <div class="grid grid-cols-3 gap-8 mb-8">
                         <div>
-                            <div class="text-4xl font-bold text-accent-primary">100+</div>
+                            <div class="text-4xl font-bold text-accent-primary">70+</div>
                             <div class="text-gray-400 text-sm">Proiecte</div>
                         </div>
                         <div>
@@ -805,7 +912,7 @@
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <!-- Section Header -->
             <span class="text-accent-primary font-medium tracking-wider uppercase text-sm">Contact</span>
-            <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-6">Să Păstrăm Legătura</h2>
+            <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-6">Hai să Vorbim</h2>
             <p class="text-gray-400 text-lg mb-12">
                 📩 DM pentru colaborări sau întrebări despre serviciile mele.
             </p>
@@ -881,11 +988,84 @@
         // ===== REGISTER GSAP PLUGINS =====
         gsap.registerPlugin(ScrollTrigger);
 
+        // ===== LENIS SMOOTH SCROLL =====
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            orientation: 'vertical',
+            smoothWheel: true
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // Connect Lenis to GSAP ScrollTrigger
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+        });
+        gsap.ticker.lagSmoothing(0);
+
+        // ===== SCROLL PROGRESS INDICATOR =====
+        const scrollProgress = document.getElementById('scroll-progress');
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            scrollProgress.style.width = scrollPercent + '%';
+        });
+
+        // ===== THEME TOGGLE =====
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+
+        // Apply saved theme on load
+        if (savedTheme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'light') {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // ===== BLUR TO SHARP LAZY LOADING =====
+        function initBlurLoad() {
+            const images = document.querySelectorAll('.portfolio-item img');
+            images.forEach(img => {
+                img.classList.add('img-blur-load');
+                if (img.complete) {
+                    img.classList.add('loaded');
+                } else {
+                    img.addEventListener('load', () => {
+                        img.classList.add('loaded');
+                    });
+                }
+            });
+        }
+
         // ===== PRELOADER =====
         window.addEventListener('load', () => {
             setTimeout(() => {
                 document.getElementById('preloader').classList.add('hidden');
                 initAnimations();
+                initBlurLoad();
             }, 1800);
         });
 
