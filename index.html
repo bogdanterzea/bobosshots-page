@@ -68,14 +68,6 @@
             --accent-hover: #818cf8;
         }
 
-        [data-theme="light"] {
-            --bg-primary: #ffffff;
-            --bg-secondary: #f3f4f6;
-            --bg-tertiary: #e5e7eb;
-            --text-primary: #111827;
-            --text-secondary: #6b7280;
-        }
-
         html {
             scroll-behavior: auto; /* Lenis handles smooth scroll */
         }
@@ -89,7 +81,6 @@
             overflow-x: hidden;
             background-color: var(--bg-primary);
             color: var(--text-primary);
-            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         /* ===== SCROLL PROGRESS INDICATOR ===== */
@@ -102,40 +93,6 @@
             background: linear-gradient(90deg, var(--accent), var(--accent-hover));
             z-index: 9999;
             transition: width 0.1s ease-out;
-        }
-
-        /* ===== THEME TOGGLE ===== */
-        .theme-toggle {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--bg-tertiary);
-            border: 1px solid rgba(255,255,255,0.1);
-            cursor: pointer;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        .theme-toggle:hover {
-            transform: scale(1.1);
-            background: var(--accent);
-        }
-
-        .theme-toggle i {
-            font-size: 20px;
-            color: var(--text-primary);
-            transition: transform 0.3s ease;
-        }
-
-        .theme-toggle:hover i {
-            transform: rotate(180deg);
         }
 
         /* ===== BLUR TO SHARP LAZY LOADING ===== */
@@ -546,11 +503,6 @@
 
     <!-- Scroll Progress Indicator -->
     <div class="scroll-progress" id="scroll-progress"></div>
-
-    <!-- Theme Toggle Button -->
-    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">
-        <i class="fas fa-sun" id="theme-icon"></i>
-    </button>
 
     <!-- Preloader -->
     <div class="preloader" id="preloader">
@@ -1018,33 +970,6 @@
             const docHeight = document.documentElement.scrollHeight - window.innerHeight;
             const scrollPercent = (scrollTop / docHeight) * 100;
             scrollProgress.style.width = scrollPercent + '%';
-        });
-
-        // ===== THEME TOGGLE =====
-        const themeToggle = document.getElementById('theme-toggle');
-        const themeIcon = document.getElementById('theme-icon');
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-
-        // Apply saved theme on load
-        if (savedTheme === 'light') {
-            document.documentElement.setAttribute('data-theme', 'light');
-            themeIcon.classList.remove('fa-sun');
-            themeIcon.classList.add('fa-moon');
-        }
-
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            if (currentTheme === 'light') {
-                document.documentElement.removeAttribute('data-theme');
-                localStorage.setItem('theme', 'dark');
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
-            } else {
-                document.documentElement.setAttribute('data-theme', 'light');
-                localStorage.setItem('theme', 'light');
-                themeIcon.classList.remove('fa-sun');
-                themeIcon.classList.add('fa-moon');
-            }
         });
 
         // ===== BLUR TO SHARP LAZY LOADING =====
