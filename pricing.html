@@ -144,6 +144,28 @@
             border-radius: 1rem;
             padding: 1.5rem;
         }
+
+        /* Navigation Pills */
+        .nav-pill {
+            padding: 0.625rem 1.25rem;
+            border-radius: 9999px;
+            font-weight: 500;
+            font-size: 0.875rem;
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .nav-pill:hover {
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--text-primary);
+        }
+        .nav-pill.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
     </style>
 </head>
 <body class="bg-dark-900 text-white min-h-screen">
@@ -204,8 +226,26 @@
         </div>
     </section>
 
+    <!-- Quick Navigation -->
+    <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-700 py-4 px-4" id="pricing-nav">
+        <div class="max-w-2xl mx-auto flex justify-center gap-2 sm:gap-4">
+            <button onclick="scrollToSection('foto')" class="nav-pill active" data-section="foto">
+                <i class="fas fa-camera mr-2"></i>Foto
+            </button>
+            <button onclick="scrollToSection('video')" class="nav-pill" data-section="video">
+                <i class="fas fa-video mr-2"></i>Video
+            </button>
+            <button onclick="scrollToSection('extra')" class="nav-pill" data-section="extra">
+                <i class="fas fa-plus-circle mr-2"></i>Add-ons
+            </button>
+        </div>
+    </nav>
+
+    <!-- Foto Sections Wrapper -->
+    <div id="foto">
+
     <!-- Portrete Section -->
-    <section class="pb-20 px-4 sm:px-6 lg:px-8" id="portrete">
+    <section class="py-20 px-4 sm:px-6 lg:px-8" id="portrete">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-12">
                 <span class="text-accent-primary font-medium tracking-wider uppercase text-sm">Ședințe Foto</span>
@@ -475,9 +515,12 @@
         </div>
     </section>
 
-    <!-- VIDEO SECTIONS -->
+    </div><!-- End Foto Wrapper -->
 
-    <!-- Video Portrete & Social Media Section -->
+    <!-- VIDEO SECTIONS -->
+    <div id="video">
+
+    <!-- Video & Social Media Section -->
     <section class="py-20 px-4 sm:px-6 lg:px-8" id="video-portrete">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-12">
@@ -656,6 +699,8 @@
         </div>
     </section>
 
+    </div><!-- End Video Wrapper -->
+
     <!-- Add-ons Section -->
     <section class="py-20 px-4 sm:px-6 lg:px-8" id="extra">
         <div class="max-w-5xl mx-auto">
@@ -759,6 +804,40 @@
             const scrollPercent = (scrollTop / docHeight) * 100;
             document.getElementById('scroll-progress').style.width = scrollPercent + '%';
         });
+
+        // Navigation scroll function
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                const navHeight = document.getElementById('pricing-nav').offsetHeight;
+                const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+                lenis.scrollTo(elementPosition - navHeight - 20, { duration: 1.2 });
+            }
+        }
+
+        // Update active nav pill on scroll
+        function updateActiveNav() {
+            const sections = ['foto', 'video', 'extra'];
+            const navHeight = document.getElementById('pricing-nav').offsetHeight;
+            const scrollPos = window.scrollY + navHeight + 100;
+
+            let currentSection = 'foto';
+            sections.forEach(sectionId => {
+                const section = document.getElementById(sectionId);
+                if (section && section.offsetTop <= scrollPos) {
+                    currentSection = sectionId;
+                }
+            });
+
+            document.querySelectorAll('.nav-pill').forEach(pill => {
+                pill.classList.remove('active');
+                if (pill.dataset.section === currentSection) {
+                    pill.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveNav);
 
         // Preloader
         window.addEventListener('load', () => {
