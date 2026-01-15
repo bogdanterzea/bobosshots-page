@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+    <!-- Homepage - Pagina Principala -->
+    <url>
+        <loc>https://bobosshots.com/</loc>
+        <lastmod>2025-01-15</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+        <image:image>
+            <image:loc>https://bobosshots.com/hero-background.jpg</image:loc>
+            <image:title>Bobosshots - Fotograf Profesionist Sibiu</image:title>
+            <image:caption>Hero background - Terzea Bogdan Photography</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://bobosshots.com/profile/bogdan-profile-hq.jpg</image:loc>
+            <image:title>Terzea Bogdan - Fotograf</image:title>
+            <image:caption>Portret Terzea Bogdan - Fotograf profesionist din Sibiu</image:caption>
+        </image:image>
+    </url>
+
+    <!-- Preturi / Pricing -->
+    <url>
+        <loc>https://bobosshots.com/preturi</loc>
+        <lastmod>2025-01-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- Galerie Principala -->
+    <url>
+        <loc>https://bobosshots.com/galerie.html</loc>
+        <lastmod>2025-01-10</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Galerie Portrete -->
+    <url>
+        <loc>https://bobosshots.com/galerie-portrete.html</loc>
+        <lastmod>2025-01-10</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <image:image>
+            <image:loc>https://bobosshots.com/portfolio/portrete/thumbs/portret-forest.jpg</image:loc>
+            <image:title>Portret in natura - Sibiu</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://bobosshots.com/portfolio/portrete/thumbs/portret-silhouette.jpg</image:loc>
+            <image:title>Portret silueta artistica</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://bobosshots.com/portfolio/portrete/thumbs/portret-christmas.jpg</image:loc>
+            <image:title>Portret de iarna - sedinta foto</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://bobosshots.com/portfolio/portrete/thumbs/portret-urban.jpg</image:loc>
+            <image:title>Portret urban - fotografie stradala</image:title>
+        </image:image>
+    </url>
+
+    <!-- Galerie Evenimente -->
+    <url>
+        <loc>https://bobosshots.com/galerie-evenimente.html</loc>
+        <lastmod>2025-01-10</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <image:image>
+            <image:loc>https://bobosshots.com/portfolio/evenimente/thumbs/event-concert.jpg</image:loc>
+            <image:title>Fotografie concert live</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://bobosshots.com/portfolio/evenimente/thumbs/event-singer.jpg</image:loc>
+            <image:title>Artist pe scena - fotografie eveniment</image:title>
+        </image:image>
+    </url>
+
+    <!-- Galerie Produse -->
+    <url>
+        <loc>https://bobosshots.com/galerie-produse.html</loc>
+        <lastmod>2025-01-10</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <image:image>
+            <image:loc>https://bobosshots.com/portfolio/auto/thumbs/product-motorcycle.jpg</image:loc>
+            <image:title>Fotografie produs - motocicleta</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://bobosshots.com/portfolio/auto/thumbs/product-vintage-car.jpg</image:loc>
+            <image:title>Fotografie auto - masina vintage</image:title>
+        </image:image>
+    </url>
+
+    <!-- Galerie Travel -->
+    <url>
+        <loc>https://bobosshots.com/galerie-travel.html</loc>
+        <lastmod>2025-01-10</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <image:image>
+            <image:loc>https://bobosshots.com/portfolio/travel/thumbs/travel-mountain-lake.jpg</image:loc>
+            <image:title>Peisaj montan - lac de munte Romania</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://bobosshots.com/portfolio/travel/thumbs/travel-village-church.jpg</image:loc>
+            <image:title>Sat transilvanean - biserica veche</image:title>
+        </image:image>
+    </url>
+
+</urlset>
