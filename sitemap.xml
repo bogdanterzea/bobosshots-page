@@ -6,7 +6,7 @@
     <!-- Homepage - Pagina Principala -->
     <url>
         <loc>https://bobosshots.com/</loc>
-        <lastmod>2025-01-15</lastmod>
+        <lastmod>2026-01-15</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
         <image:image>
@@ -24,7 +24,7 @@
     <!-- Preturi / Pricing -->
     <url>
         <loc>https://bobosshots.com/preturi</loc>
-        <lastmod>2025-01-15</lastmod>
+        <lastmod>2026-01-15</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
     </url>
@@ -32,7 +32,7 @@
     <!-- Galerie Principala -->
     <url>
         <loc>https://bobosshots.com/galerie</loc>
-        <lastmod>2025-01-10</lastmod>
+        <lastmod>2026-01-15</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -40,7 +40,7 @@
     <!-- Galerie Portrete -->
     <url>
         <loc>https://bobosshots.com/galerie/portrete</loc>
-        <lastmod>2025-01-10</lastmod>
+        <lastmod>2026-01-15</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
         <image:image>
@@ -64,7 +64,7 @@
     <!-- Galerie Evenimente -->
     <url>
         <loc>https://bobosshots.com/galerie/evenimente</loc>
-        <lastmod>2025-01-10</lastmod>
+        <lastmod>2026-01-15</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
         <image:image>
@@ -80,7 +80,7 @@
     <!-- Galerie Produse -->
     <url>
         <loc>https://bobosshots.com/galerie/produse</loc>
-        <lastmod>2025-01-10</lastmod>
+        <lastmod>2026-01-15</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
         <image:image>
@@ -96,7 +96,7 @@
     <!-- Galerie Travel -->
     <url>
         <loc>https://bobosshots.com/galerie/travel</loc>
-        <lastmod>2025-01-10</lastmod>
+        <lastmod>2026-01-15</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
         <image:image>
