@@ -1,0 +1,46 @@
+# Robots.txt pentru Bobosshots.com
+# Fotograf Profesionist Sibiu - Terzea Bogdan
+
+User-agent: *
+Allow: /
+
+# Permite accesul la toate paginile importante
+Allow: /preturi
+Allow: /galerie.html
+Allow: /galerie-portrete.html
+Allow: /galerie-evenimente.html
+Allow: /galerie-produse.html
+Allow: /galerie-travel.html
+
+# Permite crawling imagini
+Allow: /portfolio/
+Allow: /thumbnails/
+Allow: /profile/
+Allow: /images-assets/
+
+# Blocheaza fisiere neimportante
+Disallow: /*.js$
+Disallow: /*.css$
+
+# Sitemap location
+Sitemap: https://bobosshots.com/sitemap.xml
+
+# Crawl-delay pentru a nu supraincarca serverul
+Crawl-delay: 1
+
+# Google specific
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Google Images
+User-agent: Googlebot-Image
+Allow: /portfolio/
+Allow: /thumbnails/
+Allow: /profile/
+Allow: /hero-background.jpg
+
+# Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
