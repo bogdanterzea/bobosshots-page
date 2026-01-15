@@ -203,7 +203,7 @@
         div.onclick = () => openLB(i);
 
         const img = document.createElement('img');
-        img.dataset.src = 'thumbnails/' + encodeURIComponent(photo);
+        img.dataset.src = '/thumbnails/' + encodeURIComponent(photo);
         img.alt = 'Foto ' + (i + 1);
         img.onload = function() { this.classList.add('loaded'); };
 
@@ -235,7 +235,7 @@
 
         spinner.style.display = 'block';
         img.src = '';
-        img.src = 'images-assets/' + encodeURIComponent(photos[idx]);
+        img.src = '/images-assets/' + encodeURIComponent(photos[idx]);
         document.getElementById('lb-count').textContent = idx + 1;
         lb.classList.add('open');
         document.body.style.overflow = 'hidden';
