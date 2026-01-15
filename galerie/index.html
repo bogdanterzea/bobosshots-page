@@ -233,12 +233,23 @@
         const img = document.getElementById('lb-img');
         const spinner = document.getElementById('lb-spinner');
 
-        spinner.style.display = 'block';
+        // Ascunde imaginea veche și arată spinner
+        img.style.visibility = 'hidden';
         img.src = '';
-        img.src = '/images-assets/' + encodeURIComponent(photos[idx]);
+        spinner.style.display = 'block';
         document.getElementById('lb-count').textContent = idx + 1;
         lb.classList.add('open');
         document.body.style.overflow = 'hidden';
+
+        // Preîncarcă noua imagine
+        const newSrc = '/images-assets/' + encodeURIComponent(photos[idx]);
+        const newImg = new Image();
+        newImg.onload = () => {
+            img.src = newSrc;
+            spinner.style.display = 'none';
+            img.style.visibility = 'visible';
+        };
+        newImg.src = newSrc;
     }
 
     function closeLB() {

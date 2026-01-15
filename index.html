@@ -1096,6 +1096,9 @@
         <button id="lightbox-prev" class="lightbox-btn absolute left-6 top-1/2 -translate-y-1/2 text-white text-xl z-10" onclick="event.stopPropagation(); navigateLightbox(-1)">
             <i class="fas fa-chevron-left"></i>
         </button>
+        <div id="lightbox-spinner" class="absolute inset-0 flex items-center justify-center" style="display: none;">
+            <div class="w-12 h-12 border-4 border-accent-primary border-t-transparent rounded-full animate-spin"></div>
+        </div>
         <img id="lightbox-img" src="" alt="Lightbox image">
         <button id="lightbox-next" class="lightbox-btn absolute right-6 top-1/2 -translate-y-1/2 text-white text-xl z-10" onclick="event.stopPropagation(); navigateLightbox(1)">
             <i class="fas fa-chevron-right"></i>
@@ -1474,22 +1477,27 @@
             if (currentImageIndex >= visibleImages.length) currentImageIndex = 0;
 
             const lightboxImg = document.getElementById('lightbox-img');
+            const spinner = document.getElementById('lightbox-spinner');
             const fullsizeSrc = visibleImages[currentImageIndex].dataset.fullsize;
 
-            gsap.to(lightboxImg, {
-                opacity: 0,
-                x: direction * -50,
-                duration: 0.2,
-                ease: 'power2.in',
-                onComplete: () => {
-                    lightboxImg.src = fullsizeSrc;
-                    gsap.fromTo(lightboxImg,
-                        { opacity: 0, x: direction * 50 },
-                        { opacity: 1, x: 0, duration: 0.3, ease: 'power2.out' }
-                    );
-                    updateCounter();
-                }
-            });
+            // Ascunde imaginea veche și arată spinner
+            lightboxImg.style.visibility = 'hidden';
+            lightboxImg.src = '';
+            spinner.style.display = 'flex';
+            updateCounter();
+
+            // Preîncarcă noua imagine
+            const newImg = new Image();
+            newImg.onload = () => {
+                lightboxImg.src = fullsizeSrc;
+                spinner.style.display = 'none';
+                lightboxImg.style.visibility = 'visible';
+                gsap.fromTo(lightboxImg,
+                    { opacity: 0, x: direction * 50 },
+                    { opacity: 1, x: 0, duration: 0.3, ease: 'power2.out' }
+                );
+            };
+            newImg.src = fullsizeSrc;
         }
 
         // Touch swipe for lightbox
