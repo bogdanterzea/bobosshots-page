@@ -31,7 +31,7 @@
 
     <!-- Galerie Principala -->
     <url>
-        <loc>https://bobosshots.com/galerie.html</loc>
+        <loc>https://bobosshots.com/galerie</loc>
         <lastmod>2025-01-10</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
@@ -39,7 +39,7 @@
 
     <!-- Galerie Portrete -->
     <url>
-        <loc>https://bobosshots.com/galerie-portrete.html</loc>
+        <loc>https://bobosshots.com/galerie/portrete</loc>
         <lastmod>2025-01-10</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
@@ -63,7 +63,7 @@
 
     <!-- Galerie Evenimente -->
     <url>
-        <loc>https://bobosshots.com/galerie-evenimente.html</loc>
+        <loc>https://bobosshots.com/galerie/evenimente</loc>
         <lastmod>2025-01-10</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
@@ -79,7 +79,7 @@
 
     <!-- Galerie Produse -->
     <url>
-        <loc>https://bobosshots.com/galerie-produse.html</loc>
+        <loc>https://bobosshots.com/galerie/produse</loc>
         <lastmod>2025-01-10</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
@@ -95,7 +95,7 @@
 
     <!-- Galerie Travel -->
     <url>
-        <loc>https://bobosshots.com/galerie-travel.html</loc>
+        <loc>https://bobosshots.com/galerie/travel</loc>
         <lastmod>2025-01-10</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
