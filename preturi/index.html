@@ -244,6 +244,20 @@
         .tab-content.active {
             display: block;
         }
+
+        /* Fixed nav state */
+        .pricing-nav-fixed {
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+        .nav-placeholder {
+            display: none;
+        }
+        .nav-placeholder.active {
+            display: block;
+        }
     </style>
 </head>
 <body class="bg-dark-900 text-white min-h-screen">
@@ -305,7 +319,7 @@
     </section>
 
     <!-- Quick Navigation -->
-    <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-700 py-4 px-4" id="pricing-nav">
+    <nav class="z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-700 py-4 px-4" id="pricing-nav">
         <div class="max-w-2xl mx-auto flex justify-center gap-2 sm:gap-4">
             <button onclick="switchTab('foto')" class="nav-pill active" data-section="foto">
                 <i class="fas fa-camera mr-2"></i>Foto
@@ -318,6 +332,7 @@
             </button>
         </div>
     </nav>
+    <div class="nav-placeholder" id="nav-placeholder"></div>
 
     <!-- Foto Sections Wrapper -->
     <div id="foto" class="tab-content active">
@@ -883,6 +898,40 @@
             document.getElementById('scroll-progress').style.width = scrollPercent + '%';
         });
 
+        // Fixed navigation on scroll
+        const pricingNav = document.getElementById('pricing-nav');
+        const navPlaceholder = document.getElementById('nav-placeholder');
+        let navOriginalTop = null;
+
+        function initNavPosition() {
+            if (!pricingNav.classList.contains('pricing-nav-fixed')) {
+                navOriginalTop = pricingNav.offsetTop;
+            }
+            navPlaceholder.style.height = pricingNav.offsetHeight + 'px';
+        }
+
+        function handleNavScroll() {
+            if (navOriginalTop === null) initNavPosition();
+
+            if (window.scrollY >= navOriginalTop) {
+                if (!pricingNav.classList.contains('pricing-nav-fixed')) {
+                    pricingNav.classList.add('pricing-nav-fixed');
+                    navPlaceholder.classList.add('active');
+                }
+            } else {
+                if (pricingNav.classList.contains('pricing-nav-fixed')) {
+                    pricingNav.classList.remove('pricing-nav-fixed');
+                    navPlaceholder.classList.remove('active');
+                }
+            }
+        }
+
+        window.addEventListener('scroll', handleNavScroll);
+        window.addEventListener('load', () => {
+            initNavPosition();
+            handleNavScroll();
+        });
+
         // Tab switching function
         function switchTab(tabId) {
             // Hide all tab contents
@@ -904,10 +953,9 @@
                 }
             });
 
-            // Scroll to just below the sticky nav so content is visible
-            const nav = document.getElementById('pricing-nav');
-            const navTop = nav.offsetTop;
-            window.scrollTo({ top: navTop - 10, behavior: 'smooth' });
+            // Scroll to just below the nav so content is visible
+            const scrollTarget = navOriginalTop !== null ? navOriginalTop : pricingNav.offsetTop;
+            window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
 
             // Refresh ScrollTrigger after tab switch
             setTimeout(() => {
