@@ -236,6 +236,11 @@
             color: white;
             border-color: var(--accent);
         }
+
+        /* Sticky nav enhancement */
+        #pricing-nav {
+            transition: box-shadow 0.3s ease;
+        }
     </style>
 </head>
 <body class="bg-dark-900 text-white min-h-screen">
@@ -296,8 +301,9 @@
         </div>
     </section>
 
-    <!-- Quick Navigation -->
-    <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-700 py-4 px-4" id="pricing-nav">
+    <!-- Quick Navigation - becomes fixed on scroll -->
+    <div id="pricing-nav-placeholder" class="hidden"></div>
+    <nav class="bg-dark-900/98 backdrop-blur-md border-b border-dark-700 py-4 px-4 transition-shadow duration-300" id="pricing-nav">
         <div class="max-w-2xl mx-auto flex justify-center gap-2 sm:gap-4">
             <button onclick="scrollToSection('foto')" class="nav-pill active" data-section="foto">
                 <i class="fas fa-camera mr-2"></i>Foto
@@ -909,11 +915,51 @@
 
         window.addEventListener('scroll', updateActiveNav);
 
+        // Sticky Navigation - becomes fixed when scrolled past
+        const pricingNav = document.getElementById('pricing-nav');
+        const navPlaceholder = document.getElementById('pricing-nav-placeholder');
+        let navOriginalTop = null;
+
+        function initStickyNav() {
+            navOriginalTop = pricingNav.offsetTop;
+            navPlaceholder.style.height = pricingNav.offsetHeight + 'px';
+        }
+
+        function handleStickyNav() {
+            if (navOriginalTop === null) return;
+
+            const scrollTop = window.scrollY;
+
+            if (scrollTop >= navOriginalTop - 3) {
+                // Make nav fixed
+                if (!pricingNav.classList.contains('fixed')) {
+                    pricingNav.classList.add('fixed', 'top-[3px]', 'left-0', 'right-0', 'z-[100]', 'shadow-lg');
+                    navPlaceholder.classList.remove('hidden');
+                }
+            } else {
+                // Return nav to normal position
+                if (pricingNav.classList.contains('fixed')) {
+                    pricingNav.classList.remove('fixed', 'top-[3px]', 'left-0', 'right-0', 'z-[100]', 'shadow-lg');
+                    navPlaceholder.classList.add('hidden');
+                }
+            }
+        }
+
+        window.addEventListener('scroll', handleStickyNav);
+        window.addEventListener('resize', () => {
+            // Recalculate on resize
+            if (!pricingNav.classList.contains('fixed')) {
+                navOriginalTop = pricingNav.offsetTop;
+            }
+        });
+
         // Preloader
         window.addEventListener('load', () => {
             setTimeout(() => {
                 document.getElementById('preloader').classList.add('hidden');
                 initAnimations();
+                initStickyNav();
+                handleStickyNav(); // Check initial scroll position
             }, 1500);
         });
 
