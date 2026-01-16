@@ -955,12 +955,12 @@
 
             // Scroll to just below the nav so content is visible
             const scrollTarget = navOriginalTop !== null ? navOriginalTop : pricingNav.offsetTop;
-            window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+            lenis.scrollTo(scrollTarget, { duration: 0.8 });
 
             // Refresh ScrollTrigger after tab switch
             setTimeout(() => {
                 ScrollTrigger.refresh();
-            }, 100);
+            }, 300);
         }
 
         // Preloader
