@@ -237,9 +237,12 @@
             border-color: var(--accent);
         }
 
-        /* Sticky nav enhancement */
-        #pricing-nav {
-            transition: box-shadow 0.3s ease;
+        /* Tab content - simple show/hide */
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
         }
     </style>
 </head>
@@ -301,24 +304,23 @@
         </div>
     </section>
 
-    <!-- Quick Navigation - becomes fixed on scroll -->
-    <div id="pricing-nav-placeholder" class="hidden"></div>
-    <nav class="bg-dark-900/98 backdrop-blur-md border-b border-dark-700 py-4 px-4 transition-shadow duration-300" id="pricing-nav">
+    <!-- Quick Navigation -->
+    <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-700 py-4 px-4" id="pricing-nav">
         <div class="max-w-2xl mx-auto flex justify-center gap-2 sm:gap-4">
-            <button onclick="scrollToSection('foto')" class="nav-pill active" data-section="foto">
+            <button onclick="switchTab('foto')" class="nav-pill active" data-section="foto">
                 <i class="fas fa-camera mr-2"></i>Foto
             </button>
-            <button onclick="scrollToSection('video')" class="nav-pill" data-section="video">
+            <button onclick="switchTab('video')" class="nav-pill" data-section="video">
                 <i class="fas fa-video mr-2"></i>Video
             </button>
-            <button onclick="scrollToSection('extra')" class="nav-pill" data-section="extra">
+            <button onclick="switchTab('extra')" class="nav-pill" data-section="extra">
                 <i class="fas fa-plus-circle mr-2"></i>Add-ons
             </button>
         </div>
     </nav>
 
     <!-- Foto Sections Wrapper -->
-    <div id="foto">
+    <div id="foto" class="tab-content active">
 
     <!-- Portrete Section -->
     <section class="py-20 px-4 sm:px-6 lg:px-8" id="portrete">
@@ -594,7 +596,7 @@
     </div><!-- End Foto Wrapper -->
 
     <!-- VIDEO SECTIONS -->
-    <div id="video">
+    <div id="video" class="tab-content">
 
     <!-- Video & Social Media Section -->
     <section class="py-20 px-4 sm:px-6 lg:px-8" id="video-portrete">
@@ -778,7 +780,7 @@
     </div><!-- End Video Wrapper -->
 
     <!-- Add-ons Section -->
-    <section class="py-20 px-4 sm:px-6 lg:px-8" id="extra">
+    <section class="py-20 px-4 sm:px-6 lg:px-8 tab-content" id="extra">
         <div class="max-w-5xl mx-auto">
             <div class="text-center mb-12">
                 <span class="text-accent-primary font-medium tracking-wider uppercase text-sm">Servicii Extra</span>
@@ -881,85 +883,41 @@
             document.getElementById('scroll-progress').style.width = scrollPercent + '%';
         });
 
-        // Navigation scroll function
-        function scrollToSection(sectionId) {
-            const element = document.getElementById(sectionId);
-            if (element) {
-                const navHeight = document.getElementById('pricing-nav').offsetHeight;
-                const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-                lenis.scrollTo(elementPosition - navHeight - 20, { duration: 1.2 });
-            }
-        }
-
-        // Update active nav pill on scroll
-        function updateActiveNav() {
-            const sections = ['foto', 'video', 'extra'];
-            const navHeight = document.getElementById('pricing-nav').offsetHeight;
-            const scrollPos = window.scrollY + navHeight + 100;
-
-            let currentSection = 'foto';
-            sections.forEach(sectionId => {
-                const section = document.getElementById(sectionId);
-                if (section && section.offsetTop <= scrollPos) {
-                    currentSection = sectionId;
-                }
+        // Tab switching function
+        function switchTab(tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
             });
 
+            // Show selected tab content
+            const selectedTab = document.getElementById(tabId);
+            if (selectedTab) {
+                selectedTab.classList.add('active');
+            }
+
+            // Update nav pills
             document.querySelectorAll('.nav-pill').forEach(pill => {
                 pill.classList.remove('active');
-                if (pill.dataset.section === currentSection) {
+                if (pill.dataset.section === tabId) {
                     pill.classList.add('active');
                 }
             });
+
+            // Scroll to top of content area
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Refresh ScrollTrigger after tab switch
+            setTimeout(() => {
+                ScrollTrigger.refresh();
+            }, 100);
         }
-
-        window.addEventListener('scroll', updateActiveNav);
-
-        // Sticky Navigation - becomes fixed when scrolled past
-        const pricingNav = document.getElementById('pricing-nav');
-        const navPlaceholder = document.getElementById('pricing-nav-placeholder');
-        let navOriginalTop = null;
-
-        function initStickyNav() {
-            navOriginalTop = pricingNav.offsetTop;
-            navPlaceholder.style.height = pricingNav.offsetHeight + 'px';
-        }
-
-        function handleStickyNav() {
-            if (navOriginalTop === null) return;
-
-            const scrollTop = window.scrollY;
-
-            if (scrollTop >= navOriginalTop - 3) {
-                // Make nav fixed
-                if (!pricingNav.classList.contains('fixed')) {
-                    pricingNav.classList.add('fixed', 'top-[3px]', 'left-0', 'right-0', 'z-[100]', 'shadow-lg');
-                    navPlaceholder.classList.remove('hidden');
-                }
-            } else {
-                // Return nav to normal position
-                if (pricingNav.classList.contains('fixed')) {
-                    pricingNav.classList.remove('fixed', 'top-[3px]', 'left-0', 'right-0', 'z-[100]', 'shadow-lg');
-                    navPlaceholder.classList.add('hidden');
-                }
-            }
-        }
-
-        window.addEventListener('scroll', handleStickyNav);
-        window.addEventListener('resize', () => {
-            // Recalculate on resize
-            if (!pricingNav.classList.contains('fixed')) {
-                navOriginalTop = pricingNav.offsetTop;
-            }
-        });
 
         // Preloader
         window.addEventListener('load', () => {
             setTimeout(() => {
                 document.getElementById('preloader').classList.add('hidden');
                 initAnimations();
-                initStickyNav();
-                handleStickyNav(); // Check initial scroll position
             }, 1500);
         });
 
