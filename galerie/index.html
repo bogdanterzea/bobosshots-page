@@ -89,20 +89,25 @@
         }
         .lb-btn {
             position: absolute;
-            background: rgba(0,0,0,0.5);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: white;
-            border: none;
-            width: 48px;
-            height: 48px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             cursor: pointer;
             font-size: 20px;
-            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
         }
-        .lb-btn:hover { background: rgba(99,102,241,0.8); }
+        .lb-btn:hover { background: rgba(99, 102, 241, 0.3); border-color: #6366f1; }
         .lb-close { top: 16px; right: 16px; }
         .lb-prev { left: 16px; top: 50%; transform: translateY(-50%); }
         .lb-next { right: 16px; top: 50%; transform: translateY(-50%); }
+        .lb-prev:hover, .lb-next:hover { transform: translateY(-50%) scale(1.1); }
         .lb-counter {
             position: absolute;
             bottom: 16px;

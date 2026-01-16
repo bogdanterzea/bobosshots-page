@@ -554,7 +554,10 @@
         .lightbox-btn:hover {
             background: rgba(99, 102, 241, 0.3);
             border-color: #6366f1;
-            transform: scale(1.1);
+        }
+
+        #lightbox-prev:hover, #lightbox-next:hover {
+            transform: translateY(-50%) scale(1.1);
         }
 
         /* ===== TEXT ANIMATIONS ===== */
@@ -1396,6 +1399,8 @@
                 btn.classList.remove('bg-dark-700', 'text-gray-300');
 
                 const filter = btn.dataset.filter;
+                let animationsComplete = 0;
+                const totalItems = portfolioItems.length;
 
                 portfolioItems.forEach((item, index) => {
                     if (filter === 'all' || item.dataset.category === filter) {
@@ -1405,7 +1410,13 @@
                             duration: 0.4,
                             delay: index * 0.05,
                             display: 'block',
-                            ease: 'power2.out'
+                            ease: 'power2.out',
+                            onComplete: () => {
+                                animationsComplete++;
+                                if (animationsComplete === totalItems) {
+                                    ScrollTrigger.refresh();
+                                }
+                            }
                         });
                     } else {
                         gsap.to(item, {
@@ -1413,7 +1424,13 @@
                             scale: 0.9,
                             duration: 0.3,
                             display: 'none',
-                            ease: 'power2.in'
+                            ease: 'power2.in',
+                            onComplete: () => {
+                                animationsComplete++;
+                                if (animationsComplete === totalItems) {
+                                    ScrollTrigger.refresh();
+                                }
+                            }
                         });
                     }
                 });
