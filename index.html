@@ -1459,17 +1459,30 @@
             currentImageIndex = visibleImages.indexOf(element);
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
+            const spinner = document.getElementById('lightbox-spinner');
 
             const fullsizeSrc = element.dataset.fullsize;
-            lightboxImg.src = fullsizeSrc;
+
+            // Show spinner while loading
+            lightboxImg.style.visibility = 'hidden';
+            lightboxImg.src = '';
+            spinner.style.display = 'flex';
             lightbox.classList.add('active');
             document.body.style.overflow = 'hidden';
             updateCounter();
 
-            gsap.fromTo(lightboxImg,
-                { scale: 0.8, opacity: 0 },
-                { scale: 1, opacity: 1, duration: 0.4, ease: 'power2.out' }
-            );
+            // Preload image
+            const newImg = new Image();
+            newImg.onload = () => {
+                lightboxImg.src = fullsizeSrc;
+                spinner.style.display = 'none';
+                lightboxImg.style.visibility = 'visible';
+                gsap.fromTo(lightboxImg,
+                    { scale: 0.8, opacity: 0 },
+                    { scale: 1, opacity: 1, duration: 0.4, ease: 'power2.out' }
+                );
+            };
+            newImg.src = fullsizeSrc;
         }
 
         function closeLightbox() {

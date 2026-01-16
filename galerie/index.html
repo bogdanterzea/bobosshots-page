@@ -264,7 +264,23 @@
 
     function navLB(dir) {
         currentIdx = (currentIdx + dir + photos.length) % photos.length;
-        openLB(currentIdx);
+        const img = document.getElementById('lb-img');
+        const spinner = document.getElementById('lb-spinner');
+
+        // Hide old image and show spinner
+        img.style.visibility = 'hidden';
+        img.src = '';
+        spinner.style.display = 'block';
+        document.getElementById('lb-count').textContent = currentIdx + 1;
+
+        // Preload new image
+        const newImg = new Image();
+        newImg.onload = () => {
+            img.src = '/images-assets/' + encodeURIComponent(photos[currentIdx]);
+            spinner.style.display = 'none';
+            img.style.visibility = 'visible';
+        };
+        newImg.src = '/images-assets/' + encodeURIComponent(photos[currentIdx]);
     }
 
     // Keyboard
