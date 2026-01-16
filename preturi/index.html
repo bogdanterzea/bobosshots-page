@@ -904,8 +904,10 @@
                 }
             });
 
-            // Scroll to top of content area
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Scroll to just below the sticky nav so content is visible
+            const nav = document.getElementById('pricing-nav');
+            const navTop = nav.offsetTop;
+            window.scrollTo({ top: navTop - 10, behavior: 'smooth' });
 
             // Refresh ScrollTrigger after tab switch
             setTimeout(() => {
