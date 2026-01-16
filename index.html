@@ -238,6 +238,7 @@
 
         html {
             scroll-behavior: auto; /* Lenis handles smooth scroll */
+            overflow-x: hidden;
         }
 
         html.lenis, html.lenis body {
@@ -249,6 +250,7 @@
             overflow-x: hidden;
             background-color: var(--bg-primary);
             color: var(--text-primary);
+            position: relative;
         }
 
         /* ===== SCROLL PROGRESS INDICATOR ===== */
@@ -987,12 +989,12 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 <!-- Profile Image -->
-                <div class="relative">
+                <div class="relative overflow-hidden sm:overflow-visible">
                     <div class="aspect-square max-w-md mx-auto">
                         <img src="profile/bogdan-profile-hq.jpg" alt="Terzea Bogdan" class="w-full h-full object-cover rounded-3xl">
-                        <!-- Decorative elements -->
-                        <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-accent-primary/20 rounded-3xl -z-10"></div>
-                        <div class="absolute -top-6 -left-6 w-24 h-24 border-2 border-accent-primary/30 rounded-3xl -z-10"></div>
+                        <!-- Decorative elements - hidden on mobile to prevent overflow -->
+                        <div class="hidden sm:block absolute -bottom-6 -right-6 w-32 h-32 bg-accent-primary/20 rounded-3xl -z-10"></div>
+                        <div class="hidden sm:block absolute -top-6 -left-6 w-24 h-24 border-2 border-accent-primary/30 rounded-3xl -z-10"></div>
                     </div>
                 </div>
 
@@ -1459,17 +1461,30 @@
             currentImageIndex = visibleImages.indexOf(element);
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
+            const spinner = document.getElementById('lightbox-spinner');
 
             const fullsizeSrc = element.dataset.fullsize;
-            lightboxImg.src = fullsizeSrc;
+
+            // Show spinner while loading
+            lightboxImg.style.visibility = 'hidden';
+            lightboxImg.src = '';
+            spinner.style.display = 'flex';
             lightbox.classList.add('active');
             document.body.style.overflow = 'hidden';
             updateCounter();
 
-            gsap.fromTo(lightboxImg,
-                { scale: 0.8, opacity: 0 },
-                { scale: 1, opacity: 1, duration: 0.4, ease: 'power2.out' }
-            );
+            // Preload image
+            const newImg = new Image();
+            newImg.onload = () => {
+                lightboxImg.src = fullsizeSrc;
+                spinner.style.display = 'none';
+                lightboxImg.style.visibility = 'visible';
+                gsap.fromTo(lightboxImg,
+                    { scale: 0.8, opacity: 0 },
+                    { scale: 1, opacity: 1, duration: 0.4, ease: 'power2.out' }
+                );
+            };
+            newImg.src = fullsizeSrc;
         }
 
         function closeLightbox() {

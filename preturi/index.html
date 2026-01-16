@@ -102,6 +102,7 @@
             --accent: #6366f1;
             --accent-hover: #818cf8;
         }
+        html { overflow-x: hidden; }
         body { font-family: 'Inter', sans-serif; overflow-x: hidden; background: var(--bg-primary); color: var(--text-primary); }
 
         /* Scroll Progress */
@@ -235,6 +236,28 @@
             color: white;
             border-color: var(--accent);
         }
+
+        /* Tab content - simple show/hide */
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Fixed nav state */
+        .pricing-nav-fixed {
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+        .nav-placeholder {
+            display: none;
+        }
+        .nav-placeholder.active {
+            display: block;
+        }
     </style>
 </head>
 <body class="bg-dark-900 text-white min-h-screen">
@@ -296,22 +319,23 @@
     </section>
 
     <!-- Quick Navigation -->
-    <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-700 py-4 px-4" id="pricing-nav">
+    <nav class="z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-700 py-4 px-4" id="pricing-nav">
         <div class="max-w-2xl mx-auto flex justify-center gap-2 sm:gap-4">
-            <button onclick="scrollToSection('foto')" class="nav-pill active" data-section="foto">
+            <button onclick="switchTab('foto')" class="nav-pill active" data-section="foto">
                 <i class="fas fa-camera mr-2"></i>Foto
             </button>
-            <button onclick="scrollToSection('video')" class="nav-pill" data-section="video">
+            <button onclick="switchTab('video')" class="nav-pill" data-section="video">
                 <i class="fas fa-video mr-2"></i>Video
             </button>
-            <button onclick="scrollToSection('extra')" class="nav-pill" data-section="extra">
+            <button onclick="switchTab('extra')" class="nav-pill" data-section="extra">
                 <i class="fas fa-plus-circle mr-2"></i>Add-ons
             </button>
         </div>
     </nav>
+    <div class="nav-placeholder" id="nav-placeholder"></div>
 
     <!-- Foto Sections Wrapper -->
-    <div id="foto">
+    <div id="foto" class="tab-content active">
 
     <!-- Portrete Section -->
     <section class="py-20 px-4 sm:px-6 lg:px-8" id="portrete">
@@ -587,7 +611,7 @@
     </div><!-- End Foto Wrapper -->
 
     <!-- VIDEO SECTIONS -->
-    <div id="video">
+    <div id="video" class="tab-content">
 
     <!-- Video & Social Media Section -->
     <section class="py-20 px-4 sm:px-6 lg:px-8" id="video-portrete">
@@ -771,7 +795,7 @@
     </div><!-- End Video Wrapper -->
 
     <!-- Add-ons Section -->
-    <section class="py-20 px-4 sm:px-6 lg:px-8" id="extra">
+    <section class="py-20 px-4 sm:px-6 lg:px-8 tab-content" id="extra">
         <div class="max-w-5xl mx-auto">
             <div class="text-center mb-12">
                 <span class="text-accent-primary font-medium tracking-wider uppercase text-sm">Servicii Extra</span>
@@ -841,8 +865,8 @@
         <div class="max-w-2xl mx-auto text-center">
             <h2 class="text-3xl md:text-4xl font-bold mb-4">Ai un proiect în minte?</h2>
             <p class="text-gray-400 mb-8">Hai să discutăm despre viziunea ta și să găsim pachetul perfect pentru tine.</p>
-            <a href="https://instagram.com/bobosshots" target="_blank" rel="noopener noreferrer" class="inline-flex items-center bg-accent-primary hover:bg-accent-hover text-white px-8 py-4 rounded-full font-semibold transition-all hover:scale-105">
-                <i class="fab fa-instagram mr-2"></i>Contactează-mă pe Instagram
+            <a href="https://instagram.com/bobosshots" target="_blank" rel="noopener noreferrer" class="inline-flex items-center bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all hover:scale-105 hover:shadow-lg hover:shadow-pink-500/25">
+                <i class="fab fa-instagram text-xl mr-3"></i>Contactează-mă pe Instagram
             </a>
             <p class="text-gray-500 text-sm mt-6">
                 <i class="fas fa-map-marker-alt mr-2"></i>Sibiu, România • Disponibil pentru deplasări în toată țara
@@ -874,39 +898,70 @@
             document.getElementById('scroll-progress').style.width = scrollPercent + '%';
         });
 
-        // Navigation scroll function
-        function scrollToSection(sectionId) {
-            const element = document.getElementById(sectionId);
-            if (element) {
-                const navHeight = document.getElementById('pricing-nav').offsetHeight;
-                const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-                lenis.scrollTo(elementPosition - navHeight - 20, { duration: 1.2 });
+        // Fixed navigation on scroll
+        const pricingNav = document.getElementById('pricing-nav');
+        const navPlaceholder = document.getElementById('nav-placeholder');
+        let navOriginalTop = null;
+
+        function initNavPosition() {
+            if (!pricingNav.classList.contains('pricing-nav-fixed')) {
+                navOriginalTop = pricingNav.offsetTop;
+            }
+            navPlaceholder.style.height = pricingNav.offsetHeight + 'px';
+        }
+
+        function handleNavScroll() {
+            if (navOriginalTop === null) initNavPosition();
+
+            if (window.scrollY >= navOriginalTop) {
+                if (!pricingNav.classList.contains('pricing-nav-fixed')) {
+                    pricingNav.classList.add('pricing-nav-fixed');
+                    navPlaceholder.classList.add('active');
+                }
+            } else {
+                if (pricingNav.classList.contains('pricing-nav-fixed')) {
+                    pricingNav.classList.remove('pricing-nav-fixed');
+                    navPlaceholder.classList.remove('active');
+                }
             }
         }
 
-        // Update active nav pill on scroll
-        function updateActiveNav() {
-            const sections = ['foto', 'video', 'extra'];
-            const navHeight = document.getElementById('pricing-nav').offsetHeight;
-            const scrollPos = window.scrollY + navHeight + 100;
+        window.addEventListener('scroll', handleNavScroll);
+        window.addEventListener('load', () => {
+            initNavPosition();
+            handleNavScroll();
+        });
 
-            let currentSection = 'foto';
-            sections.forEach(sectionId => {
-                const section = document.getElementById(sectionId);
-                if (section && section.offsetTop <= scrollPos) {
-                    currentSection = sectionId;
-                }
+        // Tab switching function
+        function switchTab(tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
             });
 
+            // Show selected tab content
+            const selectedTab = document.getElementById(tabId);
+            if (selectedTab) {
+                selectedTab.classList.add('active');
+            }
+
+            // Update nav pills
             document.querySelectorAll('.nav-pill').forEach(pill => {
                 pill.classList.remove('active');
-                if (pill.dataset.section === currentSection) {
+                if (pill.dataset.section === tabId) {
                     pill.classList.add('active');
                 }
             });
-        }
 
-        window.addEventListener('scroll', updateActiveNav);
+            // Scroll to just below the nav so content is visible
+            const scrollTarget = navOriginalTop !== null ? navOriginalTop : pricingNav.offsetTop;
+            lenis.scrollTo(scrollTarget, { duration: 0.8 });
+
+            // Refresh ScrollTrigger after tab switch
+            setTimeout(() => {
+                ScrollTrigger.refresh();
+            }, 300);
+        }
 
         // Preloader
         window.addEventListener('load', () => {
