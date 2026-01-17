@@ -225,8 +225,8 @@
                             500: '#3a3a3a',
                         },
                         accent: {
-                            primary: '#4338ca',
-                            hover: '#4f46e5',
+                            primary: '#6366f1',
+                            hover: '#818cf8',
                         }
                     },
                     fontFamily: {
@@ -404,6 +404,13 @@
         .hero-content {
             position: relative;
             z-index: 1;
+        }
+
+        /* Mobile hero background */
+        @media (max-width: 640px) {
+            .hero-bg {
+                background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('hero-background-mobile.webp') !important;
+            }
         }
 
         /* ===== MAGNETIC BUTTONS ===== */
@@ -811,6 +818,7 @@
                 <!-- Portfolio Item 1 - Portret Forest -->
                 <div class="portfolio-item relative rounded-xl sm:rounded-2xl cursor-pointer group" data-category="portrete" data-fullsize="portfolio-backup/portrete/portret-forest.jpg" onclick="openLightbox(this)">
                     <picture>
+                        <source media="(max-width: 640px)" srcset="portfolio/portrete/thumbs/mobile/portret-forest.webp" type="image/webp">
                         <source srcset="portfolio/portrete/thumbs/portret-forest.webp" type="image/webp">
                         <img src="portfolio/portrete/thumbs/portret-forest.jpg" alt="Portret în natură" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
                     </picture>
@@ -825,6 +833,7 @@
                 <!-- Portfolio Item 2 - Concert -->
                 <div class="portfolio-item relative rounded-xl sm:rounded-2xl cursor-pointer group" data-category="evenimente" data-fullsize="portfolio-backup/evenimente/event-concert.jpg" onclick="openLightbox(this)">
                     <picture>
+                        <source media="(max-width: 640px)" srcset="portfolio/evenimente/thumbs/mobile/event-concert.webp" type="image/webp">
                         <source srcset="portfolio/evenimente/thumbs/event-concert.webp" type="image/webp">
                         <img src="portfolio/evenimente/thumbs/event-concert.jpg" alt="Concert Live" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
                     </picture>
@@ -839,6 +848,7 @@
                 <!-- Portfolio Item 3 - Mountain Lake -->
                 <div class="portfolio-item relative rounded-xl sm:rounded-2xl cursor-pointer group" data-category="travel" data-fullsize="portfolio-backup/travel/travel-mountain-lake.jpg" onclick="openLightbox(this)">
                     <picture>
+                        <source media="(max-width: 640px)" srcset="portfolio/travel/thumbs/mobile/travel-mountain-lake.webp" type="image/webp">
                         <source srcset="portfolio/travel/thumbs/travel-mountain-lake.webp" type="image/webp">
                         <img src="portfolio/travel/thumbs/travel-mountain-lake.jpg" alt="Lac Montan" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
                     </picture>
@@ -853,6 +863,7 @@
                 <!-- Portfolio Item 4 - Silhouette B&W -->
                 <div class="portfolio-item relative rounded-xl sm:rounded-2xl cursor-pointer group" data-category="portrete" data-fullsize="portfolio-backup/portrete/portret-silhouette.jpg" onclick="openLightbox(this)">
                     <picture>
+                        <source media="(max-width: 640px)" srcset="portfolio/portrete/thumbs/mobile/portret-silhouette.webp" type="image/webp">
                         <source srcset="portfolio/portrete/thumbs/portret-silhouette.webp" type="image/webp">
                         <img src="portfolio/portrete/thumbs/portret-silhouette.jpg" alt="Portret Siluetă" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
                     </picture>
@@ -867,6 +878,7 @@
                 <!-- Portfolio Item 5 - Singer -->
                 <div class="portfolio-item relative rounded-xl sm:rounded-2xl cursor-pointer group" data-category="evenimente" data-fullsize="portfolio-backup/evenimente/event-singer.jpg" onclick="openLightbox(this)">
                     <picture>
+                        <source media="(max-width: 640px)" srcset="portfolio/evenimente/thumbs/mobile/event-singer.webp" type="image/webp">
                         <source srcset="portfolio/evenimente/thumbs/event-singer.webp" type="image/webp">
                         <img src="portfolio/evenimente/thumbs/event-singer.jpg" alt="Artist pe Scenă" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
                     </picture>
@@ -881,6 +893,7 @@
                 <!-- Portfolio Item 6 - Village Church -->
                 <div class="portfolio-item relative rounded-xl sm:rounded-2xl cursor-pointer group" data-category="travel" data-fullsize="portfolio-backup/travel/travel-village-church.jpg" onclick="openLightbox(this)">
                     <picture>
+                        <source media="(max-width: 640px)" srcset="portfolio/travel/thumbs/mobile/travel-village-church.webp" type="image/webp">
                         <source srcset="portfolio/travel/thumbs/travel-village-church.webp" type="image/webp">
                         <img src="portfolio/travel/thumbs/travel-village-church.jpg" alt="Sat Transilvănean" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
                     </picture>
@@ -895,6 +908,7 @@
                 <!-- Portfolio Item 7 - Christmas Portrait -->
                 <div class="portfolio-item relative rounded-xl sm:rounded-2xl cursor-pointer group" data-category="portrete" data-fullsize="portfolio-backup/portrete/portret-christmas.jpg" onclick="openLightbox(this)">
                     <picture>
+                        <source media="(max-width: 640px)" srcset="portfolio/portrete/thumbs/mobile/portret-christmas.webp" type="image/webp">
                         <source srcset="portfolio/portrete/thumbs/portret-christmas.webp" type="image/webp">
                         <img src="portfolio/portrete/thumbs/portret-christmas.jpg" alt="Portret de Iarnă" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
                     </picture>
@@ -909,6 +923,7 @@
                 <!-- Portfolio Item 8 - Dogs Event -->
                 <div class="portfolio-item relative rounded-xl sm:rounded-2xl cursor-pointer group" data-category="evenimente" data-fullsize="portfolio-backup/evenimente/event-dogs.jpg" onclick="openLightbox(this)">
                     <picture>
+                        <source media="(max-width: 640px)" srcset="portfolio/evenimente/thumbs/mobile/event-dogs.webp" type="image/webp">
                         <source srcset="portfolio/evenimente/thumbs/event-dogs.webp" type="image/webp">
                         <img src="portfolio/evenimente/thumbs/event-dogs.jpg" alt="Eveniment Canin" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
                     </picture>
@@ -923,6 +938,7 @@
                 <!-- Portfolio Item 9 - Motorcycle -->
                 <div class="portfolio-item relative rounded-xl sm:rounded-2xl cursor-pointer group" data-category="auto" data-fullsize="portfolio-backup/auto/product-motorcycle.jpg" onclick="openLightbox(this)">
                     <picture>
+                        <source media="(max-width: 640px)" srcset="portfolio/auto/thumbs/mobile/product-motorcycle.webp" type="image/webp">
                         <source srcset="portfolio/auto/thumbs/product-motorcycle.webp" type="image/webp">
                         <img src="portfolio/auto/thumbs/product-motorcycle.jpg" alt="Motocicletă Kawasaki" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
                     </picture>
@@ -937,6 +953,7 @@
                 <!-- Portfolio Item 10 - Urban Portrait -->
                 <div class="portfolio-item relative rounded-xl sm:rounded-2xl cursor-pointer group" data-category="portrete" data-fullsize="portfolio-backup/portrete/portret-urban.jpg" onclick="openLightbox(this)">
                     <picture>
+                        <source media="(max-width: 640px)" srcset="portfolio/portrete/thumbs/mobile/portret-urban.webp" type="image/webp">
                         <source srcset="portfolio/portrete/thumbs/portret-urban.webp" type="image/webp">
                         <img src="portfolio/portrete/thumbs/portret-urban.jpg" alt="Portret Urban" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
                     </picture>
@@ -951,6 +968,7 @@
                 <!-- Portfolio Item 11 - Vintage Car -->
                 <div class="portfolio-item relative rounded-xl sm:rounded-2xl cursor-pointer group" data-category="auto" data-fullsize="portfolio-backup/auto/product-vintage-car.jpg" onclick="openLightbox(this)">
                     <picture>
+                        <source media="(max-width: 640px)" srcset="portfolio/auto/thumbs/mobile/product-vintage-car.webp" type="image/webp">
                         <source srcset="portfolio/auto/thumbs/product-vintage-car.webp" type="image/webp">
                         <img src="portfolio/auto/thumbs/product-vintage-car.jpg" alt="Cadillac Vintage" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
                     </picture>
@@ -965,6 +983,7 @@
                 <!-- Portfolio Item 12 - Sports Cars -->
                 <div class="portfolio-item relative rounded-xl sm:rounded-2xl cursor-pointer group" data-category="auto" data-fullsize="portfolio-backup/auto/product-sports-cars.jpg" onclick="openLightbox(this)">
                     <picture>
+                        <source media="(max-width: 640px)" srcset="portfolio/auto/thumbs/mobile/product-sports-cars.webp" type="image/webp">
                         <source srcset="portfolio/auto/thumbs/product-sports-cars.webp" type="image/webp">
                         <img src="portfolio/auto/thumbs/product-sports-cars.jpg" alt="Mașini Sport" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
                     </picture>
@@ -1042,6 +1061,7 @@
                 <div class="relative overflow-hidden sm:overflow-visible">
                     <div class="aspect-square max-w-md mx-auto">
                         <picture>
+                            <source media="(max-width: 640px)" srcset="profile/bogdan-profile-mobile.webp" type="image/webp">
                             <source srcset="profile/bogdan-profile-hq.webp" type="image/webp">
                             <img src="profile/bogdan-profile-hq.jpg" alt="Terzea Bogdan" class="w-full h-full object-cover rounded-3xl">
                         </picture>
