@@ -1276,6 +1276,9 @@
 
         // ===== INITIALIZE ALL ANIMATIONS =====
         function initAnimations() {
+            // Skip GSAP animations on mobile for better performance
+            if (window.innerWidth < 768) return;
+
             // Hero animations
             const heroTl = gsap.timeline();
             heroTl
