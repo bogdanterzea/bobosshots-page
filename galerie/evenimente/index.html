@@ -23,19 +23,43 @@
     {"@context":"https://schema.org","@type":"ImageGallery","name":"Galerie Evenimente - Bobosshots","description":"Fotografie evenimente: nunți, botezuri, concerte în Sibiu","url":"https://bobosshots.com/galerie/evenimente","author":{"@type":"Person","name":"Terzea Bogdan"}}
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Preconnect to external origins -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome CSS - only solid + brands -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/solid.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/solid.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css">
+    </noscript>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- GSAP + ScrollTrigger (defer) -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <!-- Lenis Smooth Scroll (defer) -->
+    <script defer src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
                         dark: { 900: '#0a0a0a', 800: '#121212', 700: '#1a1a1a' },
-                        accent: { primary: '#6366f1', hover: '#818cf8' }
+                        accent: { primary: '#4338ca', hover: '#4f46e5' }
                     }
                 }
             }
@@ -48,8 +72,8 @@
             --bg-tertiary: #1a1a1a;
             --text-primary: #ffffff;
             --text-secondary: #9ca3af;
-            --accent: #6366f1;
-            --accent-hover: #818cf8;
+            --accent: #4338ca;
+            --accent-hover: #4f46e5;
         }
         html { overflow-x: hidden; }
         body { font-family: 'Inter', sans-serif; overflow-x: hidden; background: var(--bg-primary); color: var(--text-primary); }
@@ -105,6 +129,7 @@
         </div>
     </header>
 
+    <main>
     <!-- Page Title -->
     <section class="py-16 text-center">
         <div class="w-20 h-20 bg-accent-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
@@ -119,16 +144,28 @@
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="gallery-item rounded-2xl cursor-pointer" onclick="openLightbox('/portfolio-backup/evenimente/event-concert.jpg')">
-                    <img src="/portfolio/evenimente/thumbs/event-concert.jpg" alt="Concert Live" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="/portfolio/evenimente/thumbs/event-concert.webp" type="image/webp">
+                        <img src="/portfolio/evenimente/thumbs/event-concert.jpg" alt="Concert Live" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    </picture>
                 </div>
                 <div class="gallery-item rounded-2xl cursor-pointer" onclick="openLightbox('/portfolio-backup/evenimente/event-singer.jpg')">
-                    <img src="/portfolio/evenimente/thumbs/event-singer.jpg" alt="Artist pe Scenă" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="/portfolio/evenimente/thumbs/event-singer.webp" type="image/webp">
+                        <img src="/portfolio/evenimente/thumbs/event-singer.jpg" alt="Artist pe Scenă" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    </picture>
                 </div>
                 <div class="gallery-item rounded-2xl cursor-pointer" onclick="openLightbox('/portfolio-backup/evenimente/event-dogs.jpg')">
-                    <img src="/portfolio/evenimente/thumbs/event-dogs.jpg" alt="Eveniment Canin" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="/portfolio/evenimente/thumbs/event-dogs.webp" type="image/webp">
+                        <img src="/portfolio/evenimente/thumbs/event-dogs.jpg" alt="Eveniment Canin" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    </picture>
                 </div>
                 <div class="gallery-item rounded-2xl cursor-pointer" onclick="openLightbox('/portfolio-backup/evenimente/event-marathon.jpg')">
-                    <img src="/portfolio/evenimente/thumbs/event-marathon.jpg" alt="Maraton" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="/portfolio/evenimente/thumbs/event-marathon.webp" type="image/webp">
+                        <img src="/portfolio/evenimente/thumbs/event-marathon.jpg" alt="Maraton" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    </picture>
                 </div>
             </div>
         </div>
@@ -141,17 +178,29 @@
         </a>
     </section>
 
+    </main>
+
     <!-- Lightbox -->
-    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-        <button class="lightbox-btn absolute top-6 right-6 text-white text-xl z-10" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
-        <button id="lightbox-prev" class="lightbox-btn absolute left-6 top-1/2 -translate-y-1/2 text-white text-xl z-10" onclick="event.stopPropagation(); navigateLightbox(-1)"><i class="fas fa-chevron-left"></i></button>
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()" role="dialog" aria-label="Vizualizare imagine">
+        <button class="lightbox-btn absolute top-6 right-6 text-white text-xl z-10" onclick="closeLightbox()" aria-label="Închide"><i class="fas fa-times" aria-hidden="true"></i></button>
+        <button id="lightbox-prev" class="lightbox-btn absolute left-6 top-1/2 -translate-y-1/2 text-white text-xl z-10" onclick="event.stopPropagation(); navigateLightbox(-1)" aria-label="Imaginea anterioară"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
         <div id="lightbox-spinner" class="absolute inset-0 flex items-center justify-center" style="display: none;"><div class="w-12 h-12 border-4 border-accent-primary border-t-transparent rounded-full animate-spin"></div></div>
-        <img id="lightbox-img" src="" alt="Lightbox image">
-        <button id="lightbox-next" class="lightbox-btn absolute right-6 top-1/2 -translate-y-1/2 text-white text-xl z-10" onclick="event.stopPropagation(); navigateLightbox(1)"><i class="fas fa-chevron-right"></i></button>
+        <img id="lightbox-img" src="" alt="Fotografie eveniment">
+        <button id="lightbox-next" class="lightbox-btn absolute right-6 top-1/2 -translate-y-1/2 text-white text-xl z-10" onclick="event.stopPropagation(); navigateLightbox(1)" aria-label="Imaginea următoare"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
         <div class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-dark-800/80 backdrop-blur-sm px-4 py-2 rounded-full text-sm text-gray-300"><span id="lightbox-counter">1 / 4</span></div>
     </div>
 
     <script>
+        // Wait for deferred scripts to load
+        function waitForLibraries(callback) {
+            if (typeof gsap !== 'undefined' && typeof Lenis !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                callback();
+            } else {
+                setTimeout(() => waitForLibraries(callback), 50);
+            }
+        }
+
+        waitForLibraries(function() {
         gsap.registerPlugin(ScrollTrigger);
         // Lenis Smooth Scroll
         const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), orientation: 'vertical', smoothWheel: true });
@@ -163,7 +212,8 @@
         // Scroll Progress
         window.addEventListener('scroll', () => { const scrollTop = window.scrollY; const docHeight = document.documentElement.scrollHeight - window.innerHeight; const scrollPercent = (scrollTop / docHeight) * 100; document.getElementById('scroll-progress').style.width = scrollPercent + '%'; });
         function initBlurLoad() { document.querySelectorAll('.gallery-item img').forEach(img => { img.classList.add('img-blur-load'); if (img.complete) { img.classList.add('loaded'); } else { img.addEventListener('load', () => img.classList.add('loaded')); } }); }
-        window.addEventListener('load', () => { setTimeout(() => { document.getElementById('preloader').classList.add('hidden'); initAnimations(); initBlurLoad(); }, 1500); });
+        function hidePreloaderAndInit() { document.getElementById('preloader').classList.add('hidden'); initAnimations(); initBlurLoad(); }
+        if (document.readyState === 'complete') { setTimeout(hidePreloaderAndInit, 300); } else { window.addEventListener('load', () => setTimeout(hidePreloaderAndInit, 300)); }
         const cursorGlow = document.getElementById('cursor-glow');
         if (window.innerWidth > 768 && cursorGlow) {
             document.addEventListener('mousemove', (e) => { gsap.to(cursorGlow, { x: e.clientX, y: e.clientY, duration: 0.5, ease: 'power2.out' }); });
@@ -183,9 +233,14 @@
         function openLightbox(src) { const items = Array.from(galleryItems); currentIndex = items.findIndex(item => item.getAttribute('onclick').includes(src)); const img = document.getElementById('lightbox-img'); const spinner = document.getElementById('lightbox-spinner'); img.style.visibility = 'hidden'; img.src = ''; spinner.style.display = 'flex'; document.getElementById('lightbox').classList.add('active'); document.body.style.overflow = 'hidden'; updateCounter(); const newImg = new Image(); newImg.onload = () => { img.src = src; spinner.style.display = 'none'; img.style.visibility = 'visible'; gsap.fromTo('#lightbox-img', { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'power2.out' }); }; newImg.src = src; }
         function closeLightbox() { gsap.to('#lightbox-img', { scale: 0.8, opacity: 0, duration: 0.3, ease: 'power2.in', onComplete: () => { document.getElementById('lightbox').classList.remove('active'); document.body.style.overflow = ''; } }); }
         function navigateLightbox(direction) { currentIndex += direction; if (currentIndex < 0) currentIndex = galleryItems.length - 1; if (currentIndex >= galleryItems.length) currentIndex = 0; const item = galleryItems[currentIndex], onclick = item.getAttribute('onclick'), src = onclick.match(/'([^']+)'/)[1]; const img = document.getElementById('lightbox-img'); const spinner = document.getElementById('lightbox-spinner'); img.style.visibility = 'hidden'; img.src = ''; spinner.style.display = 'flex'; updateCounter(); const newImg = new Image(); newImg.onload = () => { img.src = src; spinner.style.display = 'none'; img.style.visibility = 'visible'; gsap.fromTo('#lightbox-img', { opacity: 0, x: direction * 50 }, { opacity: 1, x: 0, duration: 0.3, ease: 'power2.out' }); }; newImg.src = src; }
+        // Expose functions globally for onclick handlers
+        window.openLightbox = openLightbox;
+        window.closeLightbox = closeLightbox;
+        window.navigateLightbox = navigateLightbox;
         document.getElementById('lightbox').addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; });
         document.getElementById('lightbox').addEventListener('touchend', (e) => { touchEndX = e.changedTouches[0].screenX; const diff = touchStartX - touchEndX; if (Math.abs(diff) > 50) navigateLightbox(diff > 0 ? 1 : -1); });
         document.addEventListener('keydown', (e) => { if (document.getElementById('lightbox').classList.contains('active')) { if (e.key === 'Escape') closeLightbox(); if (e.key === 'ArrowLeft') navigateLightbox(-1); if (e.key === 'ArrowRight') navigateLightbox(1); } });
+        }); // End waitForLibraries callback
     </script>
 </body>
 </html>

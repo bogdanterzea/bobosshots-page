@@ -23,19 +23,43 @@
     {"@context":"https://schema.org","@type":"ImageGallery","name":"Galerie Portrete - Bobosshots","description":"Portrete artistice realizate în Sibiu","url":"https://bobosshots.com/galerie/portrete","author":{"@type":"Person","name":"Terzea Bogdan"}}
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Preconnect to external origins -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome CSS - only solid + brands -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/solid.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/solid.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css">
+    </noscript>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- GSAP + ScrollTrigger (defer) -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <!-- Lenis Smooth Scroll (defer) -->
+    <script defer src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
                         dark: { 900: '#0a0a0a', 800: '#121212', 700: '#1a1a1a' },
-                        accent: { primary: '#6366f1', hover: '#818cf8' }
+                        accent: { primary: '#4338ca', hover: '#4f46e5' }
                     }
                 }
             }
@@ -48,8 +72,8 @@
             --bg-tertiary: #1a1a1a;
             --text-primary: #ffffff;
             --text-secondary: #9ca3af;
-            --accent: #6366f1;
-            --accent-hover: #818cf8;
+            --accent: #4338ca;
+            --accent-hover: #4f46e5;
         }
         html { overflow-x: hidden; }
         body { font-family: 'Inter', sans-serif; overflow-x: hidden; background: var(--bg-primary); color: var(--text-primary); }
@@ -134,6 +158,7 @@
         </div>
     </header>
 
+    <main>
     <!-- Page Title -->
     <section class="py-16 text-center">
         <div class="w-20 h-20 bg-accent-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
@@ -148,19 +173,34 @@
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="gallery-item rounded-2xl cursor-pointer" onclick="openLightbox('/portfolio-backup/portrete/portret-forest.jpg')">
-                    <img src="/portfolio/portrete/thumbs/portret-forest.jpg" alt="Portret în natură" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="/portfolio/portrete/thumbs/portret-forest.webp" type="image/webp">
+                        <img src="/portfolio/portrete/thumbs/portret-forest.jpg" alt="Portret în natură" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    </picture>
                 </div>
                 <div class="gallery-item rounded-2xl cursor-pointer" onclick="openLightbox('/portfolio-backup/portrete/portret-christmas.jpg')">
-                    <img src="/portfolio/portrete/thumbs/portret-christmas.jpg" alt="Portret de Iarnă" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="/portfolio/portrete/thumbs/portret-christmas.webp" type="image/webp">
+                        <img src="/portfolio/portrete/thumbs/portret-christmas.jpg" alt="Portret de Iarnă" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    </picture>
                 </div>
                 <div class="gallery-item rounded-2xl cursor-pointer" onclick="openLightbox('/portfolio-backup/portrete/portret-silhouette.jpg')">
-                    <img src="/portfolio/portrete/thumbs/portret-silhouette.jpg" alt="Siluetă Artistică" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="/portfolio/portrete/thumbs/portret-silhouette.webp" type="image/webp">
+                        <img src="/portfolio/portrete/thumbs/portret-silhouette.jpg" alt="Siluetă Artistică" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    </picture>
                 </div>
                 <div class="gallery-item rounded-2xl cursor-pointer" onclick="openLightbox('/portfolio-backup/portrete/portret-urban.jpg')">
-                    <img src="/portfolio/portrete/thumbs/portret-urban.jpg" alt="Portret Urban" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="/portfolio/portrete/thumbs/portret-urban.webp" type="image/webp">
+                        <img src="/portfolio/portrete/thumbs/portret-urban.jpg" alt="Portret Urban" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    </picture>
                 </div>
                 <div class="gallery-item rounded-2xl cursor-pointer" onclick="openLightbox('/portfolio-backup/portrete/portret-nature.jpg')">
-                    <img src="/portfolio/portrete/thumbs/portret-nature.jpg" alt="Portret în Natură" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="/portfolio/portrete/thumbs/portret-nature.webp" type="image/webp">
+                        <img src="/portfolio/portrete/thumbs/portret-nature.jpg" alt="Portret în Natură" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    </picture>
                 </div>
             </div>
         </div>
@@ -174,19 +214,21 @@
     </section>
 
     <!-- Lightbox -->
-    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-        <button class="lightbox-btn absolute top-6 right-6 text-white text-xl z-10" onclick="closeLightbox()">
-            <i class="fas fa-times"></i>
+    </main>
+
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()" role="dialog" aria-label="Vizualizare imagine">
+        <button class="lightbox-btn absolute top-6 right-6 text-white text-xl z-10" onclick="closeLightbox()" aria-label="Închide">
+            <i class="fas fa-times" aria-hidden="true"></i>
         </button>
-        <button id="lightbox-prev" class="lightbox-btn absolute left-6 top-1/2 -translate-y-1/2 text-white text-xl z-10" onclick="event.stopPropagation(); navigateLightbox(-1)">
-            <i class="fas fa-chevron-left"></i>
+        <button id="lightbox-prev" class="lightbox-btn absolute left-6 top-1/2 -translate-y-1/2 text-white text-xl z-10" onclick="event.stopPropagation(); navigateLightbox(-1)" aria-label="Imaginea anterioară">
+            <i class="fas fa-chevron-left" aria-hidden="true"></i>
         </button>
         <div id="lightbox-spinner" class="absolute inset-0 flex items-center justify-center" style="display: none;">
             <div class="w-12 h-12 border-4 border-accent-primary border-t-transparent rounded-full animate-spin"></div>
         </div>
-        <img id="lightbox-img" src="" alt="Lightbox image">
-        <button id="lightbox-next" class="lightbox-btn absolute right-6 top-1/2 -translate-y-1/2 text-white text-xl z-10" onclick="event.stopPropagation(); navigateLightbox(1)">
-            <i class="fas fa-chevron-right"></i>
+        <img id="lightbox-img" src="" alt="Fotografie portret">
+        <button id="lightbox-next" class="lightbox-btn absolute right-6 top-1/2 -translate-y-1/2 text-white text-xl z-10" onclick="event.stopPropagation(); navigateLightbox(1)" aria-label="Imaginea următoare">
+            <i class="fas fa-chevron-right" aria-hidden="true"></i>
         </button>
         <div class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-dark-800/80 backdrop-blur-sm px-4 py-2 rounded-full text-sm text-gray-300">
             <span id="lightbox-counter">1 / 5</span>
@@ -194,6 +236,16 @@
     </div>
 
     <script>
+        // Wait for deferred scripts to load
+        function waitForLibraries(callback) {
+            if (typeof gsap !== 'undefined' && typeof Lenis !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                callback();
+            } else {
+                setTimeout(() => waitForLibraries(callback), 50);
+            }
+        }
+
+        waitForLibraries(function() {
         gsap.registerPlugin(ScrollTrigger);
 
         // Lenis Smooth Scroll
@@ -213,13 +265,16 @@
         });
 
         // Preloader
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('preloader').classList.add('hidden');
-                initAnimations();
-                initBlurLoad();
-            }, 1500);
-        });
+        function hidePreloaderAndInit() {
+            document.getElementById('preloader').classList.add('hidden');
+            initAnimations();
+            initBlurLoad();
+        }
+        if (document.readyState === 'complete') {
+            setTimeout(hidePreloaderAndInit, 300);
+        } else {
+            window.addEventListener('load', () => setTimeout(hidePreloaderAndInit, 300));
+        }
 
         // Subtle Cursor Glow
         const cursorGlow = document.getElementById('cursor-glow');
@@ -371,6 +426,11 @@
             newImg.src = src;
         }
 
+        // Expose functions globally for onclick handlers
+        window.openLightbox = openLightbox;
+        window.closeLightbox = closeLightbox;
+        window.navigateLightbox = navigateLightbox;
+
         // Touch swipe
         document.getElementById('lightbox').addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; });
         document.getElementById('lightbox').addEventListener('touchend', (e) => {
@@ -387,6 +447,7 @@
                 if (e.key === 'ArrowRight') navigateLightbox(1);
             }
         });
+        }); // End waitForLibraries callback
     </script>
 </body>
 </html>

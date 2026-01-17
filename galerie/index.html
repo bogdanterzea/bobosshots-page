@@ -24,16 +24,35 @@
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="apple-touch-icon" href="/favicon.svg">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Preconnect to external origins -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome CSS - only solid + brands -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/solid.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/solid.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css">
+    </noscript>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
                         dark: { 900: '#0a0a0a', 800: '#121212', 700: '#1a1a1a' },
-                        accent: { primary: '#6366f1', hover: '#818cf8' }
+                        accent: { primary: '#4338ca', hover: '#4f46e5' }
                     }
                 }
             }
@@ -122,7 +141,7 @@
         }
         .lb-spinner {
             border: 3px solid #333;
-            border-top-color: #6366f1;
+            border-top-color: #4f46e5;
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -158,17 +177,17 @@
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-dark-700 py-6 text-center text-gray-500 text-xs">
-        <p>&copy; 2026 Terzea Bogdan | <a href="https://instagram.com/bobosshots" class="text-accent-primary">@bobosshots</a></p>
+    <footer class="border-t border-dark-700 py-6 text-center text-gray-400 text-xs">
+        <p>&copy; 2026 Terzea Bogdan | <a href="https://instagram.com/bobosshots" class="text-accent-primary" aria-label="Instagram @bobosshots">@bobosshots</a></p>
     </footer>
 
     <!-- Lightbox -->
-    <div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLB()">
-        <button class="lb-btn lb-close" onclick="closeLB()"><i class="fas fa-times"></i></button>
-        <button class="lb-btn lb-prev" onclick="navLB(-1)"><i class="fas fa-chevron-left"></i></button>
+    <div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLB()" role="dialog" aria-label="Vizualizare imagine">
+        <button class="lb-btn lb-close" onclick="closeLB()" aria-label="Închide"><i class="fas fa-times" aria-hidden="true"></i></button>
+        <button class="lb-btn lb-prev" onclick="navLB(-1)" aria-label="Imaginea anterioară"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
         <div class="lb-spinner" id="lb-spinner"></div>
-        <img id="lb-img" src="" alt="" onload="document.getElementById('lb-spinner').style.display='none'">
-        <button class="lb-btn lb-next" onclick="navLB(1)"><i class="fas fa-chevron-right"></i></button>
+        <img id="lb-img" src="" alt="Fotografie din galerie" onload="document.getElementById('lb-spinner').style.display='none'">
+        <button class="lb-btn lb-next" onclick="navLB(1)" aria-label="Imaginea următoare"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
         <div class="lb-counter"><span id="lb-count">1</span> / 84</div>
     </div>
 

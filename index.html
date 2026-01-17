@@ -181,23 +181,36 @@
 
     <title>Bobosshots | Terzea Bogdan Fotograf - Sibiu</title>
 
+    <!-- Preconnect to external origins -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome CSS - only solid + brands (smaller than all.min.css) -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/solid.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/solid.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css">
+    </noscript>
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- GSAP + ScrollTrigger -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <!-- GSAP + ScrollTrigger + ScrollToPlugin (defer) -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
 
-    <!-- Lenis Smooth Scroll -->
-    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lenis Smooth Scroll (defer) -->
+    <script defer src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 
     <script>
         tailwind.config = {
@@ -212,8 +225,8 @@
                             500: '#3a3a3a',
                         },
                         accent: {
-                            primary: '#6366f1',
-                            hover: '#818cf8',
+                            primary: '#4338ca',
+                            hover: '#4f46e5',
                         }
                     },
                     fontFamily: {
@@ -714,8 +727,8 @@
                 </div>
 
                 <!-- Mobile Menu Button -->
-                <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
-                    <i class="fas fa-bars text-2xl"></i>
+                <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none" aria-label="Deschide meniul">
+                    <i class="fas fa-bars text-2xl" aria-hidden="true"></i>
                 </button>
             </div>
         </div>
@@ -734,8 +747,9 @@
         </div>
     </nav>
 
+    <main>
     <!-- Hero Section -->
-    <section id="acasa" class="relative min-h-screen flex items-center justify-center hero-bg" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('hero-background.jpg');">
+    <section id="acasa" class="relative min-h-screen flex items-center justify-center hero-bg" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), image-set(url('hero-background.webp') type('image/webp'), url('hero-background.jpg') type('image/jpeg'));">
         <div class="hero-content text-center px-4">
             <!-- Location Badge -->
             <div class="inline-flex items-center bg-dark-700/80 backdrop-blur-sm px-4 py-2 rounded-full mb-8">
@@ -766,8 +780,8 @@
 
             <!-- Scroll Indicator -->
             <div class="scroll-indicator">
-                <a href="#portofoliu" class="text-white/50 hover:text-white transition-colors">
-                    <i class="fas fa-chevron-down text-2xl"></i>
+                <a href="#portofoliu" class="text-white/50 hover:text-white transition-colors" aria-label="Scroll la portofoliu">
+                    <i class="fas fa-chevron-down text-2xl" aria-hidden="true"></i>
                 </a>
             </div>
         </div>
@@ -796,7 +810,10 @@
             <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
                 <!-- Portfolio Item 1 - Portret Forest -->
                 <div class="portfolio-item relative rounded-xl sm:rounded-2xl cursor-pointer group" data-category="portrete" data-fullsize="portfolio-backup/portrete/portret-forest.jpg" onclick="openLightbox(this)">
-                    <img src="portfolio/portrete/thumbs/portret-forest.jpg" alt="Portret în natură" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="portfolio/portrete/thumbs/portret-forest.webp" type="image/webp">
+                        <img src="portfolio/portrete/thumbs/portret-forest.jpg" alt="Portret în natură" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
+                    </picture>
                     <div class="overlay absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-xl sm:rounded-2xl flex items-end p-3 sm:p-6">
                         <div>
                             <h3 class="text-sm sm:text-lg font-semibold">Portret în Natură</h3>
@@ -807,7 +824,10 @@
 
                 <!-- Portfolio Item 2 - Concert -->
                 <div class="portfolio-item relative rounded-xl sm:rounded-2xl cursor-pointer group" data-category="evenimente" data-fullsize="portfolio-backup/evenimente/event-concert.jpg" onclick="openLightbox(this)">
-                    <img src="portfolio/evenimente/thumbs/event-concert.jpg" alt="Concert Live" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="portfolio/evenimente/thumbs/event-concert.webp" type="image/webp">
+                        <img src="portfolio/evenimente/thumbs/event-concert.jpg" alt="Concert Live" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
+                    </picture>
                     <div class="overlay absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-xl sm:rounded-2xl flex items-end p-3 sm:p-6">
                         <div>
                             <h3 class="text-sm sm:text-lg font-semibold">Concert Live</h3>
@@ -818,7 +838,10 @@
 
                 <!-- Portfolio Item 3 - Mountain Lake -->
                 <div class="portfolio-item relative rounded-xl sm:rounded-2xl cursor-pointer group" data-category="travel" data-fullsize="portfolio-backup/travel/travel-mountain-lake.jpg" onclick="openLightbox(this)">
-                    <img src="portfolio/travel/thumbs/travel-mountain-lake.jpg" alt="Lac Montan" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="portfolio/travel/thumbs/travel-mountain-lake.webp" type="image/webp">
+                        <img src="portfolio/travel/thumbs/travel-mountain-lake.jpg" alt="Lac Montan" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
+                    </picture>
                     <div class="overlay absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-xl sm:rounded-2xl flex items-end p-3 sm:p-6">
                         <div>
                             <h3 class="text-sm sm:text-lg font-semibold">Lac Montan</h3>
@@ -829,7 +852,10 @@
 
                 <!-- Portfolio Item 4 - Silhouette B&W -->
                 <div class="portfolio-item relative rounded-xl sm:rounded-2xl cursor-pointer group" data-category="portrete" data-fullsize="portfolio-backup/portrete/portret-silhouette.jpg" onclick="openLightbox(this)">
-                    <img src="portfolio/portrete/thumbs/portret-silhouette.jpg" alt="Portret Siluetă" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="portfolio/portrete/thumbs/portret-silhouette.webp" type="image/webp">
+                        <img src="portfolio/portrete/thumbs/portret-silhouette.jpg" alt="Portret Siluetă" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
+                    </picture>
                     <div class="overlay absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-xl sm:rounded-2xl flex items-end p-3 sm:p-6">
                         <div>
                             <h3 class="text-sm sm:text-lg font-semibold">Siluetă Artistică</h3>
@@ -840,7 +866,10 @@
 
                 <!-- Portfolio Item 5 - Singer -->
                 <div class="portfolio-item relative rounded-xl sm:rounded-2xl cursor-pointer group" data-category="evenimente" data-fullsize="portfolio-backup/evenimente/event-singer.jpg" onclick="openLightbox(this)">
-                    <img src="portfolio/evenimente/thumbs/event-singer.jpg" alt="Artist pe Scenă" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="portfolio/evenimente/thumbs/event-singer.webp" type="image/webp">
+                        <img src="portfolio/evenimente/thumbs/event-singer.jpg" alt="Artist pe Scenă" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
+                    </picture>
                     <div class="overlay absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-xl sm:rounded-2xl flex items-end p-3 sm:p-6">
                         <div>
                             <h3 class="text-sm sm:text-lg font-semibold">Artist pe Scenă</h3>
@@ -851,7 +880,10 @@
 
                 <!-- Portfolio Item 6 - Village Church -->
                 <div class="portfolio-item relative rounded-xl sm:rounded-2xl cursor-pointer group" data-category="travel" data-fullsize="portfolio-backup/travel/travel-village-church.jpg" onclick="openLightbox(this)">
-                    <img src="portfolio/travel/thumbs/travel-village-church.jpg" alt="Sat Transilvănean" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="portfolio/travel/thumbs/travel-village-church.webp" type="image/webp">
+                        <img src="portfolio/travel/thumbs/travel-village-church.jpg" alt="Sat Transilvănean" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
+                    </picture>
                     <div class="overlay absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-xl sm:rounded-2xl flex items-end p-3 sm:p-6">
                         <div>
                             <h3 class="text-sm sm:text-lg font-semibold">Sat Transilvănean</h3>
@@ -862,7 +894,10 @@
 
                 <!-- Portfolio Item 7 - Christmas Portrait -->
                 <div class="portfolio-item relative rounded-xl sm:rounded-2xl cursor-pointer group" data-category="portrete" data-fullsize="portfolio-backup/portrete/portret-christmas.jpg" onclick="openLightbox(this)">
-                    <img src="portfolio/portrete/thumbs/portret-christmas.jpg" alt="Portret de Iarnă" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="portfolio/portrete/thumbs/portret-christmas.webp" type="image/webp">
+                        <img src="portfolio/portrete/thumbs/portret-christmas.jpg" alt="Portret de Iarnă" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
+                    </picture>
                     <div class="overlay absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-xl sm:rounded-2xl flex items-end p-3 sm:p-6">
                         <div>
                             <h3 class="text-sm sm:text-lg font-semibold">Portret de Iarnă</h3>
@@ -873,7 +908,10 @@
 
                 <!-- Portfolio Item 8 - Dogs Event -->
                 <div class="portfolio-item relative rounded-xl sm:rounded-2xl cursor-pointer group" data-category="evenimente" data-fullsize="portfolio-backup/evenimente/event-dogs.jpg" onclick="openLightbox(this)">
-                    <img src="portfolio/evenimente/thumbs/event-dogs.jpg" alt="Eveniment Canin" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="portfolio/evenimente/thumbs/event-dogs.webp" type="image/webp">
+                        <img src="portfolio/evenimente/thumbs/event-dogs.jpg" alt="Eveniment Canin" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
+                    </picture>
                     <div class="overlay absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-xl sm:rounded-2xl flex items-end p-3 sm:p-6">
                         <div>
                             <h3 class="text-sm sm:text-lg font-semibold">Eveniment Canin</h3>
@@ -884,7 +922,10 @@
 
                 <!-- Portfolio Item 9 - Motorcycle -->
                 <div class="portfolio-item relative rounded-xl sm:rounded-2xl cursor-pointer group" data-category="auto" data-fullsize="portfolio-backup/auto/product-motorcycle.jpg" onclick="openLightbox(this)">
-                    <img src="portfolio/auto/thumbs/product-motorcycle.jpg" alt="Motocicletă Kawasaki" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="portfolio/auto/thumbs/product-motorcycle.webp" type="image/webp">
+                        <img src="portfolio/auto/thumbs/product-motorcycle.jpg" alt="Motocicletă Kawasaki" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
+                    </picture>
                     <div class="overlay absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-xl sm:rounded-2xl flex items-end p-3 sm:p-6">
                         <div>
                             <h3 class="text-sm sm:text-lg font-semibold">Kawasaki ZX-6R</h3>
@@ -895,7 +936,10 @@
 
                 <!-- Portfolio Item 10 - Urban Portrait -->
                 <div class="portfolio-item relative rounded-xl sm:rounded-2xl cursor-pointer group" data-category="portrete" data-fullsize="portfolio-backup/portrete/portret-urban.jpg" onclick="openLightbox(this)">
-                    <img src="portfolio/portrete/thumbs/portret-urban.jpg" alt="Portret Urban" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="portfolio/portrete/thumbs/portret-urban.webp" type="image/webp">
+                        <img src="portfolio/portrete/thumbs/portret-urban.jpg" alt="Portret Urban" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
+                    </picture>
                     <div class="overlay absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-xl sm:rounded-2xl flex items-end p-3 sm:p-6">
                         <div>
                             <h3 class="text-sm sm:text-lg font-semibold">Portret Urban</h3>
@@ -906,7 +950,10 @@
 
                 <!-- Portfolio Item 11 - Vintage Car -->
                 <div class="portfolio-item relative rounded-xl sm:rounded-2xl cursor-pointer group" data-category="auto" data-fullsize="portfolio-backup/auto/product-vintage-car.jpg" onclick="openLightbox(this)">
-                    <img src="portfolio/auto/thumbs/product-vintage-car.jpg" alt="Cadillac Vintage" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="portfolio/auto/thumbs/product-vintage-car.webp" type="image/webp">
+                        <img src="portfolio/auto/thumbs/product-vintage-car.jpg" alt="Cadillac Vintage" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
+                    </picture>
                     <div class="overlay absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-xl sm:rounded-2xl flex items-end p-3 sm:p-6">
                         <div>
                             <h3 class="text-sm sm:text-lg font-semibold">Cadillac Vintage</h3>
@@ -917,7 +964,10 @@
 
                 <!-- Portfolio Item 12 - Sports Cars -->
                 <div class="portfolio-item relative rounded-xl sm:rounded-2xl cursor-pointer group" data-category="auto" data-fullsize="portfolio-backup/auto/product-sports-cars.jpg" onclick="openLightbox(this)">
-                    <img src="portfolio/auto/thumbs/product-sports-cars.jpg" alt="Mașini Sport" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="portfolio/auto/thumbs/product-sports-cars.webp" type="image/webp">
+                        <img src="portfolio/auto/thumbs/product-sports-cars.jpg" alt="Mașini Sport" class="w-full h-44 sm:h-80 object-cover rounded-xl sm:rounded-2xl" loading="lazy">
+                    </picture>
                     <div class="overlay absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-xl sm:rounded-2xl flex items-end p-3 sm:p-6">
                         <div>
                             <h3 class="text-sm sm:text-lg font-semibold">Mașini Sport</h3>
@@ -991,7 +1041,10 @@
                 <!-- Profile Image -->
                 <div class="relative overflow-hidden sm:overflow-visible">
                     <div class="aspect-square max-w-md mx-auto">
-                        <img src="profile/bogdan-profile-hq.jpg" alt="Terzea Bogdan" class="w-full h-full object-cover rounded-3xl">
+                        <picture>
+                            <source srcset="profile/bogdan-profile-hq.webp" type="image/webp">
+                            <img src="profile/bogdan-profile-hq.jpg" alt="Terzea Bogdan" class="w-full h-full object-cover rounded-3xl">
+                        </picture>
                         <!-- Decorative elements - hidden on mobile to prevent overflow -->
                         <div class="hidden sm:block absolute -bottom-6 -right-6 w-32 h-32 bg-accent-primary/20 rounded-3xl -z-10"></div>
                         <div class="hidden sm:block absolute -top-6 -left-6 w-24 h-24 border-2 border-accent-primary/30 rounded-3xl -z-10"></div>
@@ -1066,6 +1119,8 @@
         </div>
     </section>
 
+    </main>
+
     <!-- Footer -->
     <footer class="bg-dark-900 border-t border-dark-700 py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1076,17 +1131,17 @@
                 </a>
 
                 <!-- Copyright -->
-                <p class="text-gray-500 text-sm text-center md:text-left mb-4 md:mb-0">
+                <p class="text-gray-400 text-sm text-center md:text-left mb-4 md:mb-0">
                     &copy; 2026 Terzea Bogdan. Toate drepturile rezervate.
                 </p>
 
                 <!-- Social Icons -->
                 <div class="flex items-center space-x-4">
-                    <a href="https://instagram.com/bobosshots" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-dark-700 hover:bg-accent-primary rounded-full flex items-center justify-center transition-colors">
-                        <i class="fab fa-instagram text-white"></i>
+                    <a href="https://instagram.com/bobosshots" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-dark-700 hover:bg-accent-primary rounded-full flex items-center justify-center transition-colors" aria-label="Instagram">
+                        <i class="fab fa-instagram text-white" aria-hidden="true"></i>
                     </a>
-                    <a href="https://www.behance.net/bogdanterzea" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-dark-700 hover:bg-accent-primary rounded-full flex items-center justify-center transition-colors">
-                        <i class="fab fa-behance text-white"></i>
+                    <a href="https://www.behance.net/bogdanterzea" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-dark-700 hover:bg-accent-primary rounded-full flex items-center justify-center transition-colors" aria-label="Behance">
+                        <i class="fab fa-behance text-white" aria-hidden="true"></i>
                     </a>
                 </div>
             </div>
@@ -1115,6 +1170,16 @@
 
     <!-- JavaScript -->
     <script>
+        // Wait for deferred scripts to load
+        function waitForLibraries(callback) {
+            if (typeof gsap !== 'undefined' && typeof Lenis !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                callback();
+            } else {
+                setTimeout(() => waitForLibraries(callback), 50);
+            }
+        }
+
+        waitForLibraries(function() {
         // ===== REGISTER GSAP PLUGINS =====
         gsap.registerPlugin(ScrollTrigger);
 
@@ -1164,13 +1229,20 @@
         }
 
         // ===== PRELOADER =====
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('preloader').classList.add('hidden');
-                initAnimations();
-                initBlurLoad();
-            }, 1800);
-        });
+        function hidePreloaderAndInit() {
+            document.getElementById('preloader').classList.add('hidden');
+            initAnimations();
+            initBlurLoad();
+        }
+
+        // Check if page already loaded, otherwise wait for load event
+        if (document.readyState === 'complete') {
+            setTimeout(hidePreloaderAndInit, 300);
+        } else {
+            window.addEventListener('load', () => {
+                setTimeout(hidePreloaderAndInit, 300);
+            });
+        }
 
         // ===== SUBTLE CURSOR GLOW =====
         const cursorGlow = document.getElementById('cursor-glow');
@@ -1532,6 +1604,11 @@
             newImg.src = fullsizeSrc;
         }
 
+        // Expose functions globally for onclick handlers
+        window.openLightbox = openLightbox;
+        window.closeLightbox = closeLightbox;
+        window.navigateLightbox = navigateLightbox;
+
         // Touch swipe for lightbox
         document.getElementById('lightbox').addEventListener('touchstart', (e) => {
             touchStartX = e.changedTouches[0].screenX;
@@ -1626,9 +1703,7 @@
         window.addEventListener('resize', () => {
             ScrollTrigger.refresh();
         });
+        }); // End waitForLibraries callback
     </script>
-
-    <!-- GSAP ScrollTo Plugin -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
 </body>
 </html>
