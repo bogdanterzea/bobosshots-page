@@ -135,7 +135,7 @@
         }
         .lb-spinner {
             border: 3px solid #333;
-            border-top-color: #6366f1;
+            border-top-color: #4f46e5;
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -171,17 +171,17 @@
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-dark-700 py-6 text-center text-gray-500 text-xs">
-        <p>&copy; 2026 Terzea Bogdan | <a href="https://instagram.com/bobosshots" class="text-accent-primary">@bobosshots</a></p>
+    <footer class="border-t border-dark-700 py-6 text-center text-gray-400 text-xs">
+        <p>&copy; 2026 Terzea Bogdan | <a href="https://instagram.com/bobosshots" class="text-accent-primary" aria-label="Instagram @bobosshots">@bobosshots</a></p>
     </footer>
 
     <!-- Lightbox -->
-    <div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLB()">
-        <button class="lb-btn lb-close" onclick="closeLB()"><i class="fas fa-times"></i></button>
-        <button class="lb-btn lb-prev" onclick="navLB(-1)"><i class="fas fa-chevron-left"></i></button>
+    <div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLB()" role="dialog" aria-label="Vizualizare imagine">
+        <button class="lb-btn lb-close" onclick="closeLB()" aria-label="Închide"><i class="fas fa-times" aria-hidden="true"></i></button>
+        <button class="lb-btn lb-prev" onclick="navLB(-1)" aria-label="Imaginea anterioară"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
         <div class="lb-spinner" id="lb-spinner"></div>
-        <img id="lb-img" src="" alt="" onload="document.getElementById('lb-spinner').style.display='none'">
-        <button class="lb-btn lb-next" onclick="navLB(1)"><i class="fas fa-chevron-right"></i></button>
+        <img id="lb-img" src="" alt="Fotografie din galerie" onload="document.getElementById('lb-spinner').style.display='none'">
+        <button class="lb-btn lb-next" onclick="navLB(1)" aria-label="Imaginea următoare"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
         <div class="lb-counter"><span id="lb-count">1</span> / 84</div>
     </div>
 

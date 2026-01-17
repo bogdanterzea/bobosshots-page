@@ -53,7 +53,7 @@
                 extend: {
                     colors: {
                         dark: { 900: '#0a0a0a', 800: '#121212', 700: '#1a1a1a' },
-                        accent: { primary: '#6366f1', hover: '#818cf8' }
+                        accent: { primary: '#4f46e5', hover: '#6366f1' }
                     }
                 }
             }
@@ -66,8 +66,8 @@
             --bg-tertiary: #1a1a1a;
             --text-primary: #ffffff;
             --text-secondary: #9ca3af;
-            --accent: #6366f1;
-            --accent-hover: #818cf8;
+            --accent: #4f46e5;
+            --accent-hover: #6366f1;
         }
         html { overflow-x: hidden; }
         body { font-family: 'Inter', sans-serif; overflow-x: hidden; background: var(--bg-primary); color: var(--text-primary); }
@@ -124,6 +124,7 @@
         </div>
     </header>
 
+    <main>
     <!-- Page Title -->
     <section class="py-16 text-center">
         <div class="w-20 h-20 bg-accent-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
@@ -154,13 +155,15 @@
         </a>
     </section>
 
+    </main>
+
     <!-- Lightbox -->
-    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-        <button class="lightbox-btn absolute top-6 right-6 text-white text-xl z-10" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
-        <button id="lightbox-prev" class="lightbox-btn absolute left-6 top-1/2 -translate-y-1/2 text-white text-xl z-10" onclick="event.stopPropagation(); navigateLightbox(-1)"><i class="fas fa-chevron-left"></i></button>
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()" role="dialog" aria-label="Vizualizare imagine">
+        <button class="lightbox-btn absolute top-6 right-6 text-white text-xl z-10" onclick="closeLightbox()" aria-label="Închide"><i class="fas fa-times" aria-hidden="true"></i></button>
+        <button id="lightbox-prev" class="lightbox-btn absolute left-6 top-1/2 -translate-y-1/2 text-white text-xl z-10" onclick="event.stopPropagation(); navigateLightbox(-1)" aria-label="Imaginea anterioară"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
         <div id="lightbox-spinner" class="absolute inset-0 flex items-center justify-center" style="display: none;"><div class="w-12 h-12 border-4 border-accent-primary border-t-transparent rounded-full animate-spin"></div></div>
-        <img id="lightbox-img" src="" alt="Lightbox image">
-        <button id="lightbox-next" class="lightbox-btn absolute right-6 top-1/2 -translate-y-1/2 text-white text-xl z-10" onclick="event.stopPropagation(); navigateLightbox(1)"><i class="fas fa-chevron-right"></i></button>
+        <img id="lightbox-img" src="" alt="Fotografie travel">
+        <button id="lightbox-next" class="lightbox-btn absolute right-6 top-1/2 -translate-y-1/2 text-white text-xl z-10" onclick="event.stopPropagation(); navigateLightbox(1)" aria-label="Imaginea următoare"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
         <div class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-dark-800/80 backdrop-blur-sm px-4 py-2 rounded-full text-sm text-gray-300"><span id="lightbox-counter">1 / 2</span></div>
     </div>
 
