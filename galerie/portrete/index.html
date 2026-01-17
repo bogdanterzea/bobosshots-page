@@ -34,9 +34,15 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <!-- Font Awesome CSS - async loaded -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+    <!-- Font Awesome CSS - only solid + brands -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/solid.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/solid.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css">
+    </noscript>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -167,19 +173,34 @@
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="gallery-item rounded-2xl cursor-pointer" onclick="openLightbox('/portfolio-backup/portrete/portret-forest.jpg')">
-                    <img src="/portfolio/portrete/thumbs/portret-forest.jpg" alt="Portret în natură" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="/portfolio/portrete/thumbs/portret-forest.webp" type="image/webp">
+                        <img src="/portfolio/portrete/thumbs/portret-forest.jpg" alt="Portret în natură" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    </picture>
                 </div>
                 <div class="gallery-item rounded-2xl cursor-pointer" onclick="openLightbox('/portfolio-backup/portrete/portret-christmas.jpg')">
-                    <img src="/portfolio/portrete/thumbs/portret-christmas.jpg" alt="Portret de Iarnă" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="/portfolio/portrete/thumbs/portret-christmas.webp" type="image/webp">
+                        <img src="/portfolio/portrete/thumbs/portret-christmas.jpg" alt="Portret de Iarnă" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    </picture>
                 </div>
                 <div class="gallery-item rounded-2xl cursor-pointer" onclick="openLightbox('/portfolio-backup/portrete/portret-silhouette.jpg')">
-                    <img src="/portfolio/portrete/thumbs/portret-silhouette.jpg" alt="Siluetă Artistică" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="/portfolio/portrete/thumbs/portret-silhouette.webp" type="image/webp">
+                        <img src="/portfolio/portrete/thumbs/portret-silhouette.jpg" alt="Siluetă Artistică" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    </picture>
                 </div>
                 <div class="gallery-item rounded-2xl cursor-pointer" onclick="openLightbox('/portfolio-backup/portrete/portret-urban.jpg')">
-                    <img src="/portfolio/portrete/thumbs/portret-urban.jpg" alt="Portret Urban" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="/portfolio/portrete/thumbs/portret-urban.webp" type="image/webp">
+                        <img src="/portfolio/portrete/thumbs/portret-urban.jpg" alt="Portret Urban" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    </picture>
                 </div>
                 <div class="gallery-item rounded-2xl cursor-pointer" onclick="openLightbox('/portfolio-backup/portrete/portret-nature.jpg')">
-                    <img src="/portfolio/portrete/thumbs/portret-nature.jpg" alt="Portret în Natură" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="/portfolio/portrete/thumbs/portret-nature.webp" type="image/webp">
+                        <img src="/portfolio/portrete/thumbs/portret-nature.jpg" alt="Portret în Natură" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    </picture>
                 </div>
             </div>
         </div>

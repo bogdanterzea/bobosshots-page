@@ -34,9 +34,15 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <!-- Font Awesome CSS - async loaded -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+    <!-- Font Awesome CSS - only solid + brands -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/solid.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/solid.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css">
+    </noscript>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -138,16 +144,28 @@
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="gallery-item rounded-2xl cursor-pointer" onclick="openLightbox('/portfolio-backup/auto/product-motorcycle.jpg')">
-                    <img src="/portfolio/auto/thumbs/product-motorcycle.jpg" alt="Kawasaki ZX-6R" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="/portfolio/auto/thumbs/product-motorcycle.webp" type="image/webp">
+                        <img src="/portfolio/auto/thumbs/product-motorcycle.jpg" alt="Kawasaki ZX-6R" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    </picture>
                 </div>
                 <div class="gallery-item rounded-2xl cursor-pointer" onclick="openLightbox('/portfolio-backup/auto/product-moto-action.jpg')">
-                    <img src="/portfolio/auto/thumbs/product-moto-action.jpg" alt="Motocicletă în Acțiune" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="/portfolio/auto/thumbs/product-moto-action.webp" type="image/webp">
+                        <img src="/portfolio/auto/thumbs/product-moto-action.jpg" alt="Motocicletă în Acțiune" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    </picture>
                 </div>
                 <div class="gallery-item rounded-2xl cursor-pointer" onclick="openLightbox('/portfolio-backup/auto/product-vintage-car.jpg')">
-                    <img src="/portfolio/auto/thumbs/product-vintage-car.jpg" alt="Cadillac Vintage" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="/portfolio/auto/thumbs/product-vintage-car.webp" type="image/webp">
+                        <img src="/portfolio/auto/thumbs/product-vintage-car.jpg" alt="Cadillac Vintage" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    </picture>
                 </div>
                 <div class="gallery-item rounded-2xl cursor-pointer" onclick="openLightbox('/portfolio-backup/auto/product-sports-cars.jpg')">
-                    <img src="/portfolio/auto/thumbs/product-sports-cars.jpg" alt="Mașini Sport" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    <picture>
+                        <source srcset="/portfolio/auto/thumbs/product-sports-cars.webp" type="image/webp">
+                        <img src="/portfolio/auto/thumbs/product-sports-cars.jpg" alt="Mașini Sport" class="w-full h-80 object-cover rounded-2xl" loading="lazy">
+                    </picture>
                 </div>
             </div>
         </div>
