@@ -188,8 +188,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts - non-render-blocking -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"></noscript>
 
     <!-- Font Awesome CSS - only solid + brands (smaller than all.min.css) -->
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -238,6 +239,16 @@
     </script>
 
     <style>
+        /* Font Awesome font-display override for better performance */
+        @font-face {
+            font-family: 'Font Awesome 6 Free';
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Font Awesome 6 Brands';
+            font-display: swap;
+        }
+
         /* ===== CSS VARIABLES FOR THEMING ===== */
         :root {
             --bg-primary: #0a0a0a;
@@ -1275,6 +1286,9 @@
 
         // ===== INITIALIZE ALL ANIMATIONS =====
         function initAnimations() {
+            // Skip GSAP animations on mobile for better performance
+            if (window.innerWidth < 768) return;
+
             // Hero animations
             const heroTl = gsap.timeline();
             heroTl
