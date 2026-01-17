@@ -23,12 +23,30 @@
     {"@context":"https://schema.org","@type":"ImageGallery","name":"Travel Photography - Bobosshots","description":"Peisaje din România, Transilvania și natură","url":"https://bobosshots.com/galerie/travel","author":{"@type":"Person","name":"Terzea Bogdan"}}
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Preconnect to external origins -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome CSS - async loaded -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- GSAP + ScrollTrigger (defer) -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <!-- Lenis Smooth Scroll (defer) -->
+    <script defer src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -147,6 +165,16 @@
     </div>
 
     <script>
+        // Wait for deferred scripts to load
+        function waitForLibraries(callback) {
+            if (typeof gsap !== 'undefined' && typeof Lenis !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                callback();
+            } else {
+                setTimeout(() => waitForLibraries(callback), 50);
+            }
+        }
+
+        waitForLibraries(function() {
         gsap.registerPlugin(ScrollTrigger);
         // Lenis Smooth Scroll
         const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), orientation: 'vertical', smoothWheel: true });
@@ -158,7 +186,8 @@
         // Scroll Progress
         window.addEventListener('scroll', () => { const scrollTop = window.scrollY; const docHeight = document.documentElement.scrollHeight - window.innerHeight; const scrollPercent = (scrollTop / docHeight) * 100; document.getElementById('scroll-progress').style.width = scrollPercent + '%'; });
         function initBlurLoad() { document.querySelectorAll('.gallery-item img').forEach(img => { img.classList.add('img-blur-load'); if (img.complete) { img.classList.add('loaded'); } else { img.addEventListener('load', () => img.classList.add('loaded')); } }); }
-        window.addEventListener('load', () => { setTimeout(() => { document.getElementById('preloader').classList.add('hidden'); initAnimations(); initBlurLoad(); }, 1500); });
+        function hidePreloaderAndInit() { document.getElementById('preloader').classList.add('hidden'); initAnimations(); initBlurLoad(); }
+        if (document.readyState === 'complete') { setTimeout(hidePreloaderAndInit, 300); } else { window.addEventListener('load', () => setTimeout(hidePreloaderAndInit, 300)); }
         const cursorGlow = document.getElementById('cursor-glow');
         if (window.innerWidth > 768 && cursorGlow) {
             document.addEventListener('mousemove', (e) => { gsap.to(cursorGlow, { x: e.clientX, y: e.clientY, duration: 0.5, ease: 'power2.out' }); });
@@ -178,9 +207,14 @@
         function openLightbox(src) { const items = Array.from(galleryItems); currentIndex = items.findIndex(item => item.getAttribute('onclick').includes(src)); const img = document.getElementById('lightbox-img'); const spinner = document.getElementById('lightbox-spinner'); img.style.visibility = 'hidden'; img.src = ''; spinner.style.display = 'flex'; document.getElementById('lightbox').classList.add('active'); document.body.style.overflow = 'hidden'; updateCounter(); const newImg = new Image(); newImg.onload = () => { img.src = src; spinner.style.display = 'none'; img.style.visibility = 'visible'; gsap.fromTo('#lightbox-img', { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'power2.out' }); }; newImg.src = src; }
         function closeLightbox() { gsap.to('#lightbox-img', { scale: 0.8, opacity: 0, duration: 0.3, ease: 'power2.in', onComplete: () => { document.getElementById('lightbox').classList.remove('active'); document.body.style.overflow = ''; } }); }
         function navigateLightbox(direction) { currentIndex += direction; if (currentIndex < 0) currentIndex = galleryItems.length - 1; if (currentIndex >= galleryItems.length) currentIndex = 0; const item = galleryItems[currentIndex], onclick = item.getAttribute('onclick'), src = onclick.match(/'([^']+)'/)[1]; const img = document.getElementById('lightbox-img'); const spinner = document.getElementById('lightbox-spinner'); img.style.visibility = 'hidden'; img.src = ''; spinner.style.display = 'flex'; updateCounter(); const newImg = new Image(); newImg.onload = () => { img.src = src; spinner.style.display = 'none'; img.style.visibility = 'visible'; gsap.fromTo('#lightbox-img', { opacity: 0, x: direction * 50 }, { opacity: 1, x: 0, duration: 0.3, ease: 'power2.out' }); }; newImg.src = src; }
+        // Expose functions globally for onclick handlers
+        window.openLightbox = openLightbox;
+        window.closeLightbox = closeLightbox;
+        window.navigateLightbox = navigateLightbox;
         document.getElementById('lightbox').addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; });
         document.getElementById('lightbox').addEventListener('touchend', (e) => { touchEndX = e.changedTouches[0].screenX; const diff = touchStartX - touchEndX; if (Math.abs(diff) > 50) navigateLightbox(diff > 0 ? 1 : -1); });
         document.addEventListener('keydown', (e) => { if (document.getElementById('lightbox').classList.contains('active')) { if (e.key === 'Escape') closeLightbox(); if (e.key === 'ArrowLeft') navigateLightbox(-1); if (e.key === 'ArrowRight') navigateLightbox(1); } });
+        }); // End waitForLibraries callback
     </script>
 </body>
 </html>

@@ -23,12 +23,30 @@
     {"@context":"https://schema.org","@type":"ImageGallery","name":"Galerie Portrete - Bobosshots","description":"Portrete artistice realizate în Sibiu","url":"https://bobosshots.com/galerie/portrete","author":{"@type":"Person","name":"Terzea Bogdan"}}
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Preconnect to external origins -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome CSS - async loaded -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- GSAP + ScrollTrigger (defer) -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <!-- Lenis Smooth Scroll (defer) -->
+    <script defer src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -194,6 +212,16 @@
     </div>
 
     <script>
+        // Wait for deferred scripts to load
+        function waitForLibraries(callback) {
+            if (typeof gsap !== 'undefined' && typeof Lenis !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                callback();
+            } else {
+                setTimeout(() => waitForLibraries(callback), 50);
+            }
+        }
+
+        waitForLibraries(function() {
         gsap.registerPlugin(ScrollTrigger);
 
         // Lenis Smooth Scroll
@@ -213,13 +241,16 @@
         });
 
         // Preloader
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('preloader').classList.add('hidden');
-                initAnimations();
-                initBlurLoad();
-            }, 1500);
-        });
+        function hidePreloaderAndInit() {
+            document.getElementById('preloader').classList.add('hidden');
+            initAnimations();
+            initBlurLoad();
+        }
+        if (document.readyState === 'complete') {
+            setTimeout(hidePreloaderAndInit, 300);
+        } else {
+            window.addEventListener('load', () => setTimeout(hidePreloaderAndInit, 300));
+        }
 
         // Subtle Cursor Glow
         const cursorGlow = document.getElementById('cursor-glow');
@@ -371,6 +402,11 @@
             newImg.src = src;
         }
 
+        // Expose functions globally for onclick handlers
+        window.openLightbox = openLightbox;
+        window.closeLightbox = closeLightbox;
+        window.navigateLightbox = navigateLightbox;
+
         // Touch swipe
         document.getElementById('lightbox').addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; });
         document.getElementById('lightbox').addEventListener('touchend', (e) => {
@@ -387,6 +423,7 @@
                 if (e.key === 'ArrowRight') navigateLightbox(1);
             }
         });
+        }); // End waitForLibraries callback
     </script>
 </body>
 </html>
