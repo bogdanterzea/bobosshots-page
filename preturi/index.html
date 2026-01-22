@@ -295,6 +295,106 @@
         .nav-placeholder.active {
             display: block;
         }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .mobile-menu-content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+        }
+        .mobile-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        .menu-section {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .menu-section-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        .menu-items {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .menu-item {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .menu-item:hover {
+            color: var(--text-primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+        .menu-item.standalone {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-top: 1rem;
+        }
+        .mobile-menu-cta {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .mobile-menu-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(131, 58, 180, 0.3);
+        }
+        /* Hide mobile menu elements when not active for animation */
+        .mobile-menu-overlay .menu-section-title {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .mobile-menu-overlay.active .menu-section-title,
+        .mobile-menu-overlay.active .menu-item,
+        .mobile-menu-overlay.active .mobile-menu-cta {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body class="bg-dark-900 text-white min-h-screen">
@@ -319,14 +419,68 @@
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <a href="/" class="flex items-center text-gray-400 hover:text-white transition-colors">
                 <i class="fas fa-arrow-left mr-2"></i>
-                Înapoi
+                <span class="hidden sm:inline">Înapoi</span>
             </a>
             <a href="/" class="text-2xl font-bold">
                 <span class="text-white">Bobos</span><span class="text-indigo-400">shots</span>
             </a>
-            <div class="w-20"></div>
+            <!-- Hamburger Menu Button (Mobile) -->
+            <button id="menu-toggle" class="md:hidden w-10 h-10 flex items-center justify-center text-white hover:text-indigo-400 transition-colors" aria-label="Deschide meniu">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+            <!-- Desktop spacer -->
+            <div class="hidden md:block w-20"></div>
         </div>
     </header>
+
+    <!-- Fullscreen Mobile Menu Overlay -->
+    <div id="mobile-menu" class="mobile-menu-overlay">
+        <div class="mobile-menu-content">
+            <!-- Close Button -->
+            <button id="menu-close" class="absolute top-6 right-6 w-12 h-12 flex items-center justify-center text-white hover:text-indigo-400 transition-colors" aria-label="Închide meniu">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+
+            <!-- Logo -->
+            <a href="/" class="text-3xl font-bold mb-12 block">
+                <span class="text-white">Bobos</span><span class="text-indigo-400">shots</span>
+            </a>
+
+            <!-- Menu Items -->
+            <nav class="mobile-nav">
+                <!-- Foto Section -->
+                <div class="menu-section">
+                    <span class="menu-section-title"><i class="fas fa-camera mr-2"></i>Foto</span>
+                    <div class="menu-items">
+                        <a href="#portrete" class="menu-item" data-tab="foto">Portrete</a>
+                        <a href="#evenimente" class="menu-item" data-tab="foto">Evenimente</a>
+                        <a href="#produse" class="menu-item" data-tab="foto">Produse & Imobiliare</a>
+                        <a href="#travel" class="menu-item" data-tab="foto">Travel & Outdoor</a>
+                    </div>
+                </div>
+
+                <!-- Video Section -->
+                <div class="menu-section">
+                    <span class="menu-section-title"><i class="fas fa-video mr-2"></i>Video</span>
+                    <div class="menu-items">
+                        <a href="#video-portrete" class="menu-item" data-tab="video">Social Media</a>
+                        <a href="#video-corporate" class="menu-item" data-tab="video">Corporate & Produse</a>
+                        <a href="#video-content" class="menu-item" data-tab="video">Content Creation</a>
+                    </div>
+                </div>
+
+                <!-- Add-ons -->
+                <a href="#extra" class="menu-item standalone" data-tab="extra">
+                    <i class="fas fa-plus-circle mr-2"></i>Servicii Extra
+                </a>
+            </nav>
+
+            <!-- Contact CTA -->
+            <a href="https://instagram.com/bobosshots" target="_blank" rel="noopener noreferrer" class="mobile-menu-cta">
+                <i class="fab fa-instagram mr-2"></i>Contactează-mă
+            </a>
+        </div>
+    </div>
 
     <main>
     <!-- Page Title -->
@@ -931,6 +1085,76 @@
 
         waitForLibraries(function() {
         gsap.registerPlugin(ScrollTrigger);
+
+        // Mobile Menu
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuClose = document.getElementById('menu-close');
+        const menuItems = mobileMenu.querySelectorAll('.menu-item, .menu-section-title, .mobile-menu-cta');
+
+        function openMobileMenu() {
+            mobileMenu.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            // Animate menu items with stagger
+            gsap.fromTo(menuItems,
+                { opacity: 0, y: 30 },
+                { opacity: 1, y: 0, duration: 0.5, stagger: 0.05, ease: 'power2.out', delay: 0.2 }
+            );
+        }
+
+        function closeMobileMenu() {
+            gsap.to(menuItems, {
+                opacity: 0, y: -20, duration: 0.3, stagger: 0.02, ease: 'power2.in',
+                onComplete: () => {
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        }
+
+        menuToggle.addEventListener('click', openMobileMenu);
+        menuClose.addEventListener('click', closeMobileMenu);
+
+        // Close menu when clicking a menu item
+        mobileMenu.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                const targetTab = item.dataset.tab;
+                const targetHref = item.getAttribute('href');
+
+                e.preventDefault();
+                closeMobileMenu();
+
+                setTimeout(() => {
+                    // Switch to the correct tab
+                    if (targetTab) {
+                        switchTab(targetTab);
+                    }
+
+                    // Scroll to section after a small delay
+                    setTimeout(() => {
+                        const targetSection = document.querySelector(targetHref);
+                        if (targetSection) {
+                            lenis.scrollTo(targetSection, { offset: -80, duration: 1 });
+                        }
+                    }, 100);
+                }, 400);
+            });
+        });
+
+        // Close on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+                closeMobileMenu();
+            }
+        });
+
+        // Close when clicking outside content
+        mobileMenu.addEventListener('click', (e) => {
+            if (e.target === mobileMenu) {
+                closeMobileMenu();
+            }
+        });
 
         // Lenis Smooth Scroll
         const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), orientation: 'vertical', smoothWheel: true });

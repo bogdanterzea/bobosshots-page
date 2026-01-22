@@ -701,6 +701,72 @@
                 transition-duration: 0.01ms !important;
             }
         }
+
+        /* ===== MOBILE MENU OVERLAY ===== */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .mobile-menu-content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+        }
+        .mobile-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+        .mobile-nav-item {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            padding: 0.75rem 2rem;
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .mobile-nav-item:hover {
+            color: var(--text-primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+        .mobile-menu-cta {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .mobile-menu-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(131, 58, 180, 0.3);
+        }
     </style>
 </head>
 <body class="bg-dark-900 text-white">
@@ -745,25 +811,42 @@
                 </div>
 
                 <!-- Mobile Menu Button -->
-                <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none" aria-label="Deschide meniul">
-                    <i class="fas fa-bars text-2xl" aria-hidden="true"></i>
+                <button id="menu-toggle" class="md:hidden w-10 h-10 flex items-center justify-center text-white hover:text-indigo-400 transition-colors" aria-label="Deschide meniul">
+                    <i class="fas fa-bars text-2xl"></i>
                 </button>
             </div>
         </div>
-
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-dark-800 border-t border-dark-600">
-            <div class="px-4 py-4 space-y-3">
-                <a href="#acasa" class="block text-gray-300 hover:text-white py-2 transition-colors">Acasă</a>
-                <a href="#portofoliu" class="block text-gray-300 hover:text-white py-2 transition-colors">Portofoliu</a>
-                <a href="/galerie" class="block text-gray-300 hover:text-white py-2 transition-colors">Galerie</a>
-                <a href="#servicii" class="block text-gray-300 hover:text-white py-2 transition-colors">Servicii</a>
-                <a href="/preturi" class="block text-gray-300 hover:text-white py-2 transition-colors">Prețuri</a>
-                <a href="#despre" class="block text-gray-300 hover:text-white py-2 transition-colors">Despre</a>
-                <a href="https://instagram.com/bobosshots" target="_blank" rel="noopener noreferrer" class="block bg-accent-primary hover:bg-accent-hover text-white px-6 py-2.5 rounded-full font-medium text-center transition-colors">Contact</a>
-            </div>
-        </div>
     </nav>
+
+    <!-- Fullscreen Mobile Menu Overlay -->
+    <div id="mobile-menu-overlay" class="mobile-menu-overlay">
+        <div class="mobile-menu-content">
+            <!-- Close Button -->
+            <button id="menu-close" class="absolute top-6 right-6 w-12 h-12 flex items-center justify-center text-white hover:text-indigo-400 transition-colors" aria-label="Închide meniu">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+
+            <!-- Logo -->
+            <a href="#acasa" class="text-3xl font-bold mb-12 block mobile-nav-item" data-close-menu>
+                <span class="text-white">Bobos</span><span class="text-indigo-400">shots</span>
+            </a>
+
+            <!-- Menu Items -->
+            <nav class="mobile-nav">
+                <a href="#acasa" class="mobile-nav-item" data-close-menu>Acasă</a>
+                <a href="#portofoliu" class="mobile-nav-item" data-close-menu>Portofoliu</a>
+                <a href="/galerie" class="mobile-nav-item">Galerie</a>
+                <a href="#servicii" class="mobile-nav-item" data-close-menu>Servicii</a>
+                <a href="/preturi" class="mobile-nav-item">Prețuri</a>
+                <a href="#despre" class="mobile-nav-item" data-close-menu>Despre</a>
+            </nav>
+
+            <!-- Contact CTA -->
+            <a href="https://instagram.com/bobosshots" target="_blank" rel="noopener noreferrer" class="mobile-menu-cta">
+                <i class="fab fa-instagram mr-2"></i>Contactează-mă
+            </a>
+        </div>
+    </div>
 
     <main>
     <!-- Hero Section -->
@@ -1459,24 +1542,71 @@
             });
         });
 
-        // ===== MOBILE MENU =====
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
+        // ===== FULLSCREEN MOBILE MENU =====
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuClose = document.getElementById('menu-close');
+        const mobileNavItems = mobileMenuOverlay.querySelectorAll('.mobile-nav-item, .mobile-menu-cta');
 
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            const icon = mobileMenuBtn.querySelector('i');
-            icon.classList.toggle('fa-bars');
-            icon.classList.toggle('fa-times');
+        function openMobileMenu() {
+            mobileMenuOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            // Animate menu items with stagger
+            gsap.fromTo(mobileNavItems,
+                { opacity: 0, y: 30 },
+                { opacity: 1, y: 0, duration: 0.5, stagger: 0.05, ease: 'power2.out', delay: 0.2 }
+            );
+        }
+
+        function closeMobileMenu() {
+            gsap.to(mobileNavItems, {
+                opacity: 0, y: -20, duration: 0.3, stagger: 0.02, ease: 'power2.in',
+                onComplete: () => {
+                    mobileMenuOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        }
+
+        menuToggle.addEventListener('click', openMobileMenu);
+        menuClose.addEventListener('click', closeMobileMenu);
+
+        // Close menu when clicking items with data-close-menu
+        mobileMenuOverlay.querySelectorAll('[data-close-menu]').forEach(item => {
+            item.addEventListener('click', (e) => {
+                const targetHref = item.getAttribute('href');
+
+                if (targetHref.startsWith('#')) {
+                    e.preventDefault();
+                    closeMobileMenu();
+
+                    setTimeout(() => {
+                        const targetSection = document.querySelector(targetHref);
+                        if (targetSection) {
+                            gsap.to(window, {
+                                duration: 1,
+                                scrollTo: { y: targetSection, offsetY: 80 },
+                                ease: 'power2.inOut'
+                            });
+                        }
+                    }, 400);
+                }
+            });
         });
 
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-                const icon = mobileMenuBtn.querySelector('i');
-                icon.classList.add('fa-bars');
-                icon.classList.remove('fa-times');
-            });
+        // Close on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenuOverlay.classList.contains('active')) {
+                closeMobileMenu();
+            }
+        });
+
+        // Close when clicking outside content
+        mobileMenuOverlay.addEventListener('click', (e) => {
+            if (e.target === mobileMenuOverlay) {
+                closeMobileMenu();
+            }
         });
 
         // ===== NAVBAR SCROLL EFFECT =====
