@@ -162,6 +162,11 @@
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .pricing-card > a {
+            margin-top: auto;
         }
         .pricing-card::before {
             content: '';
@@ -189,14 +194,18 @@
         .pricing-card.featured::after {
             content: 'Popular';
             position: absolute;
-            top: 1rem;
-            right: -2rem;
+            top: 1.5rem;
+            right: -2.5rem;
             background: var(--accent);
             color: white;
-            padding: 0.25rem 2.5rem;
+            padding: 0.25rem 3rem;
             font-size: 0.75rem;
             font-weight: 600;
             transform: rotate(45deg);
+            z-index: 1;
+        }
+        .pricing-card.featured {
+            overflow: hidden;
         }
 
         /* Price styling */
@@ -376,7 +385,7 @@
                 <p class="text-gray-400 max-w-xl mx-auto">Portrete profesionale pentru profiluri, brand personal sau amintiri de familie.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
                 <!-- Basic -->
                 <div class="pricing-card">
                     <h3 class="text-xl font-semibold mb-2">Basic</h3>
@@ -447,7 +456,7 @@
                 <p class="text-gray-400 max-w-xl mx-auto">Concerte, botezuri, evenimente corporate și private - fiecare moment contează.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
                 <!-- Botez / Eveniment Privat -->
                 <div class="pricing-card">
                     <div class="flex items-center mb-4">
@@ -528,7 +537,7 @@
                 <p class="text-gray-400 max-w-xl mx-auto">Imagini care vând - pentru e-commerce, cataloage și listări imobiliare.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto items-stretch">
                 <!-- Produse -->
                 <div class="pricing-card">
                     <div class="flex items-center mb-4">
@@ -588,7 +597,7 @@
                 <p class="text-gray-400 max-w-xl mx-auto">Colaborări pentru branduri, turism și content creation în locații spectaculoase.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto items-stretch">
                 <!-- Content Creation -->
                 <div class="pricing-card">
                     <div class="flex items-center mb-4">
@@ -652,7 +661,7 @@
                 <p class="text-gray-400 max-w-xl mx-auto">Conținut video dinamic pentru prezență online puternică și engagement ridicat.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
                 <!-- Reel/Short -->
                 <div class="pricing-card">
                     <div class="flex items-center mb-4">
@@ -732,7 +741,7 @@
                 <p class="text-gray-400 max-w-xl mx-auto">Videouri profesionale pentru afacerea ta - de la evenimente corporate la prezentări de produs.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto items-stretch">
                 <!-- Video Corporate -->
                 <div class="pricing-card">
                     <div class="flex items-center mb-4">
@@ -837,7 +846,7 @@
                 <h3 class="text-lg font-semibold text-gray-300 mb-4 flex items-center justify-center">
                     <i class="fas fa-camera mr-2 text-accent-primary"></i>Foto
                 </h3>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 items-stretch">
                     <div class="bg-dark-800 rounded-xl p-6 text-center border border-dark-700">
                         <i class="fas fa-image text-accent-primary text-2xl mb-3"></i>
                         <h4 class="font-semibold mb-2">Fotografii Extra</h4>
@@ -866,7 +875,7 @@
                 <h3 class="text-lg font-semibold text-gray-300 mb-4 flex items-center justify-center">
                     <i class="fas fa-video mr-2 text-accent-primary"></i>Video
                 </h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto items-stretch">
                     <div class="bg-dark-800 rounded-xl p-6 text-center border border-dark-700">
                         <i class="fas fa-cut text-accent-primary text-2xl mb-3"></i>
                         <h4 class="font-semibold mb-2">Editare Suplimentară</h4>
@@ -1037,13 +1046,13 @@
             // Disclaimer
             gsap.from('.disclaimer-box', { y: 30, opacity: 0, duration: 0.8, ease: 'power2.out' });
 
-            // Pricing cards - animate only position, not opacity
+            // Pricing cards - animate together without stagger for proper alignment
             document.querySelectorAll('section[id]').forEach(section => {
                 gsap.from(section.querySelectorAll('.pricing-card'), {
                     y: 40,
                     duration: 0.8,
-                    stagger: 0.15,
                     ease: 'power2.out',
+                    clearProps: 'transform',
                     scrollTrigger: {
                         trigger: section,
                         start: 'top 85%'
@@ -1055,8 +1064,8 @@
             gsap.from('#extra .bg-dark-800', {
                 y: 30,
                 duration: 0.6,
-                stagger: 0.1,
                 ease: 'power2.out',
+                clearProps: 'transform',
                 scrollTrigger: {
                     trigger: '#extra',
                     start: 'top 85%'
