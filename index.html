@@ -709,13 +709,15 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(10, 10, 10, 0.98);
+            background: rgba(10, 10, 10, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             z-index: 10000;
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.4s ease, visibility 0.4s ease;
+            touch-action: none;
+            overscroll-behavior: contain;
         }
         .mobile-menu-overlay.active {
             opacity: 1;
@@ -1548,9 +1550,21 @@
         const menuClose = document.getElementById('menu-close');
         const mobileNavItems = mobileMenuOverlay.querySelectorAll('.mobile-nav-item, .mobile-menu-cta');
 
+        let scrollPosition = 0;
+
         function openMobileMenu() {
             mobileMenuOverlay.classList.add('active');
+
+            // Store scroll position and lock scroll
+            scrollPosition = window.scrollY;
             document.body.style.overflow = 'hidden';
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollPosition}px`;
+            document.body.style.width = '100%';
+            document.documentElement.style.overflow = 'hidden';
+
+            // Stop Lenis smooth scroll
+            if (typeof lenis !== 'undefined') lenis.stop();
 
             // Animate menu items with stagger
             gsap.fromTo(mobileNavItems,
@@ -1559,18 +1573,32 @@
             );
         }
 
-        function closeMobileMenu() {
+        function closeMobileMenu(skipScrollRestore = false) {
             gsap.to(mobileNavItems, {
                 opacity: 0, y: -20, duration: 0.3, stagger: 0.02, ease: 'power2.in',
                 onComplete: () => {
                     mobileMenuOverlay.classList.remove('active');
+
+                    // Restore body styles
                     document.body.style.overflow = '';
+                    document.body.style.position = '';
+                    document.body.style.top = '';
+                    document.body.style.width = '';
+                    document.documentElement.style.overflow = '';
+
+                    // Only restore scroll position if not navigating
+                    if (!skipScrollRestore) {
+                        window.scrollTo(0, scrollPosition);
+                    }
+
+                    // Resume Lenis smooth scroll
+                    if (typeof lenis !== 'undefined') lenis.start();
                 }
             });
         }
 
         menuToggle.addEventListener('click', openMobileMenu);
-        menuClose.addEventListener('click', closeMobileMenu);
+        menuClose.addEventListener('click', () => closeMobileMenu(false));
 
         // Close menu when clicking items with data-close-menu
         mobileMenuOverlay.querySelectorAll('[data-close-menu]').forEach(item => {
@@ -1579,14 +1607,15 @@
 
                 if (targetHref.startsWith('#')) {
                     e.preventDefault();
-                    closeMobileMenu();
+                    closeMobileMenu(true); // Skip scroll restore since we're navigating
 
                     setTimeout(() => {
                         const targetSection = document.querySelector(targetHref);
                         if (targetSection) {
+                            // Scroll with small offset to show section content (sections have py-24 = 96px padding)
                             gsap.to(window, {
                                 duration: 1,
-                                scrollTo: { y: targetSection, offsetY: 80 },
+                                scrollTo: { y: targetSection, offsetY: -10 },
                                 ease: 'power2.inOut'
                             });
                         }
@@ -1831,7 +1860,7 @@
                 if (target) {
                     gsap.to(window, {
                         duration: 1,
-                        scrollTo: { y: target, offsetY: 80 },
+                        scrollTo: { y: target, offsetY: -10 },
                         ease: 'power2.inOut'
                     });
                 }
