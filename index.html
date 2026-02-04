@@ -2244,6 +2244,14 @@
 
             if (!testTrack || !testCards.length) return;
 
+            // Shuffle testimonials randomly
+            const cardsArray = Array.from(testCards);
+            for (let i = cardsArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                testTrack.appendChild(cardsArray[j]);
+                [cardsArray[i], cardsArray[j]] = [cardsArray[j], cardsArray[i]];
+            }
+
             let testIndex = 0;
             let cardsVisible = getCardsVisible();
 
@@ -2329,22 +2337,33 @@
         })();
 
         // ===== TESTIMONIALS EXPAND =====
+        const allTestimonialCards = document.querySelectorAll('.testimonial-card');
+
         document.querySelectorAll('.testimonial-expand-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                const card = btn.closest('.testimonial-card');
-                const textContainer = card.querySelector('.testimonial-text');
-                const isExpanded = card.classList.contains('expanded');
+                const clickedCard = btn.closest('.testimonial-card');
+                const isExpanded = clickedCard.classList.contains('expanded');
+                const clickedTextLength = clickedCard.querySelector('.testimonial-text').textContent.length;
 
-                if (isExpanded) {
-                    card.classList.remove('expanded');
-                    textContainer.style.maxHeight = '4.5rem';
-                    btn.innerHTML = '<i class="fas fa-chevron-down"></i>';
-                } else {
-                    card.classList.add('expanded');
-                    textContainer.style.maxHeight = textContainer.scrollHeight + 'px';
-                    btn.innerHTML = '<i class="fas fa-chevron-up"></i>';
-                }
+                allTestimonialCards.forEach(card => {
+                    const textContainer = card.querySelector('.testimonial-text');
+                    const expandBtn = card.querySelector('.testimonial-expand-btn');
+                    const cardTextLength = textContainer.textContent.length;
+
+                    // Expand/collapse cards with similar or shorter text length
+                    if (cardTextLength <= clickedTextLength * 1.3) {
+                        if (isExpanded) {
+                            card.classList.remove('expanded');
+                            textContainer.style.maxHeight = '4.5rem';
+                            if (expandBtn) expandBtn.innerHTML = '<i class="fas fa-chevron-down"></i>';
+                        } else {
+                            card.classList.add('expanded');
+                            textContainer.style.maxHeight = textContainer.scrollHeight + 'px';
+                            if (expandBtn) expandBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
+                        }
+                    }
+                });
             });
         });
 
