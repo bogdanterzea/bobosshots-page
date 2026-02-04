@@ -1912,7 +1912,7 @@
             );
         }
 
-        function closeMobileMenu(skipScrollRestore = false) {
+        function closeMobileMenu(targetHref = null) {
             gsap.to(mobileNavItems, {
                 opacity: 0, y: -20, duration: 0.3, stagger: 0.02, ease: 'power2.in',
                 onComplete: () => {
@@ -1925,9 +1925,23 @@
                     document.body.style.width = '';
                     document.documentElement.style.overflow = '';
 
-                    // Only restore scroll position if not navigating
-                    if (!skipScrollRestore) {
-                        window.scrollTo(0, scrollPosition);
+                    // Always restore scroll position first (needed because of fixed positioning)
+                    window.scrollTo(0, scrollPosition);
+
+                    // If we have a target, scroll to it after a brief delay
+                    if (targetHref) {
+                        setTimeout(() => {
+                            const targetSection = document.querySelector(targetHref);
+                            if (targetSection) {
+                                const headerOffset = 80;
+                                const elementPosition = targetSection.getBoundingClientRect().top;
+                                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                                window.scrollTo({
+                                    top: offsetPosition,
+                                    behavior: 'smooth'
+                                });
+                            }
+                        }, 50);
                     }
 
                     // Resume Lenis smooth scroll
@@ -1937,28 +1951,17 @@
         }
 
         menuToggle.addEventListener('click', openMobileMenu);
-        menuClose.addEventListener('click', () => closeMobileMenu(false));
+        menuClose.addEventListener('click', () => closeMobileMenu());
 
         // Close menu when clicking items with data-close-menu
         mobileMenuOverlay.querySelectorAll('[data-close-menu]').forEach(item => {
             item.addEventListener('click', (e) => {
                 const targetHref = item.getAttribute('href');
 
-                if (targetHref.startsWith('#')) {
+                if (targetHref && targetHref.startsWith('#')) {
                     e.preventDefault();
-                    closeMobileMenu(true); // Skip scroll restore since we're navigating
-
-                    setTimeout(() => {
-                        const targetSection = document.querySelector(targetHref);
-                        if (targetSection) {
-                            // Scroll with small offset to show section content (sections have py-24 = 96px padding)
-                            gsap.to(window, {
-                                duration: 1,
-                                scrollTo: { y: targetSection, offsetY: -10 },
-                                ease: 'power2.inOut'
-                            });
-                        }
-                    }, 400);
+                    e.stopPropagation();
+                    closeMobileMenu(targetHref); // Pass target to scroll to after closing
                 }
             });
         });
@@ -2193,14 +2196,23 @@
 
         // ===== SMOOTH SCROLL =====
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            // Skip mobile menu items - they have their own handler
+            if (anchor.closest('.mobile-menu-overlay')) return;
+
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
+                const targetHref = this.getAttribute('href');
+                if (!targetHref || targetHref === '#') return;
+
+                const target = document.querySelector(targetHref);
                 if (target) {
-                    gsap.to(window, {
-                        duration: 1,
-                        scrollTo: { y: target, offsetY: -10 },
-                        ease: 'power2.inOut'
+                    const headerOffset = 80;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
                     });
                 }
             });
