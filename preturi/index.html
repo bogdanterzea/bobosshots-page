@@ -303,7 +303,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(10, 10, 10, 0.98);
+            background: rgba(10, 10, 10, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             z-index: 10000;
@@ -1086,7 +1086,7 @@
         waitForLibraries(function() {
         gsap.registerPlugin(ScrollTrigger);
 
-        // Mobile Menu
+        // Mobile Menu (Simple version without scroll lock)
         const mobileMenu = document.getElementById('mobile-menu');
         const menuToggle = document.getElementById('menu-toggle');
         const menuClose = document.getElementById('menu-close');
@@ -1123,22 +1123,44 @@
                 const targetHref = item.getAttribute('href');
 
                 e.preventDefault();
-                closeMobileMenu();
 
-                setTimeout(() => {
-                    // Switch to the correct tab
-                    if (targetTab) {
-                        switchTab(targetTab);
-                    }
+                // Close menu first
+                gsap.to(menuItems, {
+                    opacity: 0, y: -20, duration: 0.2, stagger: 0.02, ease: 'power2.in',
+                    onComplete: () => {
+                        mobileMenu.classList.remove('active');
+                        document.body.style.overflow = '';
 
-                    // Scroll to section after a small delay
-                    setTimeout(() => {
-                        const targetSection = document.querySelector(targetHref);
-                        if (targetSection) {
-                            lenis.scrollTo(targetSection, { offset: -80, duration: 1 });
+                        // Switch tab (without its default scroll)
+                        if (targetTab) {
+                            // Manually switch tab without scrolling
+                            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+                            const selectedTab = document.getElementById(targetTab);
+                            if (selectedTab) selectedTab.classList.add('active');
+                            document.querySelectorAll('.nav-pill').forEach(pill => {
+                                pill.classList.remove('active');
+                                if (pill.dataset.section === targetTab) pill.classList.add('active');
+                            });
+                            setTimeout(() => ScrollTrigger.refresh(), 300);
                         }
-                    }, 100);
-                }, 400);
+
+                        // Scroll to specific section after tab is visible (use Lenis!)
+                        requestAnimationFrame(() => {
+                            // Ensure Lenis is running
+                            if (typeof lenis !== 'undefined') {
+                                lenis.start();
+
+                                setTimeout(() => {
+                                    const targetSection = document.querySelector(targetHref);
+                                    if (targetSection) {
+                                        const navHeight = document.getElementById('pricing-nav')?.offsetHeight || 80;
+                                        lenis.scrollTo(targetSection, { offset: -(navHeight + 20), duration: 1.2 });
+                                    }
+                                }, 100);
+                            }
+                        });
+                    }
+                });
             });
         });
 

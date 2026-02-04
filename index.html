@@ -709,13 +709,15 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(10, 10, 10, 0.98);
+            background: rgba(10, 10, 10, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             z-index: 10000;
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.4s ease, visibility 0.4s ease;
+            touch-action: none;
+            overscroll-behavior: contain;
         }
         .mobile-menu-overlay.active {
             opacity: 1;
@@ -767,6 +769,188 @@
             transform: scale(1.05);
             box-shadow: 0 10px 30px rgba(131, 58, 180, 0.3);
         }
+
+        /* ===== TESTIMONIALS SECTION ===== */
+        .testimonials-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonials-track {
+            display: flex;
+            gap: 1.5rem;
+            transition: transform 0.5s ease;
+        }
+
+        .testimonial-card {
+            flex: 0 0 calc(33.333% - 1rem);
+            background: var(--bg-tertiary);
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+            position: relative;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (max-width: 1023px) {
+            .testimonial-card {
+                flex: 0 0 calc(50% - 0.75rem);
+            }
+        }
+
+        @media (max-width: 639px) {
+            .testimonial-card {
+                flex: 0 0 100%;
+            }
+        }
+
+        .testimonial-card:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 0.5rem;
+            right: 1rem;
+            font-size: 3rem;
+            font-family: Georgia, serif;
+            color: rgba(99, 102, 241, 0.12);
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .testimonial-avatar {
+            width: 2.5rem;
+            height: 2.5rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .testimonial-text {
+            max-height: 4.5rem;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            flex: 1;
+        }
+
+        .testimonial-card:not(.expanded) .testimonial-text::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1.5rem;
+            background: linear-gradient(transparent, var(--bg-tertiary));
+            pointer-events: none;
+        }
+
+        .testimonial-card.expanded .testimonial-text {
+            max-height: 500px;
+        }
+
+        .testimonial-card.short .testimonial-text {
+            max-height: none;
+        }
+
+        .testimonial-card.short .testimonial-text::after {
+            display: none;
+        }
+
+        .testimonial-expand-btn {
+            width: 1.75rem;
+            height: 1.75rem;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.65rem;
+            margin-left: auto;
+            margin-top: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .testimonial-expand-btn:hover {
+            background: rgba(99, 102, 241, 0.2);
+            border-color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .testimonial-card.short .testimonial-expand-btn {
+            display: none;
+        }
+
+        .testimonial-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .testimonial-nav:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .testimonial-nav.prev { left: 0; }
+        .testimonial-nav.next { right: 0; }
+
+        @media (max-width: 768px) {
+            .testimonial-nav {
+                width: 2rem;
+                height: 2rem;
+                font-size: 0.75rem;
+            }
+        }
+
+        .testimonial-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .testimonial-dot {
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-dot.active {
+            background: var(--accent);
+            width: 1.5rem;
+            border-radius: 0.25rem;
+        }
     </style>
 </head>
 <body class="bg-dark-900 text-white">
@@ -805,6 +989,7 @@
                     <a href="#portofoliu" class="nav-link text-gray-300 hover:text-white transition-colors">Portofoliu</a>
                     <a href="/galerie" class="nav-link text-gray-300 hover:text-white transition-colors">Galerie</a>
                     <a href="#servicii" class="nav-link text-gray-300 hover:text-white transition-colors">Servicii</a>
+                    <a href="#testimoniale" class="nav-link text-gray-300 hover:text-white transition-colors">Testimoniale</a>
                     <a href="/preturi" class="nav-link text-gray-300 hover:text-white transition-colors">Prețuri</a>
                     <a href="#despre" class="nav-link text-gray-300 hover:text-white transition-colors">Despre</a>
                     <a href="https://instagram.com/bobosshots" target="_blank" rel="noopener noreferrer" class="bg-accent-primary hover:bg-accent-hover text-white px-6 py-2.5 rounded-full font-medium transition-colors">Contact</a>
@@ -837,6 +1022,7 @@
                 <a href="#portofoliu" class="mobile-nav-item" data-close-menu>Portofoliu</a>
                 <a href="/galerie" class="mobile-nav-item">Galerie</a>
                 <a href="#servicii" class="mobile-nav-item" data-close-menu>Servicii</a>
+                <a href="#testimoniale" class="mobile-nav-item" data-close-menu>Testimoniale</a>
                 <a href="/preturi" class="mobile-nav-item">Prețuri</a>
                 <a href="#despre" class="mobile-nav-item" data-close-menu>Despre</a>
             </nav>
@@ -1147,8 +1333,149 @@
         </div>
     </section>
 
+    <!-- Testimonials Section -->
+    <section id="testimoniale" class="py-16 bg-dark-900 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center mb-10">
+                <span class="text-accent-primary font-medium tracking-wider uppercase text-sm">Testimoniale</span>
+                <h2 class="text-4xl md:text-5xl font-bold mt-3 mb-4">Ce Spun Clienții</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Feedback-ul celor cu care am colaborat înseamnă cel mai mult pentru mine.</p>
+            </div>
+
+            <!-- Testimonials Carousel -->
+            <div class="testimonials-wrapper px-10 sm:px-12">
+                <!-- Nav Buttons -->
+                <button class="testimonial-nav prev" id="test-prev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="testimonial-nav next" id="test-next">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <!-- Track -->
+                <div class="testimonials-track" id="testimonials-track">
+                    <!-- Testimonial 1 - Tavi -->
+                    <div class="testimonial-card">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="testimonial-avatar">T</div>
+                            <h4 class="font-semibold text-white">Tavi</h4>
+                        </div>
+                        <div class="testimonial-text text-gray-300 text-sm leading-relaxed">
+                            A fost extraordinar. La prima ședință împreună, am căutat zăpadă, nu am găsit zăpadă, am pivotat și mulțumită abilităților tale a ieșit un material extraordinar pe care nici nu mi l-am imaginat până să-l văd... Calitate, adaptabilitate și profesionalism. Recomand 100%
+                        </div>
+                        <button class="testimonial-expand-btn">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+
+                    <!-- Testimonial 2 - Amalia -->
+                    <div class="testimonial-card">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="testimonial-avatar">A</div>
+                            <h4 class="font-semibold text-white">Amalia</h4>
+                        </div>
+                        <div class="testimonial-text text-gray-300 text-sm leading-relaxed">
+                            Am avut marea plăcere să te avem fotograf la concursul canin unde a participat și Akita-ul meu Akimitsu. Modul în care ai interacționat cu el dar și cu ceilalți câini, faptul că ai fost mereu spontan, dornic să prinzi cele mai bune și frumoase unghiuri ne-a făcut experiența extraordinară. S-a văzut și s-a simțit profesionalismul, câinele nu s-a simțit stingher și am apreciat că ai avut atâta răbdare. Mulțumim și abia așteptăm colaborările viitoare!
+                        </div>
+                        <button class="testimonial-expand-btn">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+
+                    <!-- Testimonial 3 - Razvan -->
+                    <div class="testimonial-card">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="testimonial-avatar">R</div>
+                            <h4 class="font-semibold text-white">Răzvan</h4>
+                        </div>
+                        <div class="testimonial-text text-gray-300 text-sm leading-relaxed">
+                            Îmi plac tare pozele și clipurile care ies din mânuța ta. E veche amintirea din Portugalia dar știu că dădeai indicații despre cum să stăm ca să iasă pozele cât mai bine și asta mi se pare o chestie mișto că practic îl ajuți pe client și te ajuți și pe tine.
+                        </div>
+                        <button class="testimonial-expand-btn">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+
+                    <!-- Testimonial 4 - Ramona -->
+                    <div class="testimonial-card">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="testimonial-avatar">R</div>
+                            <h4 class="font-semibold text-white">Ramona</h4>
+                        </div>
+                        <div class="testimonial-text text-gray-300 text-sm leading-relaxed">
+                            A fost o experiență fantastică să te avem ca fotograf în vacanța noastră din Elveția! Pozele au ieșit superbe, iar pentru mine a fost de mare ajutor faptul că m-ai ghidat și îmi spuneai cum să stau în poze. Rezultatul a fost foarte fain: ai reușit să surprinzi momente magice și memorabile. Ești un fotograf foarte talentat și sper să mai colaborăm și în vacanțele viitoare (și nu numai)!
+                        </div>
+                        <button class="testimonial-expand-btn">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+
+                    <!-- Testimonial 5 - Aaron -->
+                    <div class="testimonial-card short">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="testimonial-avatar">A</div>
+                            <h4 class="font-semibold text-white">Aaron</h4>
+                        </div>
+                        <div class="testimonial-text text-gray-300 text-sm leading-relaxed">
+                            Sesiuni lungi, multe cadre și mai multe poze deci în concluzie am avut din ce alege, am râs bine și m-am distrat and I'll do it again!
+                        </div>
+                        <button class="testimonial-expand-btn">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+
+                    <!-- Testimonial 6 - Marian -->
+                    <div class="testimonial-card">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="testimonial-avatar">M</div>
+                            <h4 class="font-semibold text-white">Marian</h4>
+                        </div>
+                        <div class="testimonial-text text-gray-300 text-sm leading-relaxed">
+                            Am făcut deja o grămadă de colaborări împreună, de la shooting-uri de model și evenimente, până la poze și shorts prin vacanțe. Ce-mi place cel mai mult la tine e viziunea aia aparte: ai răbdare să cauți cadrul perfect, dar în același timp totul se simte super natural, nimic forțat. Se vede experiența în momentele alea când te oprești brusc și zici: „stai, aici o să iasă ceva fain!". Știi exact cum să ghidezi lucrurile ca să meargă smooth și să scoți ce e mai bun din orice context. Ești un mix fain de profesionalism și vibe relaxat, cu siguranță o să mai colaborăm!
+                        </div>
+                        <button class="testimonial-expand-btn">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+
+                    <!-- Testimonial 7 - Constantin -->
+                    <div class="testimonial-card">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="testimonial-avatar">C</div>
+                            <h4 class="font-semibold text-white">Constantin</h4>
+                        </div>
+                        <div class="testimonial-text text-gray-300 text-sm leading-relaxed">
+                            Am avut ocazia să lucrez de minim 3 ori la proiecte individuale cu Bobo. Rezultatele finale își spun cuvântul profesionalismului, atât din punct de vedere fotografic, dar și calitatea photoshoot-urilor, momente amuzante, zâmbete generate pe moment. Timpul de livrare a fost foarte rapid, deci, încă un plus pentru profesionalismul menționat mai sus. Looking forward to be working again!
+                        </div>
+                        <button class="testimonial-expand-btn">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+
+                    <!-- Testimonial 8 - Felicia -->
+                    <div class="testimonial-card">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="testimonial-avatar">F</div>
+                            <h4 class="font-semibold text-white">Felicia</h4>
+                        </div>
+                        <div class="testimonial-text text-gray-300 text-sm leading-relaxed">
+                            Mă simt norocoasă că am avut ocazia să lucrez cu Bobosshots, și cu siguranță colaborarea noastră nu se oprește aici! Pe lângă că îmi dă o stare bună mereu când lucrez cu el, pentru că se simte pasiunea și devotamentul lui, vine și cu idei faine pentru materiale pe care le oferă, deci e super. Să mai zic și faptul că nu am așteptat mult până să primesc materialele făcute de el? E top!
+                        </div>
+                        <button class="testimonial-expand-btn">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Dots -->
+                <div class="testimonial-dots" id="testimonial-dots"></div>
+            </div>
+        </div>
+    </section>
+
     <!-- About Section -->
-    <section id="despre" class="py-24 bg-dark-900">
+    <section id="despre" class="py-24 bg-dark-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 <!-- Profile Image -->
@@ -1202,7 +1529,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-24 bg-dark-800">
+    <section id="contact" class="py-24 bg-dark-900">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <!-- Section Header -->
             <span class="text-accent-primary font-medium tracking-wider uppercase text-sm">Contact</span>
@@ -1493,6 +1820,20 @@
                 });
             });
 
+            // Testimonials section animation - only header, cards are always visible
+            gsap.from('#testimoniale .text-center.mb-16 > *', {
+                y: 40,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: '#testimoniale',
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                }
+            });
+
             // Contact section
             gsap.from('#contact > div > *', {
                 y: 40,
@@ -1548,9 +1889,21 @@
         const menuClose = document.getElementById('menu-close');
         const mobileNavItems = mobileMenuOverlay.querySelectorAll('.mobile-nav-item, .mobile-menu-cta');
 
+        let scrollPosition = 0;
+
         function openMobileMenu() {
             mobileMenuOverlay.classList.add('active');
+
+            // Store scroll position and lock scroll
+            scrollPosition = window.scrollY;
             document.body.style.overflow = 'hidden';
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollPosition}px`;
+            document.body.style.width = '100%';
+            document.documentElement.style.overflow = 'hidden';
+
+            // Stop Lenis smooth scroll
+            if (typeof lenis !== 'undefined') lenis.stop();
 
             // Animate menu items with stagger
             gsap.fromTo(mobileNavItems,
@@ -1559,38 +1912,56 @@
             );
         }
 
-        function closeMobileMenu() {
+        function closeMobileMenu(targetHref = null) {
             gsap.to(mobileNavItems, {
                 opacity: 0, y: -20, duration: 0.3, stagger: 0.02, ease: 'power2.in',
                 onComplete: () => {
                     mobileMenuOverlay.classList.remove('active');
+
+                    // Restore body styles
                     document.body.style.overflow = '';
+                    document.body.style.position = '';
+                    document.body.style.top = '';
+                    document.body.style.width = '';
+                    document.documentElement.style.overflow = '';
+
+                    // Always restore scroll position first (needed because of fixed positioning)
+                    window.scrollTo(0, scrollPosition);
+
+                    // If we have a target, scroll to it after a brief delay
+                    if (targetHref) {
+                        setTimeout(() => {
+                            const targetSection = document.querySelector(targetHref);
+                            if (targetSection) {
+                                const headerOffset = 80;
+                                const elementPosition = targetSection.getBoundingClientRect().top;
+                                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                                window.scrollTo({
+                                    top: offsetPosition,
+                                    behavior: 'smooth'
+                                });
+                            }
+                        }, 50);
+                    }
+
+                    // Resume Lenis smooth scroll
+                    if (typeof lenis !== 'undefined') lenis.start();
                 }
             });
         }
 
         menuToggle.addEventListener('click', openMobileMenu);
-        menuClose.addEventListener('click', closeMobileMenu);
+        menuClose.addEventListener('click', () => closeMobileMenu());
 
         // Close menu when clicking items with data-close-menu
         mobileMenuOverlay.querySelectorAll('[data-close-menu]').forEach(item => {
             item.addEventListener('click', (e) => {
                 const targetHref = item.getAttribute('href');
 
-                if (targetHref.startsWith('#')) {
+                if (targetHref && targetHref.startsWith('#')) {
                     e.preventDefault();
-                    closeMobileMenu();
-
-                    setTimeout(() => {
-                        const targetSection = document.querySelector(targetHref);
-                        if (targetSection) {
-                            gsap.to(window, {
-                                duration: 1,
-                                scrollTo: { y: targetSection, offsetY: 80 },
-                                ease: 'power2.inOut'
-                            });
-                        }
-                    }, 400);
+                    e.stopPropagation();
+                    closeMobileMenu(targetHref); // Pass target to scroll to after closing
                 }
             });
         });
@@ -1825,14 +2196,23 @@
 
         // ===== SMOOTH SCROLL =====
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            // Skip mobile menu items - they have their own handler
+            if (anchor.closest('.mobile-menu-overlay')) return;
+
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
+                const targetHref = this.getAttribute('href');
+                if (!targetHref || targetHref === '#') return;
+
+                const target = document.querySelector(targetHref);
                 if (target) {
-                    gsap.to(window, {
-                        duration: 1,
-                        scrollTo: { y: target, offsetY: 80 },
-                        ease: 'power2.inOut'
+                    const headerOffset = 80;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
                     });
                 }
             });
@@ -1867,6 +2247,140 @@
         window.addEventListener('resize', () => {
             ScrollTrigger.refresh();
         });
+
+        // ===== TESTIMONIALS CAROUSEL =====
+        (function() {
+            const testTrack = document.getElementById('testimonials-track');
+            const testCards = document.querySelectorAll('.testimonial-card');
+            const testPrev = document.getElementById('test-prev');
+            const testNext = document.getElementById('test-next');
+            const testDots = document.getElementById('testimonial-dots');
+
+            if (!testTrack || !testCards.length) return;
+
+            // Shuffle testimonials randomly
+            const cardsArray = Array.from(testCards);
+            for (let i = cardsArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                testTrack.appendChild(cardsArray[j]);
+                [cardsArray[i], cardsArray[j]] = [cardsArray[j], cardsArray[i]];
+            }
+
+            let testIndex = 0;
+            let cardsVisible = getCardsVisible();
+
+            function getCardsVisible() {
+                if (window.innerWidth < 640) return 1;
+                if (window.innerWidth < 1024) return 2;
+                return 3;
+            }
+
+            function getMaxIndex() {
+                return Math.max(0, testCards.length - cardsVisible);
+            }
+
+            function updateCarousel() {
+                if (!testCards[0]) return;
+                const cardWidth = testCards[0].offsetWidth;
+                const gap = 24;
+                const offset = testIndex * (cardWidth + gap);
+                testTrack.style.transform = `translateX(-${offset}px)`;
+                updateDots();
+            }
+
+            function createDots() {
+                if (!testDots) return;
+                testDots.innerHTML = '';
+                const totalDots = getMaxIndex() + 1;
+                for (let i = 0; i < totalDots; i++) {
+                    const dot = document.createElement('button');
+                    dot.className = `testimonial-dot ${i === 0 ? 'active' : ''}`;
+                    dot.addEventListener('click', () => {
+                        testIndex = i;
+                        updateCarousel();
+                    });
+                    testDots.appendChild(dot);
+                }
+            }
+
+            function updateDots() {
+                if (!testDots) return;
+                const dots = testDots.querySelectorAll('.testimonial-dot');
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === testIndex);
+                });
+            }
+
+            function nextTestimonial() {
+                testIndex = Math.min(testIndex + 1, getMaxIndex());
+                updateCarousel();
+            }
+
+            function prevTestimonial() {
+                testIndex = Math.max(testIndex - 1, 0);
+                updateCarousel();
+            }
+
+            // Init
+            createDots();
+
+            if (testPrev) testPrev.addEventListener('click', prevTestimonial);
+            if (testNext) testNext.addEventListener('click', nextTestimonial);
+
+            // Touch swipe
+            let testTouchStartX = 0;
+            testTrack.addEventListener('touchstart', e => {
+                testTouchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            testTrack.addEventListener('touchend', e => {
+                const diff = testTouchStartX - e.changedTouches[0].screenX;
+                if (Math.abs(diff) > 50) {
+                    if (diff > 0) nextTestimonial();
+                    else prevTestimonial();
+                }
+            }, { passive: true });
+
+            // Resize
+            window.addEventListener('resize', () => {
+                cardsVisible = getCardsVisible();
+                testIndex = Math.min(testIndex, getMaxIndex());
+                createDots();
+                updateCarousel();
+            });
+        })();
+
+        // ===== TESTIMONIALS EXPAND =====
+        const allTestimonialCards = document.querySelectorAll('.testimonial-card');
+
+        document.querySelectorAll('.testimonial-expand-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const clickedCard = btn.closest('.testimonial-card');
+                const isExpanded = clickedCard.classList.contains('expanded');
+                const clickedTextLength = clickedCard.querySelector('.testimonial-text').textContent.length;
+
+                allTestimonialCards.forEach(card => {
+                    const textContainer = card.querySelector('.testimonial-text');
+                    const expandBtn = card.querySelector('.testimonial-expand-btn');
+                    const cardTextLength = textContainer.textContent.length;
+
+                    // Expand/collapse cards with similar or shorter text length
+                    if (cardTextLength <= clickedTextLength * 1.3) {
+                        if (isExpanded) {
+                            card.classList.remove('expanded');
+                            textContainer.style.maxHeight = '4.5rem';
+                            if (expandBtn) expandBtn.innerHTML = '<i class="fas fa-chevron-down"></i>';
+                        } else {
+                            card.classList.add('expanded');
+                            textContainer.style.maxHeight = textContainer.scrollHeight + 'px';
+                            if (expandBtn) expandBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
+                        }
+                    }
+                });
+            });
+        });
+
         }); // End waitForLibraries callback
     </script>
 </body>
