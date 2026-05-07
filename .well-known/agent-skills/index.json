@@ -1,0 +1,34 @@
+{
+  "$schema": "https://agentskills.io/schemas/v0.2.0/index.schema.json",
+  "version": "0.2.0",
+  "skills": [
+    {
+      "name": "get-pricing",
+      "type": "webmcp",
+      "description": "Returns photography service pricing in RON for portrete, evenimente, produse, video and travel photography sessions in Sibiu, Romania.",
+      "url": "https://bobosshots.com/preturi/index.md",
+      "sha256": "a9c80300fec4f418952ca7b8a93cb5536c5f798fa8f49cbef19eff7e2080ce24"
+    },
+    {
+      "name": "get-portfolio",
+      "type": "webmcp",
+      "description": "Lists portfolio gallery categories (portrete, evenimente, produse, travel) with their canonical URLs and short descriptions.",
+      "url": "https://bobosshots.com/galerie/index.md",
+      "sha256": "acfd380ed8bceb71e270b4c127f8721aa36f6de2989cdf337e5e2c577421645b"
+    },
+    {
+      "name": "get-contact-info",
+      "type": "webmcp",
+      "description": "Returns contact details for Terzea Bogdan / Bobosshots: phone, email, Instagram, Behance, location and operating hours.",
+      "url": "https://bobosshots.com/contact.md",
+      "sha256": "db6de5a69351c2c2cb33306c6c49703c1a9e41e53e28524f56ed396fb4bb1083"
+    },
+    {
+      "name": "get-photographer-info",
+      "type": "webmcp",
+      "description": "Returns information about the photographer Terzea Bogdan — specialties, location and approach.",
+      "url": "https://bobosshots.com/index.md",
+      "sha256": "81b5eaab09dc069436f339075cae1c95435bbc63d006880401b8a0f77af9df20"
+    }
+  ]
+}

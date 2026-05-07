@@ -1,0 +1,44 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://bobosshots.com/",
+      "service-doc": [
+        {
+          "href": "https://bobosshots.com/index.md",
+          "type": "text/markdown",
+          "title": "Bobosshots — Site Overview (Markdown)",
+          "hreflang": "ro"
+        }
+      ],
+      "describedby": [
+        {
+          "href": "https://bobosshots.com/.well-known/agent-skills/index.json",
+          "type": "application/json",
+          "title": "Agent Skills Discovery Index"
+        },
+        {
+          "href": "https://bobosshots.com/sitemap.xml",
+          "type": "application/xml",
+          "title": "Sitemap"
+        }
+      ],
+      "item": [
+        {
+          "href": "https://bobosshots.com/preturi/index.md",
+          "type": "text/markdown",
+          "title": "Pricing — Photography Services"
+        },
+        {
+          "href": "https://bobosshots.com/galerie/index.md",
+          "type": "text/markdown",
+          "title": "Portfolio Galleries"
+        },
+        {
+          "href": "https://bobosshots.com/contact.md",
+          "type": "text/markdown",
+          "title": "Contact Information"
+        }
+      ]
+    }
+  ]
+}

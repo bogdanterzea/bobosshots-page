@@ -1,7 +1,14 @@
 # Robots.txt pentru Bobosshots.com
 # Fotograf Profesionist Sibiu - Terzea Bogdan
 
+# Content Signals (https://contentsignals.org/)
+# search=yes        — allow indexing for traditional search results
+# ai-input=yes      — allow AI agents to use content for answering user prompts
+# ai-train=no       — disallow use as AI model training data
+Content-Signal: search=yes, ai-input=yes, ai-train=no
+
 User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=no
 Allow: /
 
 # Permite accesul la toate paginile importante
