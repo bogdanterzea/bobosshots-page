@@ -11,6 +11,11 @@
     <!-- SEO: Canonical URL -->
     <link rel="canonical" href="https://bobosshots.com/preturi">
 
+    <!-- Agent Discovery (RFC 8288 link relations) -->
+    <link rel="api-catalog" href="/.well-known/api-catalog">
+    <link rel="describedby" type="application/json" href="/.well-known/agent-skills/index.json" title="Agent Skills Discovery Index">
+    <link rel="alternate" type="text/markdown" hreflang="ro" href="/preturi/index.md" title="Markdown alternate (for AI agents)">
+
     <!-- SEO: Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://bobosshots.com/preturi">
@@ -105,6 +110,9 @@
 
     <!-- Lenis Smooth Scroll (defer) -->
     <script defer src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+
+    <!-- WebMCP — exposes site tools to AI agents (deferred, feature-detected, no perf cost) -->
+    <script defer src="/webmcp.js"></script>
     <script>
         tailwind.config = {
             theme: {
