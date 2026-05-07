@@ -6,10 +6,10 @@
 
 | Category | URL | Description |
 |---|---|---|
-| Portrete | https://bobosshots.com/galerie/portrete | Studio and outdoor portraits — personal branding, family, artistic. |
-| Evenimente | https://bobosshots.com/galerie/evenimente | Concerts, baptisms, corporate and private events. |
-| Produse | https://bobosshots.com/galerie/produse | Product photography (incl. automotive) for e-commerce and catalogs. |
-| Travel | https://bobosshots.com/galerie/travel | Landscape, travel and outdoor content from Romania and abroad. |
+| Portrete | https://bobosshots.com/galerie/portrete/ | Studio and outdoor portraits — personal branding, family, artistic. |
+| Evenimente | https://bobosshots.com/galerie/evenimente/ | Concerts, baptisms, corporate and private events. |
+| Produse | https://bobosshots.com/galerie/produse/ | Product photography (incl. automotive) for e-commerce and catalogs. |
+| Travel | https://bobosshots.com/galerie/travel/ | Landscape, travel and outdoor content from Romania and abroad. |
 
 ## Notes
 

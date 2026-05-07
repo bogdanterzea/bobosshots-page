@@ -14,7 +14,7 @@
       "type": "webmcp",
       "description": "Lists portfolio gallery categories (portrete, evenimente, produse, travel) with their canonical URLs and short descriptions.",
       "url": "https://bobosshots.com/galerie/index.md",
-      "sha256": "759c98df672fbf95847e8858ef6a9bedad92979e0109ab805ae18271de47d985"
+      "sha256": "acfd380ed8bceb71e270b4c127f8721aa36f6de2989cdf337e5e2c577421645b"
     },
     {
       "name": "get-contact-info",
@@ -28,7 +28,7 @@
       "type": "webmcp",
       "description": "Returns information about the photographer Terzea Bogdan — specialties, location and approach.",
       "url": "https://bobosshots.com/index.md",
-      "sha256": "13ff13d918b2f68ea607dc181597f31492d151883d42c6f8604a65eac16339ac"
+      "sha256": "81b5eaab09dc069436f339075cae1c95435bbc63d006880401b8a0f77af9df20"
     }
   ]
 }

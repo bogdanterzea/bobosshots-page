@@ -27,12 +27,12 @@
 | Section | URL | Markdown alternate |
 |---|---|---|
 | Home | https://bobosshots.com/ | https://bobosshots.com/index.md |
-| Pricing | https://bobosshots.com/preturi | https://bobosshots.com/preturi/index.md |
-| Galleries (overview) | https://bobosshots.com/galerie | https://bobosshots.com/galerie/index.md |
-| Portrait gallery | https://bobosshots.com/galerie/portrete | — |
-| Events gallery | https://bobosshots.com/galerie/evenimente | — |
-| Products gallery | https://bobosshots.com/galerie/produse | — |
-| Travel gallery | https://bobosshots.com/galerie/travel | — |
+| Pricing | https://bobosshots.com/preturi/ | https://bobosshots.com/preturi/index.md |
+| Galleries (overview) | https://bobosshots.com/galerie/ | https://bobosshots.com/galerie/index.md |
+| Portrait gallery | https://bobosshots.com/galerie/portrete/ | — |
+| Events gallery | https://bobosshots.com/galerie/evenimente/ | — |
+| Products gallery | https://bobosshots.com/galerie/produse/ | — |
+| Travel gallery | https://bobosshots.com/galerie/travel/ | — |
 | Contact | https://bobosshots.com/#contact | https://bobosshots.com/contact.md |
 
 ## Agent Discovery

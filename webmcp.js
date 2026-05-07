@@ -42,18 +42,18 @@
   };
 
   var portfolio = {
-    galleryIndex: 'https://bobosshots.com/galerie',
+    galleryIndex: 'https://bobosshots.com/galerie/',
     categories: [
-      { id: 'portrete', name: 'Portrete', url: 'https://bobosshots.com/galerie/portrete', description: 'Studio and outdoor portraits — personal branding, family, artistic.' },
-      { id: 'evenimente', name: 'Evenimente', url: 'https://bobosshots.com/galerie/evenimente', description: 'Concerts, baptisms, corporate and private events.' },
-      { id: 'produse', name: 'Produse', url: 'https://bobosshots.com/galerie/produse', description: 'Product photography (incl. automotive) for e-commerce and catalogs.' },
-      { id: 'travel', name: 'Travel', url: 'https://bobosshots.com/galerie/travel', description: 'Landscape, travel and outdoor content.' }
+      { id: 'portrete', name: 'Portrete', url: 'https://bobosshots.com/galerie/portrete/', description: 'Studio and outdoor portraits — personal branding, family, artistic.' },
+      { id: 'evenimente', name: 'Evenimente', url: 'https://bobosshots.com/galerie/evenimente/', description: 'Concerts, baptisms, corporate and private events.' },
+      { id: 'produse', name: 'Produse', url: 'https://bobosshots.com/galerie/produse/', description: 'Product photography (incl. automotive) for e-commerce and catalogs.' },
+      { id: 'travel', name: 'Travel', url: 'https://bobosshots.com/galerie/travel/', description: 'Landscape, travel and outdoor content.' }
     ]
   };
 
   var pricing = {
     currency: 'RON',
-    url: 'https://bobosshots.com/preturi',
+    url: 'https://bobosshots.com/preturi/',
     markdown: 'https://bobosshots.com/preturi/index.md',
     travelNote: 'Deplasarea în afara Sibiului este asigurată de client.',
     foto: {
