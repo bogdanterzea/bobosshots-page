@@ -95,16 +95,6 @@
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"></noscript>
 
-    <!-- Font Awesome CSS - only solid + brands -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/solid.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/solid.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css">
-    </noscript>
-
     <!-- Tailwind CSS -->
     <link rel="stylesheet" href="/shared/tailwind.css">
 
@@ -396,6 +386,7 @@
             transform: translateY(0);
         }
     </style>
+<style>.fa-icon{display:inline-block;width:1em;height:1em;fill:currentColor;vertical-align:-0.125em;flex-shrink:0}</style>
 </head>
 <body class="bg-dark-900 text-white min-h-screen">
     <!-- Scroll Progress -->
@@ -418,7 +409,7 @@
     <header class="py-6 px-4 sm:px-6 lg:px-8 border-b border-dark-700">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <a href="/" class="flex items-center text-gray-400 hover:text-white transition-colors">
-                <i class="fas fa-arrow-left mr-2"></i>
+                <svg class="fa-icon mr-2" aria-hidden="true"><use href="/shared/icons.svg#fa-arrow-left"/></svg>
                 <span class="hidden sm:inline">Înapoi</span>
             </a>
             <a href="/" class="text-2xl font-bold">
@@ -426,7 +417,7 @@
             </a>
             <!-- Hamburger Menu Button (Mobile) -->
             <button id="menu-toggle" class="md:hidden w-10 h-10 flex items-center justify-center text-white hover:text-indigo-400 transition-colors" aria-label="Deschide meniu">
-                <i class="fas fa-bars text-xl"></i>
+                <svg class="fa-icon text-xl" aria-hidden="true"><use href="/shared/icons.svg#fa-bars"/></svg>
             </button>
             <!-- Desktop spacer -->
             <div class="hidden md:block w-20"></div>
@@ -438,7 +429,7 @@
         <div class="mobile-menu-content">
             <!-- Close Button -->
             <button id="menu-close" class="absolute top-6 right-6 w-12 h-12 flex items-center justify-center text-white hover:text-indigo-400 transition-colors" aria-label="Închide meniu">
-                <i class="fas fa-times text-2xl"></i>
+                <svg class="fa-icon text-2xl" aria-hidden="true"><use href="/shared/icons.svg#fa-times"/></svg>
             </button>
 
             <!-- Logo -->
@@ -450,7 +441,7 @@
             <nav class="mobile-nav">
                 <!-- Foto Section -->
                 <div class="menu-section">
-                    <span class="menu-section-title"><i class="fas fa-camera mr-2"></i>Foto</span>
+                    <span class="menu-section-title"><svg class="fa-icon mr-2" aria-hidden="true"><use href="/shared/icons.svg#fa-camera"/></svg>Foto</span>
                     <div class="menu-items">
                         <a href="#portrete" class="menu-item" data-tab="foto">Portrete</a>
                         <a href="#evenimente" class="menu-item" data-tab="foto">Evenimente</a>
@@ -461,7 +452,7 @@
 
                 <!-- Video Section -->
                 <div class="menu-section">
-                    <span class="menu-section-title"><i class="fas fa-video mr-2"></i>Video</span>
+                    <span class="menu-section-title"><svg class="fa-icon mr-2" aria-hidden="true"><use href="/shared/icons.svg#fa-video"/></svg>Video</span>
                     <div class="menu-items">
                         <a href="#video-portrete" class="menu-item" data-tab="video">Social Media</a>
                         <a href="#video-corporate" class="menu-item" data-tab="video">Corporate & Produse</a>
@@ -471,13 +462,13 @@
 
                 <!-- Add-ons -->
                 <a href="#extra" class="menu-item standalone" data-tab="extra">
-                    <i class="fas fa-plus-circle mr-2"></i>Servicii Extra
+                    <svg class="fa-icon mr-2" aria-hidden="true"><use href="/shared/icons.svg#fa-plus-circle"/></svg>Servicii Extra
                 </a>
             </nav>
 
             <!-- Contact CTA -->
             <a href="https://instagram.com/bobosshots" target="_blank" rel="noopener noreferrer" class="mobile-menu-cta">
-                <i class="fab fa-instagram mr-2"></i>Contactează-mă
+                <svg class="fa-icon mr-2" aria-hidden="true"><use href="/shared/icons.svg#fa-instagram"/></svg>Contactează-mă
             </a>
         </div>
     </div>
@@ -486,7 +477,7 @@
     <!-- Page Title -->
     <section class="py-16 text-center">
         <div class="w-20 h-20 bg-accent-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-            <i class="fas fa-tag text-accent-primary text-3xl"></i>
+            <svg class="fa-icon text-accent-primary text-3xl" aria-hidden="true"><use href="/shared/icons.svg#fa-tag"/></svg>
         </div>
         <h1 class="text-4xl md:text-5xl font-bold mb-4">Servicii & Prețuri</h1>
         <p class="text-gray-400 max-w-2xl mx-auto px-4">Pachete flexibile adaptate nevoilor tale. Fiecare proiect este unic, la fel și abordarea mea.</p>
@@ -497,7 +488,7 @@
         <div class="max-w-4xl mx-auto">
             <div class="disclaimer-box">
                 <div class="flex items-start">
-                    <i class="fas fa-info-circle text-accent-primary text-xl mr-4 mt-1"></i>
+                    <svg class="fa-icon text-accent-primary text-xl mr-4 mt-1" aria-hidden="true"><use href="/shared/icons.svg#fa-info-circle"/></svg>
                     <div>
                         <h3 class="font-semibold text-white mb-2">Notă importantă</h3>
                         <p class="text-gray-400 text-sm leading-relaxed">
@@ -514,13 +505,13 @@
     <nav class="z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-700 py-4 px-4" id="pricing-nav">
         <div class="max-w-2xl mx-auto flex justify-center gap-2 sm:gap-4">
             <button onclick="switchTab('foto')" class="nav-pill active" data-section="foto">
-                <i class="fas fa-camera mr-2"></i>Foto
+                <svg class="fa-icon mr-2" aria-hidden="true"><use href="/shared/icons.svg#fa-camera"/></svg>Foto
             </button>
             <button onclick="switchTab('video')" class="nav-pill" data-section="video">
-                <i class="fas fa-video mr-2"></i>Video
+                <svg class="fa-icon mr-2" aria-hidden="true"><use href="/shared/icons.svg#fa-video"/></svg>Video
             </button>
             <button onclick="switchTab('extra')" class="nav-pill" data-section="extra">
-                <i class="fas fa-plus-circle mr-2"></i>Add-ons
+                <svg class="fa-icon mr-2" aria-hidden="true"><use href="/shared/icons.svg#fa-plus-circle"/></svg>Add-ons
             </button>
         </div>
     </nav>
@@ -548,11 +539,11 @@
                         <span class="price"><span class="price-currency">RON </span>350</span>
                     </div>
                     <ul class="feature-list">
-                        <li><i class="fas fa-check"></i>30 minute ședință foto</li>
-                        <li><i class="fas fa-check"></i>1 locație</li>
-                        <li><i class="fas fa-check"></i>1 ținută</li>
-                        <li><i class="fas fa-check"></i>15 fotografii editate</li>
-                        <li><i class="fas fa-check"></i>Livrare în 5 zile</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>30 minute ședință foto</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>1 locație</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>1 ținută</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>15 fotografii editate</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Livrare în 5 zile</li>
                     </ul>
                     <a href="https://instagram.com/bobosshots" target="_blank" class="block w-full text-center bg-dark-700 hover:bg-indigo-500/20 hover:border-indigo-500/50 border border-transparent text-white py-3 rounded-full font-medium transition-all">
                         Solicită Ofertă
@@ -567,11 +558,11 @@
                         <span class="price"><span class="price-currency">RON </span>550</span>
                     </div>
                     <ul class="feature-list">
-                        <li><i class="fas fa-check"></i>1 oră ședință foto</li>
-                        <li><i class="fas fa-check"></i>2 locații</li>
-                        <li><i class="fas fa-check"></i>2-3 ținute</li>
-                        <li><i class="fas fa-check"></i>40 fotografii editate</li>
-                        <li><i class="fas fa-check"></i>Livrare în 7 zile</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>1 oră ședință foto</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>2 locații</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>2-3 ținute</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>40 fotografii editate</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Livrare în 7 zile</li>
                     </ul>
                     <a href="https://instagram.com/bobosshots" target="_blank" class="block w-full text-center bg-accent-primary hover:bg-accent-hover text-white py-3 rounded-full font-medium transition-colors">
                         Solicită Ofertă
@@ -586,11 +577,11 @@
                         <span class="price"><span class="price-currency">RON </span>850</span>
                     </div>
                     <ul class="feature-list">
-                        <li><i class="fas fa-check"></i>2 ore ședință foto</li>
-                        <li><i class="fas fa-check"></i>3+ locații</li>
-                        <li><i class="fas fa-check"></i>Ținute nelimitate</li>
-                        <li><i class="fas fa-check"></i>70+ fotografii editate</li>
-                        <li><i class="fas fa-check"></i>Livrare în 7 zile</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>2 ore ședință foto</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>3+ locații</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Ținute nelimitate</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>70+ fotografii editate</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Livrare în 7 zile</li>
                     </ul>
                     <a href="https://instagram.com/bobosshots" target="_blank" class="block w-full text-center bg-dark-700 hover:bg-indigo-500/20 hover:border-indigo-500/50 border border-transparent text-white py-3 rounded-full font-medium transition-all">
                         Solicită Ofertă
@@ -614,7 +605,7 @@
                 <!-- Botez / Eveniment Privat -->
                 <div class="pricing-card">
                     <div class="flex items-center mb-4">
-                        <i class="fas fa-baby text-accent-primary text-2xl mr-3"></i>
+                        <svg class="fa-icon text-accent-primary text-2xl mr-3" aria-hidden="true"><use href="/shared/icons.svg#fa-baby"/></svg>
                         <h3 class="text-xl font-semibold">Botez / Privat</h3>
                     </div>
                     <p class="text-gray-400 text-sm mb-4">Evenimente intime și de familie</p>
@@ -622,11 +613,11 @@
                         <span class="price"><span class="price-currency">RON </span>1.200</span>
                     </div>
                     <ul class="feature-list">
-                        <li><i class="fas fa-check"></i>3-4 ore acoperire</li>
-                        <li><i class="fas fa-check"></i>Ceremonie + Restaurant</li>
-                        <li><i class="fas fa-check"></i>150+ fotografii editate</li>
-                        <li><i class="fas fa-check"></i>Fotografii de grup</li>
-                        <li><i class="fas fa-check"></i>Livrare în 10 zile</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>3-4 ore acoperire</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Ceremonie + Restaurant</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>150+ fotografii editate</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Fotografii de grup</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Livrare în 10 zile</li>
                     </ul>
                     <a href="https://instagram.com/bobosshots" target="_blank" class="block w-full text-center bg-dark-700 hover:bg-indigo-500/20 hover:border-indigo-500/50 border border-transparent text-white py-3 rounded-full font-medium transition-all">
                         Solicită Ofertă
@@ -636,7 +627,7 @@
                 <!-- Concert / Festival -->
                 <div class="pricing-card featured">
                     <div class="flex items-center mb-4">
-                        <i class="fas fa-music text-accent-primary text-2xl mr-3"></i>
+                        <svg class="fa-icon text-accent-primary text-2xl mr-3" aria-hidden="true"><use href="/shared/icons.svg#fa-music"/></svg>
                         <h3 class="text-xl font-semibold">Concert / Festival</h3>
                     </div>
                     <p class="text-gray-400 text-sm mb-4">Energie și momente unice pe scenă</p>
@@ -645,10 +636,10 @@
                         <span class="price-period">/ eveniment</span>
                     </div>
                     <ul class="feature-list">
-                        <li><i class="fas fa-check"></i>5-6 ore acoperire</li>
-                        <li><i class="fas fa-check"></i>200+ fotografii editate</li>
-                        <li><i class="fas fa-check"></i>Fotografii pentru social media</li>
-                        <li><i class="fas fa-check"></i>Livrare în 5 zile</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>5-6 ore acoperire</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>200+ fotografii editate</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Fotografii pentru social media</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Livrare în 5 zile</li>
                     </ul>
                     <a href="https://instagram.com/bobosshots" target="_blank" class="block w-full text-center bg-accent-primary hover:bg-accent-hover text-white py-3 rounded-full font-medium transition-colors">
                         Solicită Ofertă
@@ -658,7 +649,7 @@
                 <!-- Corporate -->
                 <div class="pricing-card">
                     <div class="flex items-center mb-4">
-                        <i class="fas fa-building text-accent-primary text-2xl mr-3"></i>
+                        <svg class="fa-icon text-accent-primary text-2xl mr-3" aria-hidden="true"><use href="/shared/icons.svg#fa-building"/></svg>
                         <h3 class="text-xl font-semibold">Corporate</h3>
                     </div>
                     <p class="text-gray-400 text-sm mb-4">Conferințe, team building, lansări</p>
@@ -667,11 +658,11 @@
                         <span class="price-period">/ oră</span>
                     </div>
                     <ul class="feature-list">
-                        <li><i class="fas fa-check"></i>Tarif orar flexibil</li>
-                        <li><i class="fas fa-check"></i>Headshots angajați</li>
-                        <li><i class="fas fa-check"></i>Fotografii de eveniment</li>
-                        <li><i class="fas fa-check"></i>Editare profesională</li>
-                        <li><i class="fas fa-check"></i>Format pentru presă</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Tarif orar flexibil</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Headshots angajați</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Fotografii de eveniment</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Editare profesională</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Format pentru presă</li>
                     </ul>
                     <a href="https://instagram.com/bobosshots" target="_blank" class="block w-full text-center bg-dark-700 hover:bg-indigo-500/20 hover:border-indigo-500/50 border border-transparent text-white py-3 rounded-full font-medium transition-all">
                         Solicită Ofertă
@@ -695,7 +686,7 @@
                 <!-- Produse -->
                 <div class="pricing-card">
                     <div class="flex items-center mb-4">
-                        <i class="fas fa-box-open text-accent-primary text-2xl mr-3"></i>
+                        <svg class="fa-icon text-accent-primary text-2xl mr-3" aria-hidden="true"><use href="/shared/icons.svg#fa-box-open"/></svg>
                         <h3 class="text-xl font-semibold">Fotografie de Produs</h3>
                     </div>
                     <p class="text-gray-400 text-sm mb-4">E-commerce, cataloage, social media</p>
@@ -704,11 +695,11 @@
                         <span class="price-period">/ produs</span>
                     </div>
                     <ul class="feature-list">
-                        <li><i class="fas fa-check"></i>Fundal alb sau lifestyle</li>
-                        <li><i class="fas fa-check"></i>Multiple unghiuri</li>
-                        <li><i class="fas fa-check"></i>Retușare profesională</li>
-                        <li><i class="fas fa-check"></i>Format optimizat pentru web</li>
-                        <li><i class="fas fa-check"></i>Reduceri pentru volum mare</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Fundal alb sau lifestyle</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Multiple unghiuri</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Retușare profesională</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Format optimizat pentru web</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Reduceri pentru volum mare</li>
                     </ul>
                     <a href="https://instagram.com/bobosshots" target="_blank" class="block w-full text-center bg-accent-primary hover:bg-accent-hover text-white py-3 rounded-full font-medium transition-colors">
                         Solicită Ofertă
@@ -718,7 +709,7 @@
                 <!-- Imobiliare -->
                 <div class="pricing-card">
                     <div class="flex items-center mb-4">
-                        <i class="fas fa-home text-accent-primary text-2xl mr-3"></i>
+                        <svg class="fa-icon text-accent-primary text-2xl mr-3" aria-hidden="true"><use href="/shared/icons.svg#fa-home"/></svg>
                         <h3 class="text-xl font-semibold">Imobiliare</h3>
                     </div>
                     <p class="text-gray-400 text-sm mb-4">Apartamente, case, spații comerciale</p>
@@ -727,11 +718,11 @@
                         <span class="price-period">/ proprietate</span>
                     </div>
                     <ul class="feature-list">
-                        <li><i class="fas fa-check"></i>Interior & Exterior</li>
-                        <li><i class="fas fa-check"></i>10-20 fotografii editate</li>
-                        <li><i class="fas fa-check"></i>Corecție perspectivă</li>
-                        <li><i class="fas fa-check"></i>HDR pentru luminozitate</li>
-                        <li><i class="fas fa-check"></i>Livrare în 48h</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Interior & Exterior</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>10-20 fotografii editate</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Corecție perspectivă</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>HDR pentru luminozitate</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Livrare în 48h</li>
                     </ul>
                     <a href="https://instagram.com/bobosshots" target="_blank" class="block w-full text-center bg-accent-primary hover:bg-accent-hover text-white py-3 rounded-full font-medium transition-colors">
                         Solicită Ofertă
@@ -755,7 +746,7 @@
                 <!-- Content Creation -->
                 <div class="pricing-card">
                     <div class="flex items-center mb-4">
-                        <i class="fas fa-camera-retro text-accent-primary text-2xl mr-3"></i>
+                        <svg class="fa-icon text-accent-primary text-2xl mr-3" aria-hidden="true"><use href="/shared/icons.svg#fa-camera-retro"/></svg>
                         <h3 class="text-xl font-semibold">Content Creation</h3>
                     </div>
                     <p class="text-gray-400 text-sm mb-4">Pentru branduri și influenceri</p>
@@ -764,11 +755,11 @@
                         <span class="price-period">/ zi</span>
                     </div>
                     <ul class="feature-list">
-                        <li><i class="fas fa-check"></i>7-8 ore ședință foto</li>
-                        <li><i class="fas fa-check"></i>Multiple locații</li>
-                        <li><i class="fas fa-check"></i>50+ fotografii editate</li>
-                        <li><i class="fas fa-check"></i>Format pentru toate platformele</li>
-                        <li><i class="fas fa-check"></i>Drepturi de utilizare incluse</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>7-8 ore ședință foto</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Multiple locații</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>50+ fotografii editate</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Format pentru toate platformele</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Drepturi de utilizare incluse</li>
                     </ul>
                     <a href="https://instagram.com/bobosshots" target="_blank" class="block w-full text-center bg-accent-primary hover:bg-accent-hover text-white py-3 rounded-full font-medium transition-colors">
                         Solicită Ofertă
@@ -778,7 +769,7 @@
                 <!-- Destination -->
                 <div class="pricing-card">
                     <div class="flex items-center mb-4">
-                        <i class="fas fa-plane text-accent-primary text-2xl mr-3"></i>
+                        <svg class="fa-icon text-accent-primary text-2xl mr-3" aria-hidden="true"><use href="/shared/icons.svg#fa-plane"/></svg>
                         <h3 class="text-xl font-semibold">Destination Shoots</h3>
                     </div>
                     <p class="text-gray-400 text-sm mb-4">Ședințe foto în călătorii</p>
@@ -786,11 +777,11 @@
                         <span class="price">La cerere</span>
                     </div>
                     <ul class="feature-list">
-                        <li><i class="fas fa-check"></i>Disponibil în toată România</li>
-                        <li><i class="fas fa-check"></i>Posibilitate internațional</li>
-                        <li><i class="fas fa-check"></i>Planificare locații</li>
-                        <li><i class="fas fa-check"></i>Flexibilitate program</li>
-                        <li><i class="fas fa-check"></i>Transport & cazare separate</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Disponibil în toată România</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Posibilitate internațional</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Planificare locații</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Flexibilitate program</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Transport & cazare separate</li>
                     </ul>
                     <a href="https://instagram.com/bobosshots" target="_blank" class="block w-full text-center bg-accent-primary hover:bg-accent-hover text-white py-3 rounded-full font-medium transition-colors">
                         Discută Proiectul
@@ -819,7 +810,7 @@
                 <!-- Reel/Short -->
                 <div class="pricing-card">
                     <div class="flex items-center mb-4">
-                        <i class="fas fa-mobile-alt text-accent-primary text-2xl mr-3"></i>
+                        <svg class="fa-icon text-accent-primary text-2xl mr-3" aria-hidden="true"><use href="/shared/icons.svg#fa-mobile-alt"/></svg>
                         <h3 class="text-xl font-semibold">Reel / Short</h3>
                     </div>
                     <p class="text-gray-400 text-sm mb-4">Perfect pentru TikTok, Reels, Shorts</p>
@@ -827,11 +818,11 @@
                         <span class="price"><span class="price-currency">RON </span>400</span>
                     </div>
                     <ul class="feature-list">
-                        <li><i class="fas fa-check"></i>Video 15-30 secunde</li>
-                        <li><i class="fas fa-check"></i>1 concept creativ</li>
-                        <li><i class="fas fa-check"></i>Editare profesională</li>
-                        <li><i class="fas fa-check"></i>Muzică & tranziții</li>
-                        <li><i class="fas fa-check"></i>Format vertical optimizat</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Video 15-30 secunde</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>1 concept creativ</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Editare profesională</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Muzică & tranziții</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Format vertical optimizat</li>
                     </ul>
                     <a href="https://instagram.com/bobosshots" target="_blank" class="block w-full text-center bg-dark-700 hover:bg-indigo-500/20 hover:border-indigo-500/50 border border-transparent text-white py-3 rounded-full font-medium transition-all">
                         Solicită Ofertă
@@ -841,7 +832,7 @@
                 <!-- Video de Prezentare -->
                 <div class="pricing-card featured">
                     <div class="flex items-center mb-4">
-                        <i class="fas fa-video text-accent-primary text-2xl mr-3"></i>
+                        <svg class="fa-icon text-accent-primary text-2xl mr-3" aria-hidden="true"><use href="/shared/icons.svg#fa-video"/></svg>
                         <h3 class="text-xl font-semibold">Video de Prezentare</h3>
                     </div>
                     <p class="text-gray-400 text-sm mb-4">Ideal pentru brand personal</p>
@@ -849,11 +840,11 @@
                         <span class="price"><span class="price-currency">RON </span>700</span>
                     </div>
                     <ul class="feature-list">
-                        <li><i class="fas fa-check"></i>Video 1-2 minute</li>
-                        <li><i class="fas fa-check"></i>2-3 locații</li>
-                        <li><i class="fas fa-check"></i>Voiceover inclus</li>
-                        <li><i class="fas fa-check"></i>Color grading cinematografic</li>
-                        <li><i class="fas fa-check"></i>Livrare în 7 zile</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Video 1-2 minute</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>2-3 locații</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Voiceover inclus</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Color grading cinematografic</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Livrare în 7 zile</li>
                     </ul>
                     <a href="https://instagram.com/bobosshots" target="_blank" class="block w-full text-center bg-accent-primary hover:bg-accent-hover text-white py-3 rounded-full font-medium transition-colors">
                         Solicită Ofertă
@@ -863,7 +854,7 @@
                 <!-- Pack Social Media -->
                 <div class="pricing-card">
                     <div class="flex items-center mb-4">
-                        <i class="fas fa-layer-group text-accent-primary text-2xl mr-3"></i>
+                        <svg class="fa-icon text-accent-primary text-2xl mr-3" aria-hidden="true"><use href="/shared/icons.svg#fa-layer-group"/></svg>
                         <h3 class="text-xl font-semibold">Pack Social Media</h3>
                     </div>
                     <p class="text-gray-400 text-sm mb-4">Conținut pentru o lună</p>
@@ -871,11 +862,11 @@
                         <span class="price"><span class="price-currency">RON </span>1.500</span>
                     </div>
                     <ul class="feature-list">
-                        <li><i class="fas fa-check"></i>5 reels/shorts</li>
-                        <li><i class="fas fa-check"></i>Scenarii personalizate</li>
-                        <li><i class="fas fa-check"></i>Editare cu tranziții trending</li>
-                        <li><i class="fas fa-check"></i>Subtitrări incluse</li>
-                        <li><i class="fas fa-check"></i>Livrare în 10 zile</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>5 reels/shorts</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Scenarii personalizate</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Editare cu tranziții trending</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Subtitrări incluse</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Livrare în 10 zile</li>
                     </ul>
                     <a href="https://instagram.com/bobosshots" target="_blank" class="block w-full text-center bg-dark-700 hover:bg-indigo-500/20 hover:border-indigo-500/50 border border-transparent text-white py-3 rounded-full font-medium transition-all">
                         Solicită Ofertă
@@ -899,7 +890,7 @@
                 <!-- Video Corporate -->
                 <div class="pricing-card">
                     <div class="flex items-center mb-4">
-                        <i class="fas fa-briefcase text-accent-primary text-2xl mr-3"></i>
+                        <svg class="fa-icon text-accent-primary text-2xl mr-3" aria-hidden="true"><use href="/shared/icons.svg#fa-briefcase"/></svg>
                         <h3 class="text-xl font-semibold">Video Corporate</h3>
                     </div>
                     <p class="text-gray-400 text-sm mb-4">Conferințe, team building, lansări</p>
@@ -908,11 +899,11 @@
                         <span class="price-period">/ oră</span>
                     </div>
                     <ul class="feature-list">
-                        <li><i class="fas fa-check"></i>Filmare Full HD</li>
-                        <li><i class="fas fa-check"></i>Tarif orar flexibil</li>
-                        <li><i class="fas fa-check"></i>Editare profesională inclusă</li>
-                        <li><i class="fas fa-check"></i>Sunet profesional</li>
-                        <li><i class="fas fa-check"></i>Format pentru presă & social</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Filmare Full HD</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Tarif orar flexibil</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Editare profesională inclusă</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Sunet profesional</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Format pentru presă & social</li>
                     </ul>
                     <a href="https://instagram.com/bobosshots" target="_blank" class="block w-full text-center bg-accent-primary hover:bg-accent-hover text-white py-3 rounded-full font-medium transition-colors">
                         Solicită Ofertă
@@ -922,7 +913,7 @@
                 <!-- Video Produs -->
                 <div class="pricing-card">
                     <div class="flex items-center mb-4">
-                        <i class="fas fa-cube text-accent-primary text-2xl mr-3"></i>
+                        <svg class="fa-icon text-accent-primary text-2xl mr-3" aria-hidden="true"><use href="/shared/icons.svg#fa-cube"/></svg>
                         <h3 class="text-xl font-semibold">Video de Produs</h3>
                     </div>
                     <p class="text-gray-400 text-sm mb-4">Prezentare dinamică pentru e-commerce</p>
@@ -931,11 +922,11 @@
                         <span class="price-period">/ produs</span>
                     </div>
                     <ul class="feature-list">
-                        <li><i class="fas fa-check"></i>Video 15-30 secunde</li>
-                        <li><i class="fas fa-check"></i>Prezentare lifestyle</li>
-                        <li><i class="fas fa-check"></i>Multiple unghiuri & detalii</li>
-                        <li><i class="fas fa-check"></i>Editare cinematografică</li>
-                        <li><i class="fas fa-check"></i>Reduceri pentru volum mare</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Video 15-30 secunde</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Prezentare lifestyle</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Multiple unghiuri & detalii</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Editare cinematografică</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Reduceri pentru volum mare</li>
                     </ul>
                     <a href="https://instagram.com/bobosshots" target="_blank" class="block w-full text-center bg-accent-primary hover:bg-accent-hover text-white py-3 rounded-full font-medium transition-colors">
                         Solicită Ofertă
@@ -959,7 +950,7 @@
                 <!-- Pack Creator -->
                 <div class="pricing-card featured">
                     <div class="flex items-center mb-4">
-                        <i class="fas fa-film text-accent-primary text-2xl mr-3"></i>
+                        <svg class="fa-icon text-accent-primary text-2xl mr-3" aria-hidden="true"><use href="/shared/icons.svg#fa-film"/></svg>
                         <h3 class="text-xl font-semibold">Pack Creator</h3>
                     </div>
                     <p class="text-gray-400 text-sm mb-4">Soluția completă pentru content creators</p>
@@ -968,13 +959,13 @@
                         <span class="price-period">/ zi</span>
                     </div>
                     <ul class="feature-list">
-                        <li><i class="fas fa-check"></i>8 ore de filmare</li>
-                        <li><i class="fas fa-check"></i>3-5 videouri editate</li>
-                        <li><i class="fas fa-check"></i>Multiple locații</li>
-                        <li><i class="fas fa-check"></i>Format multi-platformă</li>
-                        <li><i class="fas fa-check"></i>Scenarii & direcție creativă</li>
-                        <li><i class="fas fa-check"></i>Color grading profesional</li>
-                        <li><i class="fas fa-check"></i>Livrare în 10 zile</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>8 ore de filmare</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>3-5 videouri editate</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Multiple locații</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Format multi-platformă</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Scenarii & direcție creativă</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Color grading profesional</li>
+                        <li><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-check"/></svg>Livrare în 10 zile</li>
                     </ul>
                     <a href="https://instagram.com/bobosshots" target="_blank" class="block w-full text-center bg-accent-primary hover:bg-accent-hover text-white py-3 rounded-full font-medium transition-colors">
                         Solicită Ofertă
@@ -998,25 +989,25 @@
             <!-- Foto Add-ons -->
             <div class="mb-10">
                 <h3 class="text-lg font-semibold text-gray-300 mb-4 flex items-center justify-center">
-                    <i class="fas fa-camera mr-2 text-accent-primary"></i>Foto
+                    <svg class="fa-icon mr-2 text-accent-primary" aria-hidden="true"><use href="/shared/icons.svg#fa-camera"/></svg>Foto
                 </h3>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 items-stretch">
                     <div class="bg-dark-800 rounded-xl p-6 text-center border border-dark-700">
-                        <i class="fas fa-image text-accent-primary text-2xl mb-3"></i>
+                        <svg class="fa-icon text-accent-primary text-2xl mb-3" aria-hidden="true"><use href="/shared/icons.svg#fa-image"/></svg>
                         <h4 class="font-semibold mb-2">Fotografii Extra</h4>
                         <p class="text-gray-400 text-sm">Editare suplimentară</p>
                         <p class="text-accent-primary font-semibold mt-2">25 RON / foto</p>
                     </div>
 
                     <div class="bg-dark-800 rounded-xl p-6 text-center border border-dark-700">
-                        <i class="fas fa-bolt text-accent-primary text-2xl mb-3"></i>
+                        <svg class="fa-icon text-accent-primary text-2xl mb-3" aria-hidden="true"><use href="/shared/icons.svg#fa-bolt"/></svg>
                         <h4 class="font-semibold mb-2">Livrare Express</h4>
                         <p class="text-gray-400 text-sm">24-48 ore</p>
                         <p class="text-accent-primary font-semibold mt-2">+30% din pachet</p>
                     </div>
 
                     <div class="bg-dark-800 rounded-xl p-6 text-center border border-dark-700">
-                        <i class="fas fa-clock text-accent-primary text-2xl mb-3"></i>
+                        <svg class="fa-icon text-accent-primary text-2xl mb-3" aria-hidden="true"><use href="/shared/icons.svg#fa-clock"/></svg>
                         <h4 class="font-semibold mb-2">Ore Extra</h4>
                         <p class="text-gray-400 text-sm">Peste durata pachetului</p>
                         <p class="text-accent-primary font-semibold mt-2">150 RON / oră</p>
@@ -1027,18 +1018,18 @@
             <!-- Video Add-ons -->
             <div>
                 <h3 class="text-lg font-semibold text-gray-300 mb-4 flex items-center justify-center">
-                    <i class="fas fa-video mr-2 text-accent-primary"></i>Video
+                    <svg class="fa-icon mr-2 text-accent-primary" aria-hidden="true"><use href="/shared/icons.svg#fa-video"/></svg>Video
                 </h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto items-stretch">
                     <div class="bg-dark-800 rounded-xl p-6 text-center border border-dark-700">
-                        <i class="fas fa-cut text-accent-primary text-2xl mb-3"></i>
+                        <svg class="fa-icon text-accent-primary text-2xl mb-3" aria-hidden="true"><use href="/shared/icons.svg#fa-cut"/></svg>
                         <h4 class="font-semibold mb-2">Editare Suplimentară</h4>
                         <p class="text-gray-400 text-sm">Peste durata inclusă</p>
                         <p class="text-accent-primary font-semibold mt-2">100 RON / minut</p>
                     </div>
 
                     <div class="bg-dark-800 rounded-xl p-6 text-center border border-dark-700">
-                        <i class="fas fa-shipping-fast text-accent-primary text-2xl mb-3"></i>
+                        <svg class="fa-icon text-accent-primary text-2xl mb-3" aria-hidden="true"><use href="/shared/icons.svg#fa-shipping-fast"/></svg>
                         <h4 class="font-semibold mb-2">Livrare Express</h4>
                         <p class="text-gray-400 text-sm">48-72 ore</p>
                         <p class="text-accent-primary font-semibold mt-2">+40% din pachet</p>
@@ -1047,7 +1038,7 @@
             </div>
 
             <p class="text-center text-gray-500 text-sm mt-10">
-                <i class="fas fa-info-circle mr-2"></i>Deplasarea în afara Sibiului este asigurată de client.
+                <svg class="fa-icon mr-2" aria-hidden="true"><use href="/shared/icons.svg#fa-info-circle"/></svg>Deplasarea în afara Sibiului este asigurată de client.
             </p>
         </div>
     </section>
@@ -1058,10 +1049,10 @@
             <h2 class="text-3xl md:text-4xl font-bold mb-4">Ai un proiect în minte?</h2>
             <p class="text-gray-400 mb-8">Hai să discutăm despre viziunea ta și să găsim pachetul perfect pentru tine.</p>
             <a href="https://instagram.com/bobosshots" target="_blank" rel="noopener noreferrer" class="inline-flex items-center bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all hover:scale-105 hover:shadow-lg hover:shadow-pink-500/25">
-                <i class="fab fa-instagram text-xl mr-3"></i>Contactează-mă pe Instagram
+                <svg class="fa-icon text-xl mr-3" aria-hidden="true"><use href="/shared/icons.svg#fa-instagram"/></svg>Contactează-mă pe Instagram
             </a>
             <p class="text-gray-500 text-sm mt-6">
-                <i class="fas fa-map-marker-alt mr-2"></i>Sibiu, România • Disponibil pentru deplasări în toată țara
+                <svg class="fa-icon mr-2" aria-hidden="true"><use href="/shared/icons.svg#fa-map-marker-alt"/></svg>Sibiu, România • Disponibil pentru deplasări în toată țara
             </p>
         </div>
     </section>

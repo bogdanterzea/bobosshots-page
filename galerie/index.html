@@ -39,16 +39,6 @@
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"></noscript>
 
-    <!-- Font Awesome CSS - only solid + brands -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/solid.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/solid.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css">
-    </noscript>
-
     <!-- Tailwind CSS -->
     <link rel="stylesheet" href="/shared/tailwind.css">
     <style>
@@ -146,13 +136,14 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
+<style>.fa-icon{display:inline-block;width:1em;height:1em;fill:currentColor;vertical-align:-0.125em;flex-shrink:0}</style>
 </head>
 <body class="bg-dark-900 text-white min-h-screen">
     <!-- Header -->
     <header class="py-6 px-4 sm:px-6 lg:px-8 border-b border-dark-700">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <a href="/" class="flex items-center text-gray-400 hover:text-white transition-colors">
-                <i class="fas fa-arrow-left mr-2"></i>
+                <svg class="fa-icon mr-2" aria-hidden="true"><use href="/shared/icons.svg#fa-arrow-left"/></svg>
                 Înapoi
             </a>
             <a href="/" class="text-2xl font-bold">
@@ -165,7 +156,7 @@
     <!-- Page Title -->
     <section class="py-16 text-center">
         <div class="w-20 h-20 bg-accent-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-            <i class="fas fa-images text-accent-primary text-3xl"></i>
+            <svg class="fa-icon text-accent-primary text-3xl" aria-hidden="true"><use href="/shared/icons.svg#fa-images"/></svg>
         </div>
         <h1 class="text-4xl md:text-5xl font-bold mb-4">Galerie Foto</h1>
         <p class="text-gray-400 max-w-xl mx-auto px-4">84 fotografii din portofoliul meu.</p>
@@ -183,11 +174,11 @@
 
     <!-- Lightbox -->
     <div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLB()" role="dialog" aria-label="Vizualizare imagine">
-        <button class="lb-btn lb-close" onclick="closeLB()" aria-label="Închide"><i class="fas fa-times" aria-hidden="true"></i></button>
-        <button class="lb-btn lb-prev" onclick="navLB(-1)" aria-label="Imaginea anterioară"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
+        <button class="lb-btn lb-close" onclick="closeLB()" aria-label="Închide"><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-times"/></svg></button>
+        <button class="lb-btn lb-prev" onclick="navLB(-1)" aria-label="Imaginea anterioară"><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-chevron-left"/></svg></button>
         <div class="lb-spinner" id="lb-spinner"></div>
         <img id="lb-img" src="" alt="Fotografie din galerie" onload="document.getElementById('lb-spinner').style.display='none'">
-        <button class="lb-btn lb-next" onclick="navLB(1)" aria-label="Imaginea următoare"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
+        <button class="lb-btn lb-next" onclick="navLB(1)" aria-label="Imaginea următoare"><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-chevron-right"/></svg></button>
         <div class="lb-counter"><span id="lb-count">1</span> / 84</div>
     </div>
 

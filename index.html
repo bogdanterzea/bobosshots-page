@@ -184,13 +184,10 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="apple-touch-icon" href="favicon.svg">
 
-    <!-- LCP image preload: hero background — responsive via imagesrcset so mobile pulls the 69KB asset, desktop the 260KB one. -->
-    <link rel="preload" as="image"
-          href="hero-background.webp"
-          imagesrcset="hero-background-mobile.webp 640w, hero-background.webp 1920w"
-          imagesizes="100vw"
-          type="image/webp"
-          fetchpriority="high">
+    <!-- LCP image preload: media-scoped so each viewport pulls only its own asset (no double-download).
+         The CSS .hero-bg default + @media (max-width: 640px) override match these URLs exactly. -->
+    <link rel="preload" as="image" href="hero-background-mobile.webp" media="(max-width: 640px)" type="image/webp" fetchpriority="high">
+    <link rel="preload" as="image" href="hero-background.webp" media="(min-width: 641px)" type="image/webp" fetchpriority="high">
 
     <title>Bobosshots | Terzea Bogdan Fotograf - Sibiu</title>
 
@@ -208,16 +205,6 @@
     <!-- Google Fonts - non-render-blocking -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"></noscript>
-
-    <!-- Font Awesome CSS - only solid + brands (smaller than all.min.css) -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/solid.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/solid.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css">
-    </noscript>
 
     <!-- Tailwind CSS -->
     <link rel="stylesheet" href="/shared/tailwind.css">
@@ -421,6 +408,8 @@
 
         /* ===== HERO SECTION ===== */
         .hero-bg {
+            /* Desktop default; @media (max-width: 640px) below swaps to the 69KB mobile webp. */
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('hero-background.webp');
             background-attachment: fixed;
             background-position: center;
             background-repeat: no-repeat;
@@ -985,6 +974,7 @@
             border-radius: 0.25rem;
         }
     </style>
+<style>.fa-icon{display:inline-block;width:1em;height:1em;fill:currentColor;vertical-align:-0.125em;flex-shrink:0}</style>
 </head>
 <body class="bg-dark-900 text-white">
 
@@ -1030,7 +1020,7 @@
 
                 <!-- Mobile Menu Button -->
                 <button id="menu-toggle" class="md:hidden w-10 h-10 flex items-center justify-center text-white hover:text-indigo-400 transition-colors" aria-label="Deschide meniul">
-                    <i class="fas fa-bars text-2xl"></i>
+                    <svg class="fa-icon text-2xl" aria-hidden="true"><use href="/shared/icons.svg#fa-bars"/></svg>
                 </button>
             </div>
         </div>
@@ -1041,7 +1031,7 @@
         <div class="mobile-menu-content">
             <!-- Close Button -->
             <button id="menu-close" class="absolute top-6 right-6 w-12 h-12 flex items-center justify-center text-white hover:text-indigo-400 transition-colors" aria-label="Închide meniu">
-                <i class="fas fa-times text-2xl"></i>
+                <svg class="fa-icon text-2xl" aria-hidden="true"><use href="/shared/icons.svg#fa-times"/></svg>
             </button>
 
             <!-- Logo -->
@@ -1062,14 +1052,14 @@
 
             <!-- Contact CTA -->
             <a href="https://instagram.com/bobosshots" target="_blank" rel="noopener noreferrer" class="mobile-menu-cta">
-                <i class="fab fa-instagram mr-2"></i>Contactează-mă
+                <svg class="fa-icon mr-2" aria-hidden="true"><use href="/shared/icons.svg#fa-instagram"/></svg>Contactează-mă
             </a>
         </div>
     </div>
 
     <main>
     <!-- Hero Section -->
-    <section id="acasa" class="relative min-h-screen flex items-center justify-center hero-bg" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), image-set(url('hero-background.webp') type('image/webp'), url('hero-background.jpg') type('image/jpeg'));">
+    <section id="acasa" class="relative min-h-screen flex items-center justify-center hero-bg">
         <div class="hero-content text-center px-4">
             <!-- Location Badge -->
             <div class="inline-flex items-center bg-dark-700/80 backdrop-blur-sm px-4 py-2 rounded-full mb-8">
@@ -1091,17 +1081,17 @@
             <!-- CTA Buttons -->
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
                 <a href="#portofoliu" class="magnetic-btn bg-accent-primary hover:bg-accent-hover text-white px-8 py-4 rounded-full font-semibold text-lg transition-all shadow-lg shadow-accent-primary/25 glow">
-                    <i class="fas fa-images mr-2"></i>Vezi Portofoliul
+                    <svg class="fa-icon mr-2" aria-hidden="true"><use href="/shared/icons.svg#fa-images"/></svg>Vezi Portofoliul
                 </a>
                 <a href="#contact" class="magnetic-btn-secondary border-2 border-white/30 hover:border-white text-white px-8 py-4 rounded-full font-semibold text-lg transition-all hover:bg-white/10">
-                    <i class="fas fa-envelope mr-2"></i>Contactează-mă
+                    <svg class="fa-icon mr-2" aria-hidden="true"><use href="/shared/icons.svg#fa-envelope"/></svg>Contactează-mă
                 </a>
             </div>
 
             <!-- Scroll Indicator -->
             <div class="scroll-indicator">
                 <a href="#portofoliu" class="text-white/50 hover:text-white transition-colors" aria-label="Scroll la portofoliu">
-                    <i class="fas fa-chevron-down text-2xl" aria-hidden="true"></i>
+                    <svg class="fa-icon text-2xl" aria-hidden="true"><use href="/shared/icons.svg#fa-chevron-down"/></svg>
                 </a>
             </div>
         </div>
@@ -1326,41 +1316,41 @@
                 <!-- Service 1 - Portrete -->
                 <a href="/galerie/portrete/" class="service-card bg-dark-700 rounded-2xl sm:rounded-3xl p-4 sm:p-8 text-center block cursor-pointer">
                     <div class="icon-wrapper w-12 h-12 sm:w-20 sm:h-20 bg-accent-primary/10 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-6">
-                        <i class="fas fa-user text-accent-primary text-xl sm:text-3xl"></i>
+                        <svg class="fa-icon text-accent-primary text-xl sm:text-3xl" aria-hidden="true"><use href="/shared/icons.svg#fa-user"/></svg>
                     </div>
                     <h3 class="text-sm sm:text-xl font-bold mb-2 sm:mb-4">Portrete</h3>
                     <p class="text-gray-400 leading-relaxed text-xs sm:text-base hidden sm:block">Surprind esența ta autentică în fiecare cadru. Portrete care spun povești.</p>
-                    <span class="hidden sm:inline-block mt-4 text-accent-primary text-sm font-medium">Explorează <i class="fas fa-arrow-right ml-1 transition-transform group-hover:translate-x-1"></i></span>
+                    <span class="hidden sm:inline-block mt-4 text-accent-primary text-sm font-medium">Explorează <svg class="fa-icon ml-1 transition-transform group-hover:translate-x-1" aria-hidden="true"><use href="/shared/icons.svg#fa-arrow-right"/></svg></span>
                 </a>
 
                 <!-- Service 2 - Evenimente -->
                 <a href="/galerie/evenimente/" class="service-card bg-dark-700 rounded-2xl sm:rounded-3xl p-4 sm:p-8 text-center block cursor-pointer">
                     <div class="icon-wrapper w-12 h-12 sm:w-20 sm:h-20 bg-accent-primary/10 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-6">
-                        <i class="fas fa-calendar-check text-accent-primary text-xl sm:text-3xl"></i>
+                        <svg class="fa-icon text-accent-primary text-xl sm:text-3xl" aria-hidden="true"><use href="/shared/icons.svg#fa-calendar-check"/></svg>
                     </div>
                     <h3 class="text-sm sm:text-xl font-bold mb-2 sm:mb-4">Evenimente</h3>
                     <p class="text-gray-400 leading-relaxed text-xs sm:text-base hidden sm:block">Fiecare moment contează. Imortalizez energia și emoția evenimentelor tale.</p>
-                    <span class="hidden sm:inline-block mt-4 text-accent-primary text-sm font-medium">Descoperă <i class="fas fa-arrow-right ml-1 transition-transform group-hover:translate-x-1"></i></span>
+                    <span class="hidden sm:inline-block mt-4 text-accent-primary text-sm font-medium">Descoperă <svg class="fa-icon ml-1 transition-transform group-hover:translate-x-1" aria-hidden="true"><use href="/shared/icons.svg#fa-arrow-right"/></svg></span>
                 </a>
 
                 <!-- Service 3 - Produse -->
                 <a href="/galerie/produse/" class="service-card bg-dark-700 rounded-2xl sm:rounded-3xl p-4 sm:p-8 text-center block cursor-pointer">
                     <div class="icon-wrapper w-12 h-12 sm:w-20 sm:h-20 bg-accent-primary/10 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-6">
-                        <i class="fas fa-box-open text-accent-primary text-xl sm:text-3xl"></i>
+                        <svg class="fa-icon text-accent-primary text-xl sm:text-3xl" aria-hidden="true"><use href="/shared/icons.svg#fa-box-open"/></svg>
                     </div>
                     <h3 class="text-sm sm:text-xl font-bold mb-2 sm:mb-4">Produse & Imobiliare</h3>
                     <p class="text-gray-400 leading-relaxed text-xs sm:text-base hidden sm:block">Imagini care vând. Prezint produsele și spațiile tale în cea mai bună lumină.</p>
-                    <span class="hidden sm:inline-block mt-4 text-accent-primary text-sm font-medium">Vezi proiecte <i class="fas fa-arrow-right ml-1 transition-transform group-hover:translate-x-1"></i></span>
+                    <span class="hidden sm:inline-block mt-4 text-accent-primary text-sm font-medium">Vezi proiecte <svg class="fa-icon ml-1 transition-transform group-hover:translate-x-1" aria-hidden="true"><use href="/shared/icons.svg#fa-arrow-right"/></svg></span>
                 </a>
 
                 <!-- Service 4 - Travel -->
                 <a href="/galerie/travel/" class="service-card bg-dark-700 rounded-2xl sm:rounded-3xl p-4 sm:p-8 text-center block cursor-pointer">
                     <div class="icon-wrapper w-12 h-12 sm:w-20 sm:h-20 bg-accent-primary/10 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-6">
-                        <i class="fas fa-plane text-accent-primary text-xl sm:text-3xl"></i>
+                        <svg class="fa-icon text-accent-primary text-xl sm:text-3xl" aria-hidden="true"><use href="/shared/icons.svg#fa-plane"/></svg>
                     </div>
                     <h3 class="text-sm sm:text-xl font-bold mb-2 sm:mb-4">Travel</h3>
                     <p class="text-gray-400 leading-relaxed text-xs sm:text-base hidden sm:block">Peisaje care te transportă. Aventuri vizuale din locuri extraordinare.</p>
-                    <span class="hidden sm:inline-block mt-4 text-accent-primary text-sm font-medium">Călătorește <i class="fas fa-arrow-right ml-1 transition-transform group-hover:translate-x-1"></i></span>
+                    <span class="hidden sm:inline-block mt-4 text-accent-primary text-sm font-medium">Călătorește <svg class="fa-icon ml-1 transition-transform group-hover:translate-x-1" aria-hidden="true"><use href="/shared/icons.svg#fa-arrow-right"/></svg></span>
                 </a>
             </div>
         </div>
@@ -1380,10 +1370,10 @@
             <div class="testimonials-wrapper px-10 sm:px-12">
                 <!-- Nav Buttons -->
                 <button class="testimonial-nav prev" id="test-prev" type="button" aria-label="Testimonialul anterior">
-                    <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                    <svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-chevron-left"/></svg>
                 </button>
                 <button class="testimonial-nav next" id="test-next" type="button" aria-label="Testimonialul următor">
-                    <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                    <svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-chevron-right"/></svg>
                 </button>
 
                 <!-- Track -->
@@ -1397,7 +1387,7 @@
                         <div class="testimonial-text text-gray-300 text-sm leading-relaxed">
                             A fost extraordinar. La prima ședință împreună, am căutat zăpadă, nu am găsit zăpadă, am pivotat și mulțumită abilităților tale a ieșit un material extraordinar pe care nici nu mi l-am imaginat până să-l văd... Calitate, adaptabilitate și profesionalism. Recomand 100%
                         </div>
-                        <button class="testimonial-expand-btn" type="button" aria-label="Extinde testimonialul"><i class="fas fa-chevron-down" aria-hidden="true"></i></button>
+                        <button class="testimonial-expand-btn" type="button" aria-label="Extinde testimonialul"><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-chevron-down"/></svg></button>
                     </div>
 
                     <!-- Testimonial 2 - Amalia -->
@@ -1409,7 +1399,7 @@
                         <div class="testimonial-text text-gray-300 text-sm leading-relaxed">
                             Am avut marea plăcere să te avem fotograf la concursul canin unde a participat și Akita-ul meu Akimitsu. Modul în care ai interacționat cu el dar și cu ceilalți câini, faptul că ai fost mereu spontan, dornic să prinzi cele mai bune și frumoase unghiuri ne-a făcut experiența extraordinară. S-a văzut și s-a simțit profesionalismul, câinele nu s-a simțit stingher și am apreciat că ai avut atâta răbdare. Mulțumim și abia așteptăm colaborările viitoare!
                         </div>
-                        <button class="testimonial-expand-btn" type="button" aria-label="Extinde testimonialul"><i class="fas fa-chevron-down" aria-hidden="true"></i></button>
+                        <button class="testimonial-expand-btn" type="button" aria-label="Extinde testimonialul"><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-chevron-down"/></svg></button>
                     </div>
 
                     <!-- Testimonial 3 - Razvan -->
@@ -1421,7 +1411,7 @@
                         <div class="testimonial-text text-gray-300 text-sm leading-relaxed">
                             Îmi plac tare pozele și clipurile care ies din mânuța ta. E veche amintirea din Portugalia dar știu că dădeai indicații despre cum să stăm ca să iasă pozele cât mai bine și asta mi se pare o chestie mișto că practic îl ajuți pe client și te ajuți și pe tine.
                         </div>
-                        <button class="testimonial-expand-btn" type="button" aria-label="Extinde testimonialul"><i class="fas fa-chevron-down" aria-hidden="true"></i></button>
+                        <button class="testimonial-expand-btn" type="button" aria-label="Extinde testimonialul"><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-chevron-down"/></svg></button>
                     </div>
 
                     <!-- Testimonial 4 - Ramona -->
@@ -1433,7 +1423,7 @@
                         <div class="testimonial-text text-gray-300 text-sm leading-relaxed">
                             A fost o experiență fantastică să te avem ca fotograf în vacanța noastră din Elveția! Pozele au ieșit superbe, iar pentru mine a fost de mare ajutor faptul că m-ai ghidat și îmi spuneai cum să stau în poze. Rezultatul a fost foarte fain: ai reușit să surprinzi momente magice și memorabile. Ești un fotograf foarte talentat și sper să mai colaborăm și în vacanțele viitoare (și nu numai)!
                         </div>
-                        <button class="testimonial-expand-btn" type="button" aria-label="Extinde testimonialul"><i class="fas fa-chevron-down" aria-hidden="true"></i></button>
+                        <button class="testimonial-expand-btn" type="button" aria-label="Extinde testimonialul"><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-chevron-down"/></svg></button>
                     </div>
 
                     <!-- Testimonial 5 - Aaron -->
@@ -1445,7 +1435,7 @@
                         <div class="testimonial-text text-gray-300 text-sm leading-relaxed">
                             Sesiuni lungi, multe cadre și mai multe poze deci în concluzie am avut din ce alege, am râs bine și m-am distrat and I'll do it again!
                         </div>
-                        <button class="testimonial-expand-btn" type="button" aria-label="Extinde testimonialul"><i class="fas fa-chevron-down" aria-hidden="true"></i></button>
+                        <button class="testimonial-expand-btn" type="button" aria-label="Extinde testimonialul"><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-chevron-down"/></svg></button>
                     </div>
 
                     <!-- Testimonial 6 - Marian -->
@@ -1457,7 +1447,7 @@
                         <div class="testimonial-text text-gray-300 text-sm leading-relaxed">
                             Am făcut deja o grămadă de colaborări împreună, de la shooting-uri de model și evenimente, până la poze și shorts prin vacanțe. Ce-mi place cel mai mult la tine e viziunea aia aparte: ai răbdare să cauți cadrul perfect, dar în același timp totul se simte super natural, nimic forțat. Se vede experiența în momentele alea când te oprești brusc și zici: „stai, aici o să iasă ceva fain!". Știi exact cum să ghidezi lucrurile ca să meargă smooth și să scoți ce e mai bun din orice context. Ești un mix fain de profesionalism și vibe relaxat, cu siguranță o să mai colaborăm!
                         </div>
-                        <button class="testimonial-expand-btn" type="button" aria-label="Extinde testimonialul"><i class="fas fa-chevron-down" aria-hidden="true"></i></button>
+                        <button class="testimonial-expand-btn" type="button" aria-label="Extinde testimonialul"><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-chevron-down"/></svg></button>
                     </div>
 
                     <!-- Testimonial 7 - Constantin -->
@@ -1469,7 +1459,7 @@
                         <div class="testimonial-text text-gray-300 text-sm leading-relaxed">
                             Am avut ocazia să lucrez de minim 3 ori la proiecte individuale cu Bobo. Rezultatele finale își spun cuvântul profesionalismului, atât din punct de vedere fotografic, dar și calitatea photoshoot-urilor, momente amuzante, zâmbete generate pe moment. Timpul de livrare a fost foarte rapid, deci, încă un plus pentru profesionalismul menționat mai sus. Looking forward to be working again!
                         </div>
-                        <button class="testimonial-expand-btn" type="button" aria-label="Extinde testimonialul"><i class="fas fa-chevron-down" aria-hidden="true"></i></button>
+                        <button class="testimonial-expand-btn" type="button" aria-label="Extinde testimonialul"><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-chevron-down"/></svg></button>
                     </div>
 
                     <!-- Testimonial 8 - Felicia -->
@@ -1481,7 +1471,7 @@
                         <div class="testimonial-text text-gray-300 text-sm leading-relaxed">
                             Mă simt norocoasă că am avut ocazia să lucrez cu Bobosshots, și cu siguranță colaborarea noastră nu se oprește aici! Pe lângă că îmi dă o stare bună mereu când lucrez cu el, pentru că se simte pasiunea și devotamentul lui, vine și cu idei faine pentru materiale pe care le oferă, deci e super. Să mai zic și faptul că nu am așteptat mult până să primesc materialele făcute de el? E top!
                         </div>
-                        <button class="testimonial-expand-btn" type="button" aria-label="Extinde testimonialul"><i class="fas fa-chevron-down" aria-hidden="true"></i></button>
+                        <button class="testimonial-expand-btn" type="button" aria-label="Extinde testimonialul"><svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-chevron-down"/></svg></button>
                     </div>
                 </div>
 
@@ -1538,7 +1528,7 @@
 
                     <!-- CTA -->
                     <a href="https://instagram.com/bobosshots" target="_blank" rel="noopener noreferrer" class="inline-flex items-center bg-accent-primary hover:bg-accent-hover text-white px-8 py-4 rounded-full font-semibold transition-all hover:scale-105">
-                        <i class="fab fa-instagram mr-2"></i>Hai să Colaborăm
+                        <svg class="fa-icon mr-2" aria-hidden="true"><use href="/shared/icons.svg#fa-instagram"/></svg>Hai să Colaborăm
                     </a>
                 </div>
             </div>
@@ -1558,7 +1548,7 @@
             <!-- Social Links -->
             <div class="flex items-center justify-center mb-12">
                 <a href="https://instagram.com/bobosshots" target="_blank" rel="noopener noreferrer" class="flex items-center bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white px-8 py-4 rounded-full font-semibold transition-all hover:scale-105 hover:shadow-lg hover:shadow-pink-500/25">
-                    <i class="fab fa-instagram text-2xl mr-3"></i>
+                    <svg class="fa-icon text-2xl mr-3" aria-hidden="true"><use href="/shared/icons.svg#fa-instagram"/></svg>
                     @bobosshots
                 </a>
             </div>
@@ -1566,7 +1556,7 @@
             <!-- Contact Info -->
             <div class="bg-dark-700 rounded-3xl p-8 max-w-md mx-auto">
                 <div class="flex items-center justify-center mb-4">
-                    <i class="fas fa-map-marker-alt text-accent-primary text-xl mr-3"></i>
+                    <svg class="fa-icon text-accent-primary text-xl mr-3" aria-hidden="true"><use href="/shared/icons.svg#fa-map-marker-alt"/></svg>
                     <span class="text-gray-300">Sibiu, Romania</span>
                 </div>
                 <p class="text-gray-400 text-xs sm:text-sm">
@@ -1596,10 +1586,10 @@
                 <!-- Social Icons -->
                 <div class="flex items-center space-x-4">
                     <a href="https://instagram.com/bobosshots" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-dark-700 hover:bg-accent-primary rounded-full flex items-center justify-center transition-colors" aria-label="Instagram">
-                        <i class="fab fa-instagram text-white" aria-hidden="true"></i>
+                        <svg class="fa-icon text-white" aria-hidden="true"><use href="/shared/icons.svg#fa-instagram"/></svg>
                     </a>
                     <a href="https://www.behance.net/bogdanterzea" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-dark-700 hover:bg-accent-primary rounded-full flex items-center justify-center transition-colors" aria-label="Behance">
-                        <i class="fab fa-behance text-white" aria-hidden="true"></i>
+                        <svg class="fa-icon text-white" aria-hidden="true"><use href="/shared/icons.svg#fa-behance"/></svg>
                     </a>
                 </div>
             </div>
@@ -1609,17 +1599,17 @@
     <!-- Lightbox Modal -->
     <div id="lightbox" class="lightbox" onclick="closeLightbox()">
         <button class="lightbox-btn absolute top-6 right-6 text-white text-xl z-10" onclick="closeLightbox()">
-            <i class="fas fa-times"></i>
+            <svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-times"/></svg>
         </button>
         <button id="lightbox-prev" class="lightbox-btn absolute left-6 top-1/2 -translate-y-1/2 text-white text-xl z-10" onclick="event.stopPropagation(); navigateLightbox(-1)">
-            <i class="fas fa-chevron-left"></i>
+            <svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-chevron-left"/></svg>
         </button>
         <div id="lightbox-spinner" class="absolute inset-0 flex items-center justify-center" style="display: none;">
             <div class="w-12 h-12 border-4 border-accent-primary border-t-transparent rounded-full animate-spin"></div>
         </div>
         <img id="lightbox-img" src="" alt="Lightbox image">
         <button id="lightbox-next" class="lightbox-btn absolute right-6 top-1/2 -translate-y-1/2 text-white text-xl z-10" onclick="event.stopPropagation(); navigateLightbox(1)">
-            <i class="fas fa-chevron-right"></i>
+            <svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-chevron-right"/></svg>
         </button>
         <div class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-dark-800/80 backdrop-blur-sm px-4 py-2 rounded-full text-sm text-gray-300">
             <span id="lightbox-counter">1 / 12</span>
@@ -2392,11 +2382,11 @@
                         if (isExpanded) {
                             card.classList.remove('expanded');
                             textContainer.style.maxHeight = '4.5rem';
-                            if (expandBtn) expandBtn.innerHTML = '<i class="fas fa-chevron-down"></i>';
+                            if (expandBtn) expandBtn.innerHTML = '<svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-chevron-down"/></svg>';
                         } else {
                             card.classList.add('expanded');
                             textContainer.style.maxHeight = textContainer.scrollHeight + 'px';
-                            if (expandBtn) expandBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
+                            if (expandBtn) expandBtn.innerHTML = '<svg class="fa-icon" aria-hidden="true"><use href="/shared/icons.svg#fa-chevron-up"/></svg>';
                         }
                     }
                 });
