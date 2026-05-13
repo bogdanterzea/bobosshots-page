@@ -11,13 +11,13 @@ User-agent: *
 Content-Signal: search=yes, ai-input=yes, ai-train=no
 Allow: /
 
-# Permite accesul la toate paginile importante
-Allow: /preturi
-Allow: /galerie.html
-Allow: /galerie-portrete.html
-Allow: /galerie-evenimente.html
-Allow: /galerie-produse.html
-Allow: /galerie-travel.html
+# Permite accesul la paginile importante (folosesc URL-uri canonice cu slash final)
+Allow: /preturi/
+Allow: /galerie/
+Allow: /galerie/portrete/
+Allow: /galerie/evenimente/
+Allow: /galerie/produse/
+Allow: /galerie/travel/
 
 # Permite crawling imagini
 Allow: /portfolio/
@@ -25,9 +25,13 @@ Allow: /thumbnails/
 Allow: /profile/
 Allow: /images-assets/
 
-# Blocheaza fisiere neimportante
-Disallow: /*.js$
-Disallow: /*.css$
+# Permite asset-uri necesare pentru randare corectă (mobile-friendly / Lighthouse)
+Allow: /translations.js
+Allow: /webmcp.js
+Allow: /shared/
+
+# Blocheaza directoare interne (backup-uri full-size)
+Disallow: /portfolio-backup/
 
 # Sitemap location
 Sitemap: https://bobosshots.com/sitemap.xml

@@ -9,7 +9,7 @@
 - **Photographer**: Terzea Bogdan
 - **Brand**: Bobosshots
 - **Location**: Sibiu, Romania (available throughout Romania for special events)
-- **Languages**: Romanian (primary)
+- **Languages**: Romanian (primary) and English — every page has a top-right flag toggle (`RO ⇄ EN`) that swaps copy client-side and persists the choice in `localStorage` (`bs_lang`). URLs are the same in both languages.
 - **Website**: https://bobosshots.com/
 - **Instagram**: https://instagram.com/bobosshots
 - **Behance**: https://www.behance.net/bogdanterzea
@@ -41,6 +41,12 @@
 - Agent skills index: `/.well-known/agent-skills/index.json`
 - Sitemap: `/sitemap.xml`
 - Robots: `/robots.txt` (declares Content Signals: `search=yes, ai-input=yes, ai-train=no`)
+
+## Site Internals (for contributors)
+
+- **Language switcher**: `/translations.js` — RO ⇄ EN dictionary + floating flag button, included by every page.
+- **Shared gallery assets**: `/shared/gallery-page.css` and `/shared/gallery-page.js` are loaded by `galerie/portrete/`, `galerie/evenimente/`, `galerie/produse/`, `galerie/travel/` (preloader, smooth scroll, lightbox, animations). Edits to gallery interaction live there.
+- **WebMCP tools**: `/webmcp.js` (browser-side MCP tools exposed to AI agents).
 
 ## Contact
 
