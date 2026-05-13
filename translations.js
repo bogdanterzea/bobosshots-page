@@ -512,7 +512,10 @@
         const target = lang === 'ro' ? 'en' : 'ro';
         flag.innerHTML = FLAG_SVG[target];
         code.textContent = target.toUpperCase();
-        btn.setAttribute('title', target === 'en' ? 'Switch to English' : 'Schimbă în Română');
+        // aria-label must contain the visible text (Lighthouse "label-content-name-mismatch").
+        const title = target === 'en' ? 'Switch to English' : 'Schimbă în Română';
+        btn.setAttribute('title', title);
+        btn.setAttribute('aria-label', target.toUpperCase() + ' — ' + title);
     }
 
     function init() {
@@ -520,7 +523,17 @@
         const lang = getLang();
         if (lang !== DEFAULT_LANG) applyLanguage(lang);
         else updateSwitcherLabel(lang);
+        // Reveal body once translation is applied (no-op for users who never set lang).
+        // Paired with the inline pre-paint snippet in each page's <head> that hides
+        // the body when the stored language is not the default (avoiding flash of RO).
+        document.documentElement.removeAttribute('data-lang-pending');
     }
+
+    // Safety net: if the script ever fails to run (parse error, blocked, etc.),
+    // remove the pre-paint hide attribute after 2s so the page is never stuck blank.
+    setTimeout(function () {
+        document.documentElement.removeAttribute('data-lang-pending');
+    }, 2000);
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);

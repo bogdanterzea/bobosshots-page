@@ -14,7 +14,7 @@
     <!-- Agent Discovery (RFC 8288 link relations) -->
     <link rel="api-catalog" href="/.well-known/api-catalog">
     <link rel="describedby" type="application/json" href="/.well-known/agent-skills/index.json" title="Agent Skills Discovery Index">
-    <link rel="alternate" type="text/markdown" hreflang="ro" href="/preturi/index.md" title="Markdown alternate (for AI agents)">
+    <link rel="alternate" type="text/markdown" href="/preturi/index.md" title="Markdown alternate (for AI agents)">
 
     <!-- SEO: Open Graph -->
     <meta property="og:type" content="website">
@@ -80,11 +80,12 @@
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
-    <!-- Language Switcher -->
+    <!-- Language Switcher: pre-paint flag avoids RO flash when EN is the stored choice -->
+    <script>try{if(localStorage.getItem('bs_lang')==='en')document.documentElement.setAttribute('data-lang-pending','1')}catch(e){}</script>
+    <style>html[data-lang-pending] body{visibility:hidden}</style>
     <script defer src="/translations.js"></script>
 
     <!-- Preconnect to external origins -->
-    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://unpkg.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -105,7 +106,7 @@
     </noscript>
 
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/shared/tailwind.css">
 
     <!-- GSAP + ScrollTrigger (defer) -->
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -116,18 +117,6 @@
 
     <!-- WebMCP — exposes site tools to AI agents (deferred, feature-detected, no perf cost) -->
     <script defer src="/webmcp.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        dark: { 900: '#0a0a0a', 800: '#121212', 700: '#1a1a1a' },
-                        accent: { primary: '#4338ca', hover: '#6366f1' }
-                    }
-                }
-            }
-        }
-    </script>
     <style>
         /* Font Awesome font-display override */
         @font-face { font-family: 'Font Awesome 6 Free'; font-display: swap; }
