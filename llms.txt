@@ -1,0 +1,33 @@
+# Bobosshots — Terzea Bogdan, Fotograf Profesionist Sibiu
+
+> Photography portfolio of Terzea Bogdan (brand: Bobosshots), a professional photographer
+> based in Sibiu, Romania. Specialties: artistic portraits, events (weddings, baptisms,
+> concerts, corporate), product & real-estate photography, travel photography and videography.
+> Transparent pricing in RON. Romanian site with full English toggle. Available throughout
+> Romania for special events.
+
+Key facts:
+
+- Photographer: Terzea Bogdan
+- Location: Sibiu, Romania (45.7983, 24.1256)
+- Contact: Instagram DM preferred (https://instagram.com/bobosshots), phone +40 748 144 371, email contact@bobosshots.com
+- Hours: Mon–Fri 09:00–18:00, Sat 10:00–16:00, Sun closed (Europe/Bucharest)
+- Last updated: 2026-06-11
+
+## Pages
+
+- [Homepage overview (Markdown)](https://bobosshots.com/index.md): who the photographer is, specialties, site map, agent discovery endpoints
+- [Pricing (Markdown)](https://bobosshots.com/preturi/index.md): photo & video packages with prices in RON, add-ons, travel notes
+- [Galleries overview (Markdown)](https://bobosshots.com/galerie/index.md): portfolio categories — portrete, evenimente, produse, travel
+- [Contact (Markdown)](https://bobosshots.com/contact.md): all contact channels, service area and operating hours
+
+## Agent resources
+
+- [Agent skills index](https://bobosshots.com/.well-known/agent-skills/index.json): WebMCP browser tools (getPhotographerInfo, getContactInfo, getPortfolio, getPricing)
+- [API catalog](https://bobosshots.com/.well-known/api-catalog): RFC 9264 linkset of machine-readable resources
+- [Sitemap](https://bobosshots.com/sitemap.xml)
+
+## Policies
+
+- [robots.txt](https://bobosshots.com/robots.txt): Content Signals — search=yes, ai-input=yes, ai-train=no (content may be used to answer user prompts, but not for model training)
+- [Canonical HTML experience](https://bobosshots.com/): the Markdown alternates above are provided for AI agents
