@@ -37,6 +37,7 @@
 
 ## Agent Discovery
 
+- llms.txt: `/llms.txt` (curated links + key facts for AI agents)
 - API catalog: `/.well-known/api-catalog`
 - Agent skills index: `/.well-known/agent-skills/index.json`
 - Sitemap: `/sitemap.xml`

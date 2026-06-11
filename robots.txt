@@ -33,6 +33,10 @@ Allow: /shared/
 # Blocheaza directoare interne (backup-uri full-size)
 Disallow: /portfolio-backup/
 
+# llms.txt — curated entry points + key facts for AI agents
+# https://bobosshots.com/llms.txt
+Allow: /llms.txt
+
 # Sitemap location
 Sitemap: https://bobosshots.com/sitemap.xml
 

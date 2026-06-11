@@ -291,6 +291,22 @@
         'Vizualizare imagine': 'Image viewer',
         'Imaginea anterioară': 'Previous image',
         'Imaginea următoare': 'Next image',
+
+        // ---------- Homepage chapter heads (lens adventure) ----------
+        'Capitolul 1 · Despre': 'Chapter 1 · About',
+        'Capitolul 2 · Portofoliu': 'Chapter 2 · Portfolio',
+        'Capitolul 3 · Servicii': 'Chapter 3 · Services',
+        'Capitolul 4 · Testimoniale': 'Chapter 4 · Testimonials',
+        'Ultimul cadru · Contact': 'The final frame · Contact',
+        'Omul din spatele camerei': 'The man behind the camera',
+        'Cadrele': 'The frames',
+        'Declanșarea': 'The shutter release',
+        'Developarea': 'The darkroom',
+        'Înainte de primul cadru, cunoaște-l pe cel din spatele declanșatorului.': 'Before the first frame, meet the one behind the shutter.',
+        'Scroll la următorul capitol': 'Scroll to the next chapter',
+        // Label only — the date lives in a separate <time> element so bumping it
+        // never breaks this dictionary entry.
+        'Ultima actualizare:': 'Last updated:',
     };
 
     // Build reverse map (EN → RO) for restoring.
